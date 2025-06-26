@@ -969,15 +969,23 @@ class LLaDALlamaBlock(LLaDABlock):
             # 将计算的结果放回原位置
             past_key, past_value = layer_past
             print(compute_indices)
+            print(x_normed.shape)
+            print(x_normed_compute_kv)
+            print('---')
+
+            print(k_compute.shape)
+
             print(past_key.shape)
-            print(compute_indices.shape)
+
+            k = past_key
+            v = past_value
+            k[compute_indices] = k_compute
+            v[compute_indices] = v_compute
             exit(0)
             # print()
             #
             # k = past_key.view(x.shape[0], x.shape[1], -1).clone()
             # v = past_value.view(x.shape[0], x.shape[1], -1).clone()
-            k[compute_indices] = k_compute
-            v[compute_indices] = v_compute
         else:
             # 原有逻辑：所有位置都计算KV
             k = self.k_proj(x_normed)
