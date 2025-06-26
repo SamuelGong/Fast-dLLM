@@ -312,6 +312,7 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
+            nfe += 1
         else:
             # 复用上一块的cache
             block_kv_cache = []
