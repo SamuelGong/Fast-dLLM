@@ -14,10 +14,8 @@ import torch
 from transformers import AutoTokenizer, AutoModel
 
 from generate import generate, generate_with_prefix_cache, generate_with_dual_cache
-import types
 from torch.profiler import profile, ProfilerActivity
-import torch.nn.functional as F
-import math
+from model.modeling_llada import LLaDAModelLM
 
 # ───────────────────────────────────────── config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -39,14 +37,14 @@ def cuda_timer(label="Elapsed"):
 def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
     tag = "Q‑cache" if use_kv_cache else "Vanilla"
     print(f"\nLoading model for {tag} …")
-    model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
+    # model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
+    model = LLaDAModelLM.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
 
     # warm‑up
     with torch.inference_mode():
         _ = model(prompt[:, :1]); torch.cuda.synchronize()
 
-    seq_len = prompt.shape[1] + gen_len
-
+    # seq_len = prompt.shape[1] + gen_len
     # attach_qcache_monkey(model, prompt.shape[1] + gen_len) if use_qcache else None
     with cuda_timer(f"{tag}") as get_elapsed:
         with profile(activities=[ProfilerActivity.CUDA]) as prof:
