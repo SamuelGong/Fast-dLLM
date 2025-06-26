@@ -1,9 +1,8 @@
 The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
 
 Loading model for None …
-Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  6.47it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  6.57it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  6.38it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  6.42it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  6.47it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.52it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.49it/s]
-The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
-None: 112.259s
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  6.43it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  6.55it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  6.36it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  6.38it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  6.44it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.49it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.45it/s]
+None: 112.215s
 None output → Diffusion models are a type of generative model that learn to generate data by iteratively transforming noise into the desired data. They are particularly useful for generating high-quality images, text, and other types of data.
 
 Here's a brief overview of how diffusion models work:
@@ -32,35 +31,55 @@ These models have been shown to achieve state-of-the-art results in various gene
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
                                                    Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us       36.808s        37.00%       36.808s     449.317us         81920  
-void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us       36.040s        36.23%       36.040s       1.083ms         33280  
+ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us       36.815s        37.00%       36.815s     449.406us         81920  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us       36.046s        36.23%       36.046s       1.083ms         33280  
 void at::native::(anonymous namespace)::cunn_SoftMax...         0.00%       0.000us         0.00%       0.000us       0.000us        6.905s         6.94%        6.905s      13.486ms           512  
-void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        3.735s         3.75%        3.735s      37.800us         98816  
-void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us        1.847s         1.86%        1.847s      27.968us         66048  
-void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        1.828s         1.84%        1.828s      55.787us         32768  
-void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us        1.747s         1.76%        1.747s     106.610us         16384  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.737s         1.75%        1.737s      26.295us         66048  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.355s         1.36%        1.355s      82.674us         16384  
-void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us        1.301s         1.31%        1.301s      39.693us         32768  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.250s         1.26%        1.250s      37.561us         33280  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     911.257ms         0.92%     911.257ms      55.619us         16384  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     749.180ms         0.75%     749.180ms      22.863us         32768  
-void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     739.862ms         0.74%     739.862ms      22.231us         33280  
-void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     720.574ms         0.72%     720.574ms       1.407ms           512  
-void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     699.822ms         0.70%     699.822ms      21.357us         32768  
-void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     672.602ms         0.68%     672.602ms      20.210us         33280  
-void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     149.746ms         0.15%     149.746ms     292.473us           512  
-                                        Memset (Device)         0.00%       0.000us         0.00%       0.000us       0.000us      96.413ms         0.10%      96.413ms       1.177us         81920  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      74.520ms         0.07%      74.520ms       2.239us         33280  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        3.735s         3.75%        3.735s      37.802us         98816  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us        1.847s         1.86%        1.847s      27.972us         66048  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        1.828s         1.84%        1.828s      55.793us         32768  
+void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us        1.749s         1.76%        1.749s     106.729us         16384  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.737s         1.75%        1.737s      26.293us         66048  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.354s         1.36%        1.354s      82.668us         16384  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us        1.300s         1.31%        1.300s      39.685us         32768  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.250s         1.26%        1.250s      37.568us         33280  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     911.384ms         0.92%     911.384ms      55.626us         16384  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     749.027ms         0.75%     749.027ms      22.858us         32768  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     739.606ms         0.74%     739.606ms      22.224us         33280  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     720.717ms         0.72%     720.717ms       1.408ms           512  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     700.143ms         0.70%     700.143ms      21.367us         32768  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     673.039ms         0.68%     673.039ms      20.224us         33280  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     149.726ms         0.15%     149.726ms     292.433us           512  
+                                        Memset (Device)         0.00%       0.000us         0.00%       0.000us       0.000us      94.646ms         0.10%      94.646ms       1.155us         81920  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      74.557ms         0.07%      74.557ms       2.240us         33280  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      70.032ms         0.07%      70.032ms       2.104us         33280  
+void at::native::(anonymous namespace)::indexSelectL...         0.00%       0.000us         0.00%       0.000us       0.000us      12.971ms         0.01%      12.971ms      25.334us           512  
+void at::native::sbtopk::gatherTopK<double, unsigned...         0.00%       0.000us         0.00%       0.000us       0.000us       6.236ms         0.01%       6.236ms      12.179us           512  
+void at::native::_scatter_gather_elementwise_kernel<...         0.00%       0.000us         0.00%       0.000us       0.000us       3.647ms         0.00%       3.647ms       7.123us           512  
+void at::native::(anonymous namespace)::write_indice...         0.00%       0.000us         0.00%       0.000us       0.000us       3.058ms         0.00%       3.058ms       2.987us          1024  
+                         Memcpy DtoH (Device -> Pinned)         0.00%       0.000us         0.00%       0.000us       0.000us       2.731ms         0.00%       2.731ms       1.313us          2080  
+void at_cuda_detail::cub::DeviceReduceSingleTileKern...         0.00%       0.000us         0.00%       0.000us       0.000us       2.002ms         0.00%       2.002ms       1.955us          1024  
+void at::native::vectorized_elementwise_kernel<2, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.819ms         0.00%       1.819ms       3.552us           512  
+void at_cuda_detail::cub::DeviceSelectSweepKernel<at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.798ms         0.00%       1.798ms       1.756us          1024  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.686ms         0.00%       1.686ms       3.293us           512  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.634ms         0.00%       1.634ms       3.191us           512  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.612ms         0.00%       1.612ms       3.149us           512  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us       1.571ms         0.00%       1.571ms       2.976us           528  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.464ms         0.00%       1.464ms       1.430us          1024  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us       1.201ms         0.00%       1.201ms       2.346us           512  
+void at_cuda_detail::cub::DeviceCompactInitKernel<at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.116ms         0.00%       1.116ms       1.090us          1024  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     963.681us         0.00%     963.681us       1.825us           528  
+void at::native::vectorized_elementwise_kernel<2, at...         0.00%       0.000us         0.00%       0.000us       0.000us     818.984us         0.00%     818.984us       1.706us           480  
+void at::native::vectorized_elementwise_kernel<2, at...         0.00%       0.000us         0.00%       0.000us       0.000us     736.258us         0.00%     736.258us       1.394us           528  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     603.480us         0.00%     603.480us       1.179us           512  
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-Self CPU time total: 82.613s
-Self CUDA time total: 99.485s
+Self CPU time total: 82.649s
+Self CUDA time total: 99.499s
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
 
 
 Loading model for Prefix …
-Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:32,  6.43s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:06<00:11,  2.87s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:06<00:04,  1.64s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:07<00:02,  1.05s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:07<00:00,  1.37it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:07<00:00,  1.87it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:07<00:00,  1.24s/it]
-The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
-Prefix: 74.442s
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:31,  6.32s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:06<00:11,  2.82s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:06<00:04,  1.61s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:07<00:02,  1.04s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:07<00:00,  1.39it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:07<00:00,  1.89it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:07<00:00,  1.22s/it]
+Prefix: 74.317s
 Prefix output → Diffusion models are a type of generative model that have been widely used in natural language processing (NLP) and computer vision. They are based on the idea of transforming a data distribution into a target distribution through a series of iterative steps.
 
 Here's a brief overview of how diffusion models work:
@@ -92,35 +111,55 @@ Overall, diffusion models are a powerful tool for generating high-quality data a
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
                                                    Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us       10.484s        16.60%       10.484s     637.411us         16448  
-ampere_bf16_s16816gemm_bf16_128x128_ldg8_f2f_stages_...         0.00%       0.000us         0.00%       0.000us       0.000us        8.825s        13.97%        8.825s     444.804us         19840  
-void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        8.729s        13.82%        8.729s     439.979us         19840  
-void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        5.975s         9.46%        5.975s     545.133us         10960  
-         ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_tn         0.00%       0.000us         0.00%       0.000us       0.000us        4.270s         6.76%        4.270s     215.236us         19840  
+ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us       10.487s        16.60%       10.487s     637.576us         16448  
+ampere_bf16_s16816gemm_bf16_128x128_ldg8_f2f_stages_...         0.00%       0.000us         0.00%       0.000us       0.000us        8.828s        13.97%        8.828s     444.936us         19840  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        8.732s        13.82%        8.732s     440.114us         19840  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        5.976s         9.46%        5.976s     545.236us         10960  
+         ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_tn         0.00%       0.000us         0.00%       0.000us       0.000us        4.275s         6.77%        4.275s     215.465us         19840  
 void at::native::(anonymous namespace)::cunn_SoftMax...         0.00%       0.000us         0.00%       0.000us       0.000us        3.849s         6.09%        3.849s       7.517ms           512  
-ampere_bf16_s16816gemm_bf16_256x128_ldg8_f2f_stages_...         0.00%       0.000us         0.00%       0.000us       0.000us        3.237s         5.12%        3.237s       1.356ms          2387  
-void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        2.529s         4.00%        2.529s      25.592us         98815  
-ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.919s         3.04%        1.919s     160.404us         11966  
-void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us        1.180s         1.87%        1.180s      17.869us         66047  
-ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_6...         0.00%       0.000us         0.00%       0.000us       0.000us        1.117s         1.77%        1.117s     160.826us          6944  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.031s         1.63%        1.031s      15.602us         66048  
-void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us        1.004s         1.59%        1.004s      30.629us         32768  
-void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us     994.119ms         1.57%     994.119ms      95.295us         10432  
-void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us     881.988ms         1.40%     881.988ms      27.784us         31744  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     879.602ms         1.39%     879.602ms      55.419us         15872  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     692.298ms         1.10%     692.298ms      42.254us         16384  
-void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us     663.760ms         1.05%     663.760ms     334.556us          1984  
-void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us     560.921ms         0.89%     560.921ms     113.089us          4960  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     539.602ms         0.85%     539.602ms      16.214us         33279  
+ampere_bf16_s16816gemm_bf16_256x128_ldg8_f2f_stages_...         0.00%       0.000us         0.00%       0.000us       0.000us        3.238s         5.13%        3.238s       1.357ms          2387  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        2.529s         4.00%        2.529s      25.594us         98816  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.919s         3.04%        1.919s     160.387us         11966  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us        1.180s         1.87%        1.180s      17.871us         66048  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_6...         0.00%       0.000us         0.00%       0.000us       0.000us        1.117s         1.77%        1.117s     160.825us          6944  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.030s         1.63%        1.030s      15.599us         66048  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us        1.004s         1.59%        1.004s      30.628us         32768  
+void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us     994.648ms         1.57%     994.648ms      95.346us         10432  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us     882.218ms         1.40%     882.218ms      27.792us         31744  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     879.749ms         1.39%     879.749ms      55.428us         15872  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     692.243ms         1.10%     692.243ms      42.251us         16384  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us     663.813ms         1.05%     663.813ms     334.583us          1984  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us     560.869ms         0.89%     560.869ms     113.078us          4960  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     539.607ms         0.85%     539.607ms      16.214us         33280  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     528.222ms         0.84%     528.222ms      16.120us         32768  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     487.254ms         0.77%     487.254ms      28.838us         16896  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     472.847ms         0.75%     472.847ms      14.208us         33280  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     455.371ms         0.72%     455.371ms      27.794us         16384  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     380.151ms         0.60%     380.151ms     742.482us           512  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     361.502ms         0.57%     361.502ms      11.032us         32768  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     320.419ms         0.51%     320.419ms       9.628us         33280  
+void pytorch_flash::flash_fwd_splitkv_kernel<Flash_f...         0.00%       0.000us         0.00%       0.000us       0.000us     263.005ms         0.42%     263.005ms      44.188us          5952  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     153.171ms         0.24%     153.171ms     151.956us          1008  
+ampere_bf16_s1688gemm_bf16_128x64_sliced1x2_ldg8_f2f...         0.00%       0.000us         0.00%       0.000us       0.000us      93.973ms         0.15%      93.973ms       3.031ms            31  
+void pytorch_flash::flash_fwd_splitkv_combine_kernel...         0.00%       0.000us         0.00%       0.000us       0.000us      63.962ms         0.10%      63.962ms      16.119us          3968  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      54.468ms         0.09%      54.468ms       1.637us         33280  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      50.936ms         0.08%      50.936ms       1.531us         33280  
+void pytorch_flash::flash_fwd_splitkv_combine_kernel...         0.00%       0.000us         0.00%       0.000us       0.000us      47.817ms         0.08%      47.817ms      24.101us          1984  
+                                        Memset (Device)         0.00%       0.000us         0.00%       0.000us       0.000us      36.928ms         0.06%      36.928ms       1.109us         33312  
+void at::native::(anonymous namespace)::indexSelectL...         0.00%       0.000us         0.00%       0.000us       0.000us       7.355ms         0.01%       7.355ms      14.366us           512  
+void at::native::sbtopk::gatherTopK<double, unsigned...         0.00%       0.000us         0.00%       0.000us       0.000us       4.604ms         0.01%       4.604ms       8.993us           512  
+void at::native::(anonymous namespace)::write_indice...         0.00%       0.000us         0.00%       0.000us       0.000us       3.050ms         0.00%       3.050ms       2.978us          1024  
+                         Memcpy DtoH (Device -> Pinned)         0.00%       0.000us         0.00%       0.000us       0.000us       2.751ms         0.00%       2.751ms       1.333us          2064  
+void at::native::_scatter_gather_elementwise_kernel<...         0.00%       0.000us         0.00%       0.000us       0.000us       2.599ms         0.00%       2.599ms       5.076us           512  
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-Self CPU time total: 46.020s
-Self CUDA time total: 63.169s
+Self CPU time total: 45.931s
+Self CUDA time total: 63.185s
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
 
 
 Loading model for Dual …
-Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:30,  6.01s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:06<00:10,  2.57s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:06<00:04,  1.48s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:06<00:01,  1.04it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:06<00:00,  1.48it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  2.00it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.14s/it]
-The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
-Dual: 52.517s
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:05<00:29,  5.89s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:06<00:10,  2.52s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:06<00:04,  1.45s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:06<00:01,  1.06it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:06<00:00,  1.50it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  2.01it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.12s/it]
+Dual: 52.557s
 Dual output → Diffusion models are a type of machine learning model that learn to generate data by approximating the process of diffusion, which is the gradual transformation of a signal into a noise signal. The key idea is to learn a series of transformations that convert a clean signal into a noisy signal, and then reverse this process to generate new data samples.
 
 Here's a brief overview of how diffusion models work:
@@ -135,58 +174,110 @@ Diffusion models have been used in various applications, including image generat
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
                                                    Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        8.978s        30.97%        8.978s     113.130us         79360  
-ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_6...         0.00%       0.000us         0.00%       0.000us       0.000us        8.456s        29.17%        8.456s     266.367us         31744  
-void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        1.542s         5.32%        1.542s      15.601us         98816  
-ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.151s         3.97%        1.151s     449.614us          2560  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        8.978s        30.97%        8.978s     113.126us         79360  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_6...         0.00%       0.000us         0.00%       0.000us       0.000us        8.456s        29.17%        8.456s     266.384us         31744  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        1.542s         5.32%        1.542s      15.604us         98816  
+ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.151s         3.97%        1.151s     449.765us          2560  
 ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.142s         3.94%        1.142s       2.303ms           496  
-void at::native::(anonymous namespace)::cunn_SoftMax...         0.00%       0.000us         0.00%       0.000us       0.000us        1.132s         3.91%        1.132s       2.211ms           512  
-void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        1.126s         3.89%        1.126s       1.083ms          1040  
-void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     983.622ms         3.39%     983.622ms      30.018us         32768  
-void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us     737.079ms         2.54%     737.079ms      22.494us         32768  
-void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     640.610ms         2.21%     640.610ms       9.699us         66048  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     570.143ms         1.97%     570.143ms       8.632us         66048  
-void pytorch_flash::flash_fwd_splitkv_kernel<Flash_f...         0.00%       0.000us         0.00%       0.000us       0.000us     426.560ms         1.47%     426.560ms      26.875us         15872  
-void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     388.724ms         1.34%     388.724ms      11.863us         32768  
-void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     320.038ms         1.10%     320.038ms       9.617us         33280  
-void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     150.578ms         0.52%     150.578ms       4.744us         31744  
-void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     139.246ms         0.48%     139.246ms       4.184us         33280  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     111.836ms         0.39%     111.836ms       3.413us         32768  
-                         Memcpy DtoH (Device -> Pinned)         0.00%       0.000us         0.00%       0.000us       0.000us     105.809ms         0.37%     105.809ms       1.299us         81424  
-void pytorch_flash::flash_fwd_splitkv_combine_kernel...         0.00%       0.000us         0.00%       0.000us       0.000us     100.195ms         0.35%     100.195ms       6.313us         15872  
-void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      96.491ms         0.33%      96.491ms       5.889us         16384  
+void at::native::(anonymous namespace)::cunn_SoftMax...         0.00%       0.000us         0.00%       0.000us       0.000us        1.132s         3.90%        1.132s       2.211ms           512  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        1.127s         3.89%        1.127s       1.083ms          1040  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     983.809ms         3.39%     983.809ms      30.023us         32768  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us     737.129ms         2.54%     737.129ms      22.495us         32768  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     640.751ms         2.21%     640.751ms       9.701us         66048  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     570.120ms         1.97%     570.120ms       8.632us         66048  
+void pytorch_flash::flash_fwd_splitkv_kernel<Flash_f...         0.00%       0.000us         0.00%       0.000us       0.000us     427.654ms         1.48%     427.654ms      26.944us         15872  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     388.890ms         1.34%     388.890ms      11.868us         32768  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     320.203ms         1.10%     320.203ms       9.621us         33280  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     150.532ms         0.52%     150.532ms       4.742us         31744  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     139.290ms         0.48%     139.290ms       4.185us         33280  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     111.881ms         0.39%     111.881ms       3.414us         32768  
+                         Memcpy DtoH (Device -> Pinned)         0.00%       0.000us         0.00%       0.000us       0.000us     106.955ms         0.37%     106.955ms       1.314us         81424  
+void pytorch_flash::flash_fwd_splitkv_combine_kernel...         0.00%       0.000us         0.00%       0.000us       0.000us     100.027ms         0.35%     100.027ms       6.302us         15872  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      96.488ms         0.33%      96.488ms       5.889us         16384  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      95.522ms         0.33%      95.522ms       5.830us         16384  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      94.478ms         0.33%      94.478ms       2.839us         33280  
+void at::native::(anonymous namespace)::write_indice...         0.00%       0.000us         0.00%       0.000us       0.000us      64.625ms         0.22%      64.625ms       3.825us         16896  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us      62.933ms         0.22%      62.933ms     122.917us           512  
+void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us      54.622ms         0.19%      54.622ms     106.684us           512  
+void at_cuda_detail::cub::DeviceReduceSingleTileKern...         0.00%       0.000us         0.00%       0.000us       0.000us      50.808ms         0.18%      50.808ms       3.007us         16896  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us      49.407ms         0.17%      49.407ms       3.113us         15872  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      44.943ms         0.16%      44.943ms       1.350us         33280  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      42.640ms         0.15%      42.640ms       1.281us         33280  
+void at_cuda_detail::cub::DeviceSelectSweepKernel<at...         0.00%       0.000us         0.00%       0.000us       0.000us      32.786ms         0.11%      32.786ms       1.940us         16896  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us      25.534ms         0.09%      25.534ms      49.871us           512  
+void at_cuda_detail::cub::DeviceCompactInitKernel<at...         0.00%       0.000us         0.00%       0.000us       0.000us      24.723ms         0.09%      24.723ms       1.463us         16896  
+void at::native::vectorized_elementwise_kernel<2, at...         0.00%       0.000us         0.00%       0.000us       0.000us      21.889ms         0.08%      21.889ms       1.379us         15872  
+void at::native::sbtopk::gatherTopK<double, unsigned...         0.00%       0.000us         0.00%       0.000us       0.000us       3.994ms         0.01%       3.994ms       7.801us           512  
+                                        Memset (Device)         0.00%       0.000us         0.00%       0.000us       0.000us       2.923ms         0.01%       2.923ms       1.142us          2560  
+void at::native::(anonymous namespace)::indexSelectL...         0.00%       0.000us         0.00%       0.000us       0.000us       2.271ms         0.01%       2.271ms       4.436us           512  
+void at::native::_scatter_gather_elementwise_kernel<...         0.00%       0.000us         0.00%       0.000us       0.000us       1.838ms         0.01%       1.838ms       3.589us           512  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.663ms         0.01%       1.663ms       3.249us           512  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.632ms         0.01%       1.632ms       3.188us           512  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.614ms         0.01%       1.614ms       3.153us           512  
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-Self CPU time total: 19.828s
-Self CUDA time total: 28.987s
+Self CPU time total: 19.807s
+Self CUDA time total: 28.991s
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
 
 
 Loading model for Fine …
-Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:07<00:39,  7.91s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:08<00:13,  3.36s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:08<00:05,  1.90s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:08<00:02,  1.22s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:08<00:00,  1.19it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:08<00:00,  1.64it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:08<00:00,  1.46s/it]
-Traceback (most recent call last):
-  File "/home/ubuntu/Fast-dLLM/llada/kvcache_baseline.py", line 99, in <module>
-    main()
-  File "/home/ubuntu/Fast-dLLM/llada/kvcache_baseline.py", line 96, in main
-    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
-  File "/home/ubuntu/Fast-dLLM/llada/kvcache_baseline.py", line 65, in benchmark
-    out, nfe = generate_with_finegrained_cache(model, prompt, steps=steps, gen_length=gen_len,
-  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
-    return func(*args, **kwargs)
-  File "/home/ubuntu/Fast-dLLM/llada/generate.py", line 349, in generate_with_finegrained_cache
-    output = model(
-  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home/ubuntu/Fast-dLLM/llada/model/modeling_llada.py", line 1582, in forward
-    outputs = self.model.forward(
-  File "/home/ubuntu/Fast-dLLM/llada/model/modeling_llada.py", line 1479, in forward
-    x, cache = block(x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position)
-  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home/ubuntu/Fast-dLLM/llada/model/modeling_llada.py", line 966, in forward
-    att, cache = self.attention(q, k, v, attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position)
-  File "/home/ubuntu/Fast-dLLM/llada/model/modeling_llada.py", line 735, in attention
-    past_key[:, :, replace_indices] = k
-RuntimeError: shape mismatch: value tensor of shape [32, 32, 128] cannot be broadcast to indexing result of shape [1, 32, 1, 128]
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:07<00:39,  7.88s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:08<00:13,  3.34s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:08<00:05,  1.90s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:08<00:02,  1.21s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:08<00:00,  1.20it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:08<00:00,  1.65it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:08<00:00,  1.45s/it]
+Fine: 57.242s
+Fine output → Diffusion models are a type of machine learning model that are used to generate data, particularly text, images, and audio. They are based on the mathematical concept of diffusion processes, a mathematical model that describes how a physical system changes over time. The key idea here is to effectively reverse the process of diffusion, to generate new data samples.
+
+**Here's how they work, briefly explained:**
+
+1. **"Reverse Diffusion Process""**: The core idea is is to effectively reverse the diffusion process of generating the desired data samples.
+
+2.  **"Reverse Diffusion Process"****: The reverse diffusion process itself is called the reverse process of generating the reverse diffusion process itself.
+
+3.  **"Reverse Diffusion Process"****: The reverse diffusion process itself is called the reverse diffusion process of generating the data samples itself, process itself itself.
+4. **  **"Reverse Diffusion Process Process"******: The reverse diffusion process itself is called the reverse diffusion process of generating the data samples itself itself.
+
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_6...         0.00%       0.000us         0.00%       0.000us       0.000us        8.727s        31.25%        8.727s     266.859us         32704  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        6.702s        24.00%        6.702s     136.626us         49056  
+ampere_bf16_s16816gemm_bf16_64x64_sliced1x2_ldg8_f2f...         0.00%       0.000us         0.00%       0.000us       0.000us        2.517s         9.01%        2.517s      76.952us         32704  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        1.475s         5.28%        1.475s      14.924us         98811  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.176s         4.21%        1.176s       2.302ms           511  
+void at::native::(anonymous namespace)::cunn_SoftMax...         0.00%       0.000us         0.00%       0.000us       0.000us     957.385ms         3.43%     957.385ms       1.870ms           512  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     952.362ms         3.41%     952.362ms      29.066us         32766  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us     718.014ms         2.57%     718.014ms      21.913us         32766  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     653.180ms         2.34%     653.180ms       9.890us         66044  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     534.848ms         1.92%     534.848ms       8.098us         66045  
+                         Memcpy DtoD (Device -> Device)         0.00%       0.000us         0.00%       0.000us       0.000us     533.409ms         1.91%     533.409ms      16.310us         32704  
+void pytorch_flash::flash_fwd_splitkv_kernel<Flash_f...         0.00%       0.000us         0.00%       0.000us       0.000us     438.145ms         1.57%     438.145ms      26.795us         16352  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     378.162ms         1.35%     378.162ms      11.541us         32766  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     342.840ms         1.23%     342.840ms       5.242us         65408  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     307.332ms         1.10%     307.332ms       9.235us         33278  
+                         Memcpy DtoH (Device -> Pinned)         0.00%       0.000us         0.00%       0.000us       0.000us     152.969ms         0.55%     152.969ms       1.313us        116541  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     123.284ms         0.44%     123.284ms       3.705us         33279  
+void at::native::(anonymous namespace)::write_indice...         0.00%       0.000us         0.00%       0.000us       0.000us     119.454ms         0.43%     119.454ms       3.542us         33728  
+void pytorch_flash::flash_fwd_splitkv_combine_kernel...         0.00%       0.000us         0.00%       0.000us       0.000us     104.891ms         0.38%     104.891ms       6.415us         16352  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      95.900ms         0.34%      95.900ms       5.865us         16352  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      92.552ms         0.33%      92.552ms       2.825us         32767  
+void at_cuda_detail::cub::DeviceReduceSingleTileKern...         0.00%       0.000us         0.00%       0.000us       0.000us      76.315ms         0.27%      76.315ms       2.263us         33728  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      72.159ms         0.26%      72.159ms       4.404us         16384  
+ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us      70.630ms         0.25%      70.630ms     452.755us           156  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us      70.446ms         0.25%      70.446ms       1.084ms            65  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us      70.218ms         0.25%      70.218ms       4.294us         16352  
+void at_cuda_detail::cub::DeviceSelectSweepKernel<at...         0.00%       0.000us         0.00%       0.000us       0.000us      64.349ms         0.23%      64.349ms       1.908us         33728  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      59.157ms         0.21%      59.157ms       1.778us         33278  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      57.043ms         0.20%      57.043ms       3.482us         16384  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us      50.783ms         0.18%      50.783ms       3.106us         16352  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      44.138ms         0.16%      44.138ms       1.326us         33279  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us      42.991ms         0.15%      42.991ms      83.966us           512  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      41.770ms         0.15%      41.770ms       1.255us         33278  
+void at_cuda_detail::cub::DeviceCompactInitKernel<at...         0.00%       0.000us         0.00%       0.000us       0.000us      37.349ms         0.13%      37.349ms       1.107us         33728  
+void at::native::vectorized_elementwise_kernel<2, at...         0.00%       0.000us         0.00%       0.000us       0.000us      22.146ms         0.08%      22.146ms       1.354us         16352  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us      21.545ms         0.08%      21.545ms      42.081us           512  
+void at::native::sbtopk::gatherTopK<double, unsigned...         0.00%       0.000us         0.00%       0.000us       0.000us       3.811ms         0.01%       3.811ms       7.444us           512  
+void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us       3.302ms         0.01%       3.302ms     106.508us            31  
+void at::native::(anonymous namespace)::indexSelectL...         0.00%       0.000us         0.00%       0.000us       0.000us       1.916ms         0.01%       1.916ms       3.750us           511  
+void at::native::vectorized_elementwise_kernel<2, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.847ms         0.01%       1.847ms       1.781us          1037  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 18.355s
+Self CUDA time total: 27.929s
+
