@@ -717,7 +717,10 @@ class LLaDABlock(nn.Module):
         # shape: (B, n_kv_h, T, hs)
         k = k.view(B, T, self.config.effective_n_kv_heads, C // self.config.n_heads).transpose(1, 2)
         # shape: (B, n_kv_h, T, hs)
+        print(v.shape)
         v = v.view(B, T, self.config.effective_n_kv_heads, C // self.config.n_heads).transpose(1, 2)
+        print(v.shape)
+        print('=======')
 
         if layer_past is not None:
             past_key, past_value = layer_past
@@ -990,8 +993,6 @@ class LLaDALlamaBlock(LLaDABlock):
             # 原有逻辑：所有位置都计算KV
             k = self.k_proj(x_normed)
             v = self.v_proj(x_normed)
-            print(k.shape)
-            print('***')
 
         # attention_bias: None
         # layer_past: None
