@@ -7,3 +7,4 @@ sympy
 hf_xet
 pydantic==2.10.6
 gradio
+einops

@@ -318,15 +318,10 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
-            # 初始化状态
-            block_length_ = current_block_end - current_block_start
-            position_status = torch.zeros((x.shape[0], block_length_), dtype=torch.int, device=device)
-            position_status[transfer_index] = 1
-            last_transfer_step = torch.full((x.shape[0], block_length_), -1, dtype=torch.int, device=device)
-            last_transfer_step[transfer_index] = 0
             # 第一轮后，下一轮需要重算KV的位置就是本轮transfer的位置
-            need_recompute_kv = transfer_index.clone()
+            replace_position = transfer_index.clone()
             start_step = 1
+            nfe += 1
         else:
             block_kv_cache = []
             for layer_kv in past_key_values:
@@ -335,61 +330,49 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
-            block_length_ = current_block_end - current_block_start
-            position_status = torch.zeros((x.shape[0], block_length_), dtype=torch.int, device=device)
-            last_transfer_step = torch.full((x.shape[0], block_length_), -1, dtype=torch.int, device=device)
-            need_recompute_kv = torch.ones((x.shape[0], block_length_), dtype=torch.bool, device=device)
+            replace_position = None
             start_step = 0
 
         for step in range(start_step, steps_per_block):
             nfe += 1
-            # 1. 只对need_recompute_kv为True的位置重算KV，其余复用
-            if need_recompute_kv.any():
-                # 用replace_position高效重算部分KV
-                output = model(
-                    x[:, current_block_start:current_block_end],
-                    past_key_values=past_key_values,
-                    use_cache=True,
-                    replace_position=need_recompute_kv
-                )
-                new_kv = output.past_key_values
-                for l, (k, v) in enumerate(new_kv):
-                    block_kv_cache[l] = (k, v)
-            # 2. 组装完整past_key_values
-            new_past_key_values = []
-            for l, (k, v) in enumerate(past_key_values):
-                k_prompt = k[:, :, :current_block_start, :]
-                v_prompt = v[:, :, :current_block_start, :]
-                k_block = block_kv_cache[l][0]
-                v_block = block_kv_cache[l][1]
-                k_suffix = k[:, :, current_block_end:, :]
-                v_suffix = v[:, :, current_block_end:, :]
-                k_full = torch.cat([k_prompt, k_block, k_suffix], dim=2)
-                v_full = torch.cat([v_prompt, v_block, v_suffix], dim=2)
-                new_past_key_values.append((k_full, v_full))
-            past_key_values = new_past_key_values
-            # 3. 用block_kv_cache做去噪
-            mask_index = (x[:, current_block_start:current_block_end] == mask_id)
-            logits = model(
+            # 只调用一次model，replace_position指定本轮需要重算KV的位置
+            output = model(
                 x[:, current_block_start:current_block_end],
                 past_key_values=past_key_values,
                 use_cache=True,
-                replace_position=None
-            ).logits
+                replace_position=replace_position,
+                block_kv_cache=block_kv_cache
+            )
+            logits = output.logits
+            new_kv = output.past_key_values
+            # 更新block_kv_cache
+            for l, (k, v) in enumerate(new_kv):
+                block_kv_cache[l] = (k, v)
+            # 选出本轮transfer的位置
+            mask_index = (x[:, current_block_start:current_block_end] == mask_id)
             x0, transfer_index = get_transfer_index(
                 logits, temperature, remasking, mask_index, x[:, current_block_start:current_block_end],
                 num_transfer_tokens[:, step] if threshold is None else None, threshold
             )
             x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
-            # 4. 更新状态
-            position_status[transfer_index] = 1
-            position_status[(position_status == 1) & (~transfer_index)] = 2
-            last_transfer_step[transfer_index] = step
-            # 5. 更新need_recompute_kv：本轮transfer的位置，下轮需要重算KV
-            need_recompute_kv = transfer_index.clone()
-            # 6. 终止条件
+            # 下一轮replace_position = transfer_index
+            replace_position = transfer_index.clone()
+            # 终止条件
             if (x[:, current_block_start:current_block_end] == mask_id).sum() == 0:
                 break
+        # 每个block结束后，组装完整past_key_values
+        new_past_key_values = []
+        for l, (k, v) in enumerate(past_key_values):
+            k_prompt = k[:, :, :current_block_start, :]
+            v_prompt = v[:, :, :current_block_start, :]
+            k_block = block_kv_cache[l][0]
+            v_block = block_kv_cache[l][1]
+            k_suffix = k[:, :, current_block_end:, :]
+            v_suffix = v[:, :, current_block_end:, :]
+            k_full = torch.cat([k_prompt, k_block, k_suffix], dim=2)
+            v_full = torch.cat([v_prompt, v_block, v_suffix], dim=2)
+            new_past_key_values.append((k_full, v_full))
+        past_key_values = new_past_key_values
 
     return x, nfe
 
