@@ -299,6 +299,11 @@ def generate_with_finegrained_cache(
         block_mask_index = (x[:, current_block_start:current_block_end] == mask_id)
         num_transfer_tokens = get_num_transfer_tokens(block_mask_index, steps_per_block)
 
+        # 追踪每个位置的状态
+        position_status = torch.zeros((x.shape[0], block_length), dtype=torch.int, device=device)
+        # 记录每个位置最晚被transfer的轮数
+        last_transfer_step = torch.full((x.shape[0], block_length), -1, dtype=torch.int, device=device)
+
         # 1. 初始化block_kv_cache
         if num_block == 0:
             # 全量前向，拿到初始KV cache和logits
@@ -323,6 +328,11 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
+
+            # 更新状态
+            position_status[transfer_index] = 1
+            last_transfer_step[transfer_index] = 0  # step=0
+
             # 其余逻辑进入多轮去噪循环（step从1开始）
             start_step = 1
             nfe += 1
@@ -336,13 +346,6 @@ def generate_with_finegrained_cache(
                     v[:, :, current_block_start:current_block_end, :]
                 ))
             start_step = 0
-
-        # 追踪每个位置的状态
-        position_status = torch.zeros((x.shape[0], block_length), dtype=torch.int, device=device)
-        # 记录每一轮哪些位置被transfer
-        prev_transfer_index = torch.zeros((x.shape[0], block_length), dtype=torch.bool, device=device)
-        # 记录每个位置最晚被transfer的轮数
-        last_transfer_step = torch.full((x.shape[0], block_length), -1, dtype=torch.int, device=device)
 
         # 2. block内多轮去噪
         for step in range(start_step, steps_per_block):
@@ -367,12 +370,8 @@ def generate_with_finegrained_cache(
             # transfer_index==True的位置: 1（刚去噪），并记录step
             # transfer_index==False且上轮为1: 2（已稳定）
             # transfer_index==False且上轮为0: 0（未去噪）
-            new_position_status = position_status.clone()
-            new_position_status[transfer_index] = 1
-            # 上一轮为1，这一轮没被transfer，变成2
-            new_position_status[(position_status == 1) & (~transfer_index)] = 2
-            # 其余保持原样
-            position_status = new_position_status
+            position_status[transfer_index] = 1
+            position_status[(position_status == 1) & (~transfer_index)] = 2
             last_transfer_step[transfer_index] = step
 
             # 4. 只对transfer_index==True的位置重算KV，其余复用
