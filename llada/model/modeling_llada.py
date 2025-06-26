@@ -717,10 +717,7 @@ class LLaDABlock(nn.Module):
         # shape: (B, n_kv_h, T, hs)
         k = k.view(B, T, self.config.effective_n_kv_heads, C // self.config.n_heads).transpose(1, 2)
         # shape: (B, n_kv_h, T, hs)
-        print(v.shape)
         v = v.view(B, T, self.config.effective_n_kv_heads, C // self.config.n_heads).transpose(1, 2)
-        print(v.shape)
-        print('=======')
 
         if layer_past is not None:
             past_key, past_value = layer_past
@@ -978,17 +975,12 @@ class LLaDALlamaBlock(LLaDABlock):
             # print(x_normed_compute_kv.shape)  # torch.Size([1, 4096])
             # print('---')
             # print(k_compute.shape)  # torch.Size([1, 4096])
-            print(past_key.shape)  # torch.Size([1, 32, 530, 128])
+            # print(past_key.shape)  # torch.Size([1, 32, 530, 128])
 
-            k = past_key
-            v = past_value
-            # k[compute_indices] = k_compute
-            # v[compute_indices] = v_compute
-            exit(0)
-            # print()
-            #
-            # k = past_key.view(x.shape[0], x.shape[1], -1).clone()
-            # v = past_value.view(x.shape[0], x.shape[1], -1).clone()
+            k = past_key.transpose(1, 2).contiguous().flatten(start_dim=2)
+            v = past_value.transpose(1, 2).contiguous().flatten(start_dim=2)
+            k[compute_indices] = k_compute
+            v[compute_indices] = v_compute
         else:
             # 原有逻辑：所有位置都计算KV
             k = self.k_proj(x_normed)
