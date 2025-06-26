@@ -954,30 +954,30 @@ class LLaDALlamaBlock(LLaDABlock):
         #                      k, v: (batch_size, seq_len, d_model // n_kv_heads)
         x_normed = self.attn_norm(x) #x:torch.Size([2, 168, 4096])
         q = self.q_proj(x_normed) #q:torch.Size([2, 168, 4096])
-        if need_compute_kv is not None:
-            # 细粒度KV控制：只对需要的位置计算KV，Query对所有位置计算
-            past_key, past_value = layer_past
-            
-            # 只对需要计算KV的位置做投影
-            if need_compute_kv.any():
-                # 获取需要计算KV的位置索引
-                compute_indices = need_compute_kv.nonzero(as_tuple=True)
-                # 只取需要计算KV的位置
-                x_normed_compute_kv = x_normed[compute_indices]
-                
-                # 只对这部分位置计算KV
-                k_compute = self.k_proj(x_normed_compute_kv)
-                v_compute = self.v_proj(x_normed_compute_kv)
 
-                # 将计算的结果放回原位置
-                k = past_key.view(x.shape[0], x.shape[1], -1).clone()
-                v = past_value.view(x.shape[0], x.shape[1], -1).clone()
-                k[compute_indices] = k_compute
-                v[compute_indices] = v_compute
-            else:
-                # 如果所有位置都不需要计算KV，直接从block_kv_cache获取
-                k = past_key.view(x.shape[0], x.shape[1], -1)
-                v = past_value.view(x.shape[0], x.shape[1], -1)
+        # 细粒度KV控制：只对需要的位置计算KV，Query对所有位置计算
+        if need_compute_kv is not None and need_compute_kv.any():
+            # 获取需要计算KV的位置索引
+            compute_indices = need_compute_kv.nonzero(as_tuple=True)
+            # 只取需要计算KV的位置
+            x_normed_compute_kv = x_normed[compute_indices]
+
+            # 只对这部分位置计算KV
+            k_compute = self.k_proj(x_normed_compute_kv)
+            v_compute = self.v_proj(x_normed_compute_kv)
+
+            # 将计算的结果放回原位置
+            past_key, past_value = layer_past
+            print(compute_indices)
+            print(past_key.shape)
+            print(compute_indices.shape)
+            exit(0)
+            # print()
+            #
+            # k = past_key.view(x.shape[0], x.shape[1], -1).clone()
+            # v = past_value.view(x.shape[0], x.shape[1], -1).clone()
+            k[compute_indices] = k_compute
+            v[compute_indices] = v_compute
         else:
             # 原有逻辑：所有位置都计算KV
             k = self.k_proj(x_normed)
