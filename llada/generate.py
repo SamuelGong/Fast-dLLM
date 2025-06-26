@@ -323,7 +323,7 @@ def generate_with_finegrained_cache(
 
             # 第一轮后，下一轮需要重算KV的位置就是本轮transfer的位置
             replace_position = torch.zeros_like(x, dtype=torch.bool)
-            replace_position[current_block_start:current_block_end] = 1
+            replace_position[transfer_index] = 1
             print(replace_position)
             exit(0)
             start_step = 1
