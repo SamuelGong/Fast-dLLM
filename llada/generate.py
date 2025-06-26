@@ -301,6 +301,7 @@ def generate_with_finegrained_cache(
         if num_block == 0:
             # 全量前向，拿到初始KV cache和logits
             output = model(x, use_cache=True)
+            print('here')
             past_key_values = output.past_key_values
 
             # 对当前block做第一次去噪
