@@ -956,9 +956,11 @@ class LLaDALlamaBlock(LLaDABlock):
         q = self.q_proj(x_normed) #q:torch.Size([2, 168, 4096])
 
         # 细粒度KV控制：只对需要的位置计算KV，Query对所有位置计算
-        if need_compute_kv is not None and need_compute_kv.any():
+        if need_compute_kv is not None and need_compute_kv[2].any():
+            current_block_start, current_block_end, transfer_index = need_compute_kv
+
             # 获取需要计算KV的位置索引
-            compute_indices = need_compute_kv.nonzero(as_tuple=True)
+            compute_indices = transfer_index.nonzero(as_tuple=True)
             # 只取需要计算KV的位置
             x_normed_compute_kv = x_normed[compute_indices]
 
@@ -979,6 +981,11 @@ class LLaDALlamaBlock(LLaDABlock):
 
             k = past_key.transpose(1, 2).contiguous().flatten(start_dim=2)
             v = past_value.transpose(1, 2).contiguous().flatten(start_dim=2)
+            print(k.shape)
+
+            k = k[:, current_block_start:current_block_end]
+            v = v[:, current_block_start:current_block_end]
+            print(k.shape)
             k[compute_indices] = k_compute
             v[compute_indices] = v_compute
         else:
@@ -1364,7 +1371,7 @@ class LLaDAModel(nn.Module):
         last_logits_only: bool = False,
         output_hidden_states: Optional[bool] = None,
         replace_position: Optional[torch.Tensor] = None,
-        need_compute_kv: Optional[torch.Tensor] = None
+        need_compute_kv = None
     ) -> LLaDAOutput:
         """
         :param input_ids: A tensor of shape `(batch_size, seq_len)`.
@@ -1602,7 +1609,7 @@ class LLaDAModelLM(PreTrainedModel):
         output_hidden_states: Optional[bool] = None,
         return_dict: Optional[bool] = None,
         replace_position: Optional[torch.Tensor] = None,  # This is a hack mitigation of an issue in transformers `4.39.x`
-        need_compute_kv: Optional[torch.Tensor] = None,
+        need_compute_kv = None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         if use_cache is None:
             use_cache = self.config.use_cache
