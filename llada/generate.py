@@ -325,6 +325,7 @@ def generate_with_finegrained_cache(
             replace_position = torch.zeros_like(x, dtype=torch.bool)
             replace_position[transfer_index] = 1
             print(replace_position)
+            print(transfer_index)
             exit(0)
             start_step = 1
             nfe += 1
