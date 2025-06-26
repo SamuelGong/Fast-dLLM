@@ -719,7 +719,7 @@ class LLaDABlock(nn.Module):
         # shape: (B, n_kv_h, T, hs)
         v = v.view(B, T, self.config.effective_n_kv_heads, C // self.config.n_heads).transpose(1, 2)
 
-        if layer_past is not None: 
+        if layer_past is not None:
             past_key, past_value = layer_past
             if replace_position is None:
                 k = torch.cat((past_key, k), dim=-2)
@@ -732,24 +732,11 @@ class LLaDABlock(nn.Module):
                 # Get the indices that need to be replaced
                 replace_indices = replace_position.nonzero(as_tuple=True)[1]  # [selected_length]
                 # Use scatter operation to perform replacement
-                # Ensure k and v have the same sequence length as the number of positions to replace
-                if len(replace_indices) != k.shape[-2]:
-                    # If k has different length, we need to handle this case
-                    # This can happen when replace_position marks only some positions
-                    # We need to create a full-size tensor and only update the marked positions
-                    k_full = past_key.clone()
-                    v_full = past_value.clone()
-                    # Only update the positions that need replacement
-                    k_full[:, :, replace_indices] = k
-                    v_full[:, :, replace_indices] = v
-                    k = k_full
-                    v = v_full
-                else:
-                    # Direct replacement when dimensions match
-                    past_key[:, :, replace_indices] = k
-                    past_value[:, :, replace_indices] = v
-                    k = past_key
-                    v = past_value
+                past_key[:, :, replace_indices] = k
+                k = past_key
+                # Perform the same operation for value
+                past_value[:, :, replace_indices] = v
+                v = past_value
 
         present = (k, v) if use_cache else None #present: None
         query_len, key_len = q.shape[-2], k.shape[-2]  # could be different if layer_past not None
@@ -795,8 +782,7 @@ class LLaDABlock(nn.Module):
         attention_bias: Optional[torch.FloatTensor] = None,
         layer_past: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
         use_cache: bool = False,
-        need_compute_kv: Optional[torch.Tensor] = None,
-        block_kv_cache: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,
+        need_compute_kv: Optional[torch.Tensor] = None
     ) -> Tuple[torch.Tensor, Optional[Tuple[torch.Tensor, torch.Tensor]]]:
         raise NotImplementedError
 
@@ -967,13 +953,10 @@ class LLaDALlamaBlock(LLaDABlock):
         #  - for group query attn q: (batch_size, seq_len, d_model)
         #                      k, v: (batch_size, seq_len, d_model // n_kv_heads)
         x_normed = self.attn_norm(x) #x:torch.Size([2, 168, 4096])
-        
+        q = self.q_proj(x_normed) #q:torch.Size([2, 168, 4096])
         if need_compute_kv is not None:
             # 细粒度KV控制：只对需要的位置计算KV，Query对所有位置计算
             past_key, past_value = layer_past
-            
-            # Query对所有位置都计算
-            q = self.q_proj(x_normed)
             
             # 只对需要计算KV的位置做投影
             if need_compute_kv.any():
@@ -997,7 +980,6 @@ class LLaDALlamaBlock(LLaDABlock):
                 v = past_value.view(x.shape[0], x.shape[1], -1)
         else:
             # 原有逻辑：所有位置都计算KV
-            q = self.q_proj(x_normed)
             k = self.k_proj(x_normed)
             v = self.v_proj(x_normed)
 
@@ -1007,7 +989,8 @@ class LLaDALlamaBlock(LLaDABlock):
         # Get attention scores.
         if self._activation_checkpoint_fn is not None:
             att, cache = self._activation_checkpoint_fn(  # type: ignore
-                self.attention, q, k, v, attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position)
+                self.attention, q, k, v, attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position
+            )
         else:
             att, cache = self.attention(q, k, v, attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position)
 
@@ -1519,11 +1502,11 @@ class LLaDAModel(nn.Module):
                 ):
                     # shape: (batch_size, seq_len, d_model)
                     x, cache = self._activation_checkpoint_fn(
-                        block, x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache, replace_position=replace_position, need_compute_kv=need_compute_kv, block_kv_cache=layer_block_kv_cache
+                        block, x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position, need_compute_kv=need_compute_kv
                     )
                 else:
                     # shape: (batch_size, seq_len, d_model)
-                    x, cache = block(x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache, replace_position=replace_position, need_compute_kv=need_compute_kv)
+                    x, cache = block(x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position, need_compute_kv=need_compute_kv)
                 if attn_key_values is not None:
                     assert cache is not None
                     attn_key_values.append(cache)
@@ -1617,7 +1600,6 @@ class LLaDAModelLM(PreTrainedModel):
         return_dict: Optional[bool] = None,
         replace_position: Optional[torch.Tensor] = None,  # This is a hack mitigation of an issue in transformers `4.39.x`
         need_compute_kv: Optional[torch.Tensor] = None,
-        block_kv_cache: Optional[Sequence[Tuple[torch.Tensor, torch.Tensor]]] = None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         if use_cache is None:
             use_cache = self.config.use_cache
@@ -1637,8 +1619,7 @@ class LLaDAModelLM(PreTrainedModel):
             use_cache=use_cache,
             output_hidden_states=output_hidden_states,
             replace_position=replace_position,
-            need_compute_kv=need_compute_kv,
-            block_kv_cache=block_kv_cache,
+            need_compute_kv=need_compute_kv
         )
         # import pdb; pdb.set_trace()
         logits = outputs.logits

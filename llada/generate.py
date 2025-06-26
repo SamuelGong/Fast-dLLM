@@ -321,13 +321,6 @@ def generate_with_finegrained_cache(
             start_step = 1
             nfe += 1
         else:
-            block_kv_cache = []
-            for layer_kv in past_key_values:
-                k, v = layer_kv
-                block_kv_cache.append((
-                    k[:, :, current_block_start:current_block_end, :],
-                    v[:, :, current_block_start:current_block_end, :]
-                ))
             replace_position = torch.zeros_like(x, dtype=torch.bool)
             replace_position[:, current_block_start:current_block_end] = 1
             need_recompute_kv = None
@@ -358,19 +351,6 @@ def generate_with_finegrained_cache(
             # 终止条件
             if (x[:, current_block_start:current_block_end] == mask_id).sum() == 0:
                 break
-        # 每个block结束后，组装完整past_key_values
-        new_past_key_values = []
-        for l, (k, v) in enumerate(past_key_values):
-            k_prompt = k[:, :, :current_block_start, :]
-            v_prompt = v[:, :, :current_block_start, :]
-            k_block = block_kv_cache[l][0]
-            v_block = block_kv_cache[l][1]
-            k_suffix = k[:, :, current_block_end:, :]
-            v_suffix = v[:, :, current_block_end:, :]
-            k_full = torch.cat([k_prompt, k_block, k_suffix], dim=2)
-            v_full = torch.cat([v_prompt, v_block, v_suffix], dim=2)
-            new_past_key_values.append((k_full, v_full))
-        past_key_values = new_past_key_values
 
     return x, nfe
 
