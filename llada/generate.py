@@ -321,9 +321,6 @@ def generate_with_finegrained_cache(
             start_step = 1
             nfe += 1
         else:
-            replace_position = torch.zeros_like(x, dtype=torch.bool)
-            replace_position[:, current_block_start:current_block_end] = 1
-            need_compute_kv = None
             start_step = 0
 
         for step in range(start_step, steps_per_block):
