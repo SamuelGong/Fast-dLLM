@@ -312,21 +312,12 @@ def generate_with_finegrained_cache(
             )
             x[transfer_index] = x0[transfer_index]
 
-            # # 初始化block_kv_cache（直接用slice，不clone）
-            # block_kv_cache = []
-            # for layer_kv in past_key_values:
-            #     k, v = layer_kv
-            #     block_kv_cache.append((
-            #         k[:, :, current_block_start:current_block_end, :],
-            #         v[:, :, current_block_start:current_block_end, :]
-            #     ))
+            # 沿用 generate_with_dual_cache 的 prefix 和 suffix cache 思想
+            replace_position = torch.zeros_like(x, dtype=torch.bool)
+            replace_position[:, current_block_start:current_block_end] = 1
 
             # 第一轮后，下一轮需要重算KV的位置就是本轮transfer的位置
-            replace_position = torch.zeros_like(x, dtype=torch.bool)
-            replace_position[transfer_index] = 1
-            print(replace_position)
-            print(transfer_index)
-            exit(0)
+            need_recompute_kv = transfer_index
             start_step = 1
             nfe += 1
         else:
@@ -337,7 +328,9 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
-            replace_position = torch.zeros((x.shape[0], block_length), dtype=torch.bool, device=device)
+            replace_position = torch.zeros_like(x, dtype=torch.bool)
+            replace_position[:, current_block_start:current_block_end] = 1
+            need_recompute_kv = None
             start_step = 0
 
         for step in range(start_step, steps_per_block):
@@ -348,22 +341,20 @@ def generate_with_finegrained_cache(
                 past_key_values=past_key_values,
                 use_cache=True,
                 replace_position=replace_position,
-                block_kv_cache=block_kv_cache
+                need_recompute_kv=need_recompute_kv
             )
-            logits = output.logits
-            new_kv = output.past_key_values
-            # 更新block_kv_cache
-            for l, (k, v) in enumerate(new_kv):
-                block_kv_cache[l] = (k, v)
+
             # 选出本轮transfer的位置
             mask_index = (x[:, current_block_start:current_block_end] == mask_id)
             x0, transfer_index = get_transfer_index(
-                logits, temperature, remasking, mask_index, x[:, current_block_start:current_block_end],
+                output.logits, temperature, remasking, mask_index, x[:, current_block_start:current_block_end],
                 num_transfer_tokens[:, step] if threshold is None else None, threshold
             )
             x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
             # 下一轮replace_position = transfer_index
-            replace_position = transfer_index.clone()
+            replace_position = torch.zeros_like(x, dtype=torch.bool)
+            replace_position[:, current_block_start:current_block_end] = 1
+            need_recompute_kv = transfer_index
             # 终止条件
             if (x[:, current_block_start:current_block_end] == mask_id).sum() == 0:
                 break
