@@ -309,8 +309,8 @@ def generate_with_finegrained_cache(
             for layer_kv in past_key_values:
                 k, v = layer_kv
                 block_kv_cache.append((
-                    k[:, :, current_block_start:current_block_end, :].clone(),
-                    v[:, :, current_block_start:current_block_end, :].clone()
+                    k[:, :, current_block_start:current_block_end, :],
+                    v[:, :, current_block_start:current_block_end, :]
                 ))
         else:
             # 复用上一块的cache
@@ -318,8 +318,8 @@ def generate_with_finegrained_cache(
             for layer_kv in past_key_values:
                 k, v = layer_kv
                 block_kv_cache.append((
-                    k[:, :, current_block_start:current_block_end, :].clone(),
-                    v[:, :, current_block_start:current_block_end, :].clone()
+                    k[:, :, current_block_start:current_block_end, :],
+                    v[:, :, current_block_start:current_block_end, :]
                 ))
 
         # 追踪每个位置的状态
