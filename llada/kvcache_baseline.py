@@ -52,15 +52,15 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
         with profile(activities=[ProfilerActivity.CUDA]) as prof:
             if use_kv_cache == "None":
                 out, nfe = generate(model, prompt, steps=steps, gen_length=gen_len,
-                               block_length=block_len, temperature=0., cfg_scale=0.,
+                               block_length=block_len, temperature=0.,
                                remasking='low_confidence')
             elif use_kv_cache == "Prefix":
                 out, nfe = generate_with_prefix_cache(model, prompt, steps=steps, gen_length=gen_len,
-                               block_length=block_len, temperature=0., cfg_scale=0.,
+                               block_length=block_len, temperature=0.,
                                remasking='low_confidence')
             elif use_kv_cache == "Dual":
                 out, nfe = generate_with_dual_cache(model, prompt, steps=steps, gen_length=gen_len,
-                               block_length=block_len, temperature=0., cfg_scale=0.,
+                               block_length=block_len, temperature=0.,
                                remasking='low_confidence')
     # decode and show (outside timing)
     answer = tokenizer.batch_decode(out[:, prompt.shape[1]:], skip_special_tokens=True)[0]
