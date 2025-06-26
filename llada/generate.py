@@ -304,7 +304,8 @@ def generate_with_finegrained_cache(
             past_key_values = output.past_key_values
 
             # 对当前block做第一次去噪
-            mask_index = (x[:, :current_block_end] == mask_id)
+            mask_index = (x == mask_id)
+            mask_index[:, current_block_end:] = 0
             x0, transfer_index = get_transfer_index(
                 output.logits, temperature, remasking, mask_index,
                 x, num_transfer_tokens[:, 0] if threshold is None else None, threshold
