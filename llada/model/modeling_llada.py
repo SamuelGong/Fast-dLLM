@@ -968,13 +968,13 @@ class LLaDALlamaBlock(LLaDABlock):
 
             # 将计算的结果放回原位置
             past_key, past_value = layer_past
+
+            # for debug
             print(compute_indices)
             print(x_normed.shape)
             print(x_normed_compute_kv)
             print('---')
-
             print(k_compute.shape)
-
             print(past_key.shape)
 
             k = past_key
