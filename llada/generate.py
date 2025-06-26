@@ -301,10 +301,21 @@ def generate_with_finegrained_cache(
 
         # 1. 初始化block_kv_cache
         if num_block == 0:
-            # 第一块，必须全量重新算
+            # 全量前向，拿到初始KV cache和logits
             output = model(x, use_cache=True)
             past_key_values = output.past_key_values
-            # 提取当前block的KV
+            logits = output.logits
+
+            # 对当前block做第一次去噪
+            mask_index = (x[:, current_block_start:current_block_end] == mask_id)
+            x0, transfer_index = get_transfer_index(
+                logits[:, current_block_start:current_block_end, :], temperature, remasking, mask_index,
+                x[:, current_block_start:current_block_end], num_transfer_tokens[:, 0] if threshold is None else None,
+                threshold
+            )
+            x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
+
+            # 初始化block_kv_cache
             block_kv_cache = []
             for layer_kv in past_key_values:
                 k, v = layer_kv
@@ -312,6 +323,8 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
+            # 其余逻辑进入多轮去噪循环（step从1开始）
+            start_step = 1
             nfe += 1
         else:
             # 复用上一块的cache
@@ -322,6 +335,7 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
+            start_step = 0
 
         # 追踪每个位置的状态
         position_status = torch.zeros((x.shape[0], block_length), dtype=torch.int, device=device)
@@ -331,7 +345,7 @@ def generate_with_finegrained_cache(
         last_transfer_step = torch.full((x.shape[0], block_length), -1, dtype=torch.int, device=device)
 
         # 2. block内多轮去噪
-        for step in range(steps_per_block):
+        for step in range(start_step, steps_per_block):
             nfe += 1
             mask_index = (x[:, current_block_start:current_block_end] == mask_id)
             # 只对当前block做mask
