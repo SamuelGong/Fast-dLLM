@@ -1,0 +1,192 @@
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+
+Loading model for None …
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  6.47it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  6.57it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  6.38it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  6.42it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  6.47it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.52it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.49it/s]
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+None: 112.259s
+None output → Diffusion models are a type of generative model that learn to generate data by iteratively transforming noise into the desired data. They are particularly useful for generating high-quality images, text, and other types of data.
+
+Here's a brief overview of how diffusion models work:
+
+1. **Initialization**: The model starts with a random noise vector, which is the starting point for the diffusion process.
+2. **Diffusion Process**: The noise vector is transformed through a series of steps, where each step adds a small perturbation to the noise vector. This process is repeated until the noise vector is transformed into the desired data.
+3. **Reconstruction Process**: To generate new data, the model reverses the diffusion process, starting from the desired data and iteratively removing the perturbations to reconstruct the original data.
+4. **Training**: The model is trained to minimize the difference between the generated data and the original data, using a loss function that measures the difference between the generated and original data.
+
+Diffusion models are particularly useful for tasks that require high-quality data generation, such as image synthesis, text generation, and data augmentation. They have been used in various applications, including:
+
+* Image synthesis
+* Text generation
+* Data augmentation
+* Style transfer
+* Data compression
+
+Some popular diffusion models include:
+
+* Diffusion Probability Models (DPMs)
+* Diffusion Autoencoders (DAEs)
+* Variational Diffusion Models (VDMs)
+
+These models have been shown to achieve state-of-the-art results in various generative tasks.
+
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us       36.808s        37.00%       36.808s     449.317us         81920  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us       36.040s        36.23%       36.040s       1.083ms         33280  
+void at::native::(anonymous namespace)::cunn_SoftMax...         0.00%       0.000us         0.00%       0.000us       0.000us        6.905s         6.94%        6.905s      13.486ms           512  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        3.735s         3.75%        3.735s      37.800us         98816  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us        1.847s         1.86%        1.847s      27.968us         66048  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        1.828s         1.84%        1.828s      55.787us         32768  
+void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us        1.747s         1.76%        1.747s     106.610us         16384  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.737s         1.75%        1.737s      26.295us         66048  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.355s         1.36%        1.355s      82.674us         16384  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us        1.301s         1.31%        1.301s      39.693us         32768  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.250s         1.26%        1.250s      37.561us         33280  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     911.257ms         0.92%     911.257ms      55.619us         16384  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     749.180ms         0.75%     749.180ms      22.863us         32768  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     739.862ms         0.74%     739.862ms      22.231us         33280  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     720.574ms         0.72%     720.574ms       1.407ms           512  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     699.822ms         0.70%     699.822ms      21.357us         32768  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     672.602ms         0.68%     672.602ms      20.210us         33280  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     149.746ms         0.15%     149.746ms     292.473us           512  
+                                        Memset (Device)         0.00%       0.000us         0.00%       0.000us       0.000us      96.413ms         0.10%      96.413ms       1.177us         81920  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      74.520ms         0.07%      74.520ms       2.239us         33280  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 82.613s
+Self CUDA time total: 99.485s
+
+
+Loading model for Prefix …
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:32,  6.43s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:06<00:11,  2.87s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:06<00:04,  1.64s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:07<00:02,  1.05s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:07<00:00,  1.37it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:07<00:00,  1.87it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:07<00:00,  1.24s/it]
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Prefix: 74.442s
+Prefix output → Diffusion models are a type of generative model that have been widely used in natural language processing (NLP) and computer vision. They are based on the idea of transforming a data distribution into a target distribution through a series of iterative steps.
+
+Here's a brief overview of how diffusion models work:
+
+1. **Initialization**: The model starts with a data distribution, which is typically a normal distribution or a uniform distribution.
+2. **Diffusion process**: The model iteratively transforms the data distribution into a target distribution by adding noise to the data. This process is repeated until the data matches the target distribution.
+3. **Reverse diffusion process**: To generate new data, the model reverses the diffusion process by removing noise from the data until it matches the target distribution.
+
+Diffusion models are particularly useful for generating high-quality data, such as images or text, because they can capture the underlying distribution of the data. They are also useful for tasks like image synthesis, text generation, and data augmentation.
+
+Some popular diffusion models include:
+
+* Diffusion Probability Models (DPMs)
+* Diffusion Energy Models (DEMs)
+* Diffusion Probabilistic Models (DPMs)
+* Diffusion-Based Models (DBMs)
+
+Diffusion models have been used in various applications, including:
+
+* Image generation
+* Text generation
+* Data augmentation
+* Image synthesis
+* Video generation
+* Audio generation
+
+Overall, diffusion models are a powerful tool for generating high-quality data and have the potential to revolutionize various fields.
+
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us       10.484s        16.60%       10.484s     637.411us         16448  
+ampere_bf16_s16816gemm_bf16_128x128_ldg8_f2f_stages_...         0.00%       0.000us         0.00%       0.000us       0.000us        8.825s        13.97%        8.825s     444.804us         19840  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        8.729s        13.82%        8.729s     439.979us         19840  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        5.975s         9.46%        5.975s     545.133us         10960  
+         ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_tn         0.00%       0.000us         0.00%       0.000us       0.000us        4.270s         6.76%        4.270s     215.236us         19840  
+void at::native::(anonymous namespace)::cunn_SoftMax...         0.00%       0.000us         0.00%       0.000us       0.000us        3.849s         6.09%        3.849s       7.517ms           512  
+ampere_bf16_s16816gemm_bf16_256x128_ldg8_f2f_stages_...         0.00%       0.000us         0.00%       0.000us       0.000us        3.237s         5.12%        3.237s       1.356ms          2387  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        2.529s         4.00%        2.529s      25.592us         98815  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.919s         3.04%        1.919s     160.404us         11966  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us        1.180s         1.87%        1.180s      17.869us         66047  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_6...         0.00%       0.000us         0.00%       0.000us       0.000us        1.117s         1.77%        1.117s     160.826us          6944  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us        1.031s         1.63%        1.031s      15.602us         66048  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us        1.004s         1.59%        1.004s      30.629us         32768  
+void pytorch_flash::flash_fwd_kernel<Flash_fwd_kerne...         0.00%       0.000us         0.00%       0.000us       0.000us     994.119ms         1.57%     994.119ms      95.295us         10432  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us     881.988ms         1.40%     881.988ms      27.784us         31744  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     879.602ms         1.39%     879.602ms      55.419us         15872  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     692.298ms         1.10%     692.298ms      42.254us         16384  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us     663.760ms         1.05%     663.760ms     334.556us          1984  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us     560.921ms         0.89%     560.921ms     113.089us          4960  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     539.602ms         0.85%     539.602ms      16.214us         33279  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 46.020s
+Self CUDA time total: 63.169s
+
+
+Loading model for Dual …
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:06<00:30,  6.01s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:06<00:10,  2.57s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:06<00:04,  1.48s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:06<00:01,  1.04it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:06<00:00,  1.48it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  2.00it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.14s/it]
+The argument `trust_remote_code` is to be used with Auto classes. It has no effect here and is ignored.
+Dual: 52.517s
+Dual output → Diffusion models are a type of machine learning model that learn to generate data by approximating the process of diffusion, which is the gradual transformation of a signal into a noise signal. The key idea is to learn a series of transformations that convert a clean signal into a noisy signal, and then reverse this process to generate new data samples.
+
+Here's a brief overview of how diffusion models work:
+
+1. **Diffusion Process**: The model learns a series of transformations that convert a clean signal into a noisy signal. These transformations are typically applied sequentially, with each transformation adding noise to the signal.
+2. **Reverse Diffusion Process**: To generate new data samples, the model reverses the diffusion process by applying the learned transformations in reverse order, starting from a noisy signal.
+3. **Training Objective**: The model is trained to minimize the difference between the generated data and the original data, using a loss function that measures the difference between the generated data and the true data.
+4. **Data Generation**: Diffusion models can be used to generate new data samples by applying the learned transformations to a noisy signal.
+
+Diffusion models have been used in various applications, including image generation, text generation, and audio generation. They have shown promising results in generating high-quality data samples.
+
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        8.978s        30.97%        8.978s     113.130us         79360  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_6...         0.00%       0.000us         0.00%       0.000us       0.000us        8.456s        29.17%        8.456s     266.367us         31744  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us        1.542s         5.32%        1.542s      15.601us         98816  
+ampere_bf16_s1688gemm_bf16_128x128_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.151s         3.97%        1.151s     449.614us          2560  
+ampere_bf16_s16816gemm_bf16_128x64_ldg8_f2f_stages_3...         0.00%       0.000us         0.00%       0.000us       0.000us        1.142s         3.94%        1.142s       2.303ms           496  
+void at::native::(anonymous namespace)::cunn_SoftMax...         0.00%       0.000us         0.00%       0.000us       0.000us        1.132s         3.91%        1.132s       2.211ms           512  
+void cutlass::Kernel2<cutlass_80_tensorop_bf16_s1681...         0.00%       0.000us         0.00%       0.000us       0.000us        1.126s         3.89%        1.126s       1.083ms          1040  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     983.622ms         3.39%     983.622ms      30.018us         32768  
+void at::native::(anonymous namespace)::CatArrayBatc...         0.00%       0.000us         0.00%       0.000us       0.000us     737.079ms         2.54%     737.079ms      22.494us         32768  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us     640.610ms         2.21%     640.610ms       9.699us         66048  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     570.143ms         1.97%     570.143ms       8.632us         66048  
+void pytorch_flash::flash_fwd_splitkv_kernel<Flash_f...         0.00%       0.000us         0.00%       0.000us       0.000us     426.560ms         1.47%     426.560ms      26.875us         15872  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     388.724ms         1.34%     388.724ms      11.863us         32768  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us     320.038ms         1.10%     320.038ms       9.617us         33280  
+void at::native::index_elementwise_kernel<128, 4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     150.578ms         0.52%     150.578ms       4.744us         31744  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     139.246ms         0.48%     139.246ms       4.184us         33280  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     111.836ms         0.39%     111.836ms       3.413us         32768  
+                         Memcpy DtoH (Device -> Pinned)         0.00%       0.000us         0.00%       0.000us       0.000us     105.809ms         0.37%     105.809ms       1.299us         81424  
+void pytorch_flash::flash_fwd_splitkv_combine_kernel...         0.00%       0.000us         0.00%       0.000us       0.000us     100.195ms         0.35%     100.195ms       6.313us         15872  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      96.491ms         0.33%      96.491ms       5.889us         16384  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 19.828s
+Self CUDA time total: 28.987s
+
+
+Loading model for Fine …
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:07<00:39,  7.91s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:08<00:13,  3.36s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:08<00:05,  1.90s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:08<00:02,  1.22s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:08<00:00,  1.19it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:08<00:00,  1.64it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:08<00:00,  1.46s/it]
+Traceback (most recent call last):
+  File "/home/ubuntu/Fast-dLLM/llada/kvcache_baseline.py", line 99, in <module>
+    main()
+  File "/home/ubuntu/Fast-dLLM/llada/kvcache_baseline.py", line 96, in main
+    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
+  File "/home/ubuntu/Fast-dLLM/llada/kvcache_baseline.py", line 65, in benchmark
+    out, nfe = generate_with_finegrained_cache(model, prompt, steps=steps, gen_length=gen_len,
+  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/ubuntu/Fast-dLLM/llada/generate.py", line 349, in generate_with_finegrained_cache
+    output = model(
+  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/ubuntu/Fast-dLLM/llada/model/modeling_llada.py", line 1582, in forward
+    outputs = self.model.forward(
+  File "/home/ubuntu/Fast-dLLM/llada/model/modeling_llada.py", line 1479, in forward
+    x, cache = block(x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position)
+  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1751, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/ubuntu/anaconda3/envs/llada/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1762, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/ubuntu/Fast-dLLM/llada/model/modeling_llada.py", line 966, in forward
+    att, cache = self.attention(q, k, v, attention_bias, layer_past=layer_past, use_cache=use_cache,replace_position=replace_position)
+  File "/home/ubuntu/Fast-dLLM/llada/model/modeling_llada.py", line 735, in attention
+    past_key[:, :, replace_indices] = k
+RuntimeError: shape mismatch: value tensor of shape [32, 32, 128] cannot be broadcast to indexing result of shape [1, 32, 1, 128]
