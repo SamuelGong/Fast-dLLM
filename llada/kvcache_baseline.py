@@ -35,7 +35,7 @@ def cuda_timer(label="Elapsed"):
 # ─────────────────────────────────── benchmark helper
 
 def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
-    tag = "Q‑cache" if use_kv_cache else "Vanilla"
+    tag = use_kv_cache
     print(f"\nLoading model for {tag} …")
     # model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
     model = LLaDAModelLM.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
@@ -74,10 +74,10 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--question", default="Explain diffusion models briefly.")
-    ap.add_argument("--steps", type=int, default=128)
-    ap.add_argument("--gen", type=int, default=128)
-    # ap.add_argument("--steps", type=int, default=512)
-    # ap.add_argument("--gen", type=int, default=512)
+    # ap.add_argument("--steps", type=int, default=128)
+    # ap.add_argument("--gen", type=int, default=128)
+    ap.add_argument("--steps", type=int, default=512)
+    ap.add_argument("--gen", type=int, default=512)
     ap.add_argument("--block", type=int, default=32)
     args = ap.parse_args()
 
