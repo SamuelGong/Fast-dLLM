@@ -13,7 +13,7 @@ from contextlib import contextmanager
 import torch
 from transformers import AutoTokenizer, AutoModel
 
-from llada.generate import generate, generate_with_prefix_cache, generate_with_dual_cache
+from generate import generate, generate_with_prefix_cache, generate_with_dual_cache
 import types
 from torch.profiler import profile, ProfilerActivity
 import torch.nn.functional as F
