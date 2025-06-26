@@ -13,7 +13,8 @@ from contextlib import contextmanager
 import torch
 from transformers import AutoTokenizer, AutoModel
 
-from generate import generate, generate_with_prefix_cache, generate_with_dual_cache
+from generate import (generate, generate_with_prefix_cache,
+                      generate_with_dual_cache, generate_with_finegrained_cache)
 from torch.profiler import profile, ProfilerActivity
 from model.modeling_llada import LLaDAModelLM
 
@@ -60,6 +61,10 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
                 out, nfe = generate_with_dual_cache(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
                                remasking='low_confidence')
+            elif use_kv_cache == "Fine":
+                out, nfe = generate_with_finegrained_cache(model, prompt, steps=steps, gen_length=gen_len,
+                               block_length=block_len, temperature=0.,
+                               remasking='low_confidence')
     # decode and show (outside timing)
     answer = tokenizer.batch_decode(out[:, prompt.shape[1]:], skip_special_tokens=True)[0]
     print(f"{tag} output → {answer}\n")
@@ -85,9 +90,10 @@ def main():
     prompt_txt = tokenizer.apply_chat_template([{"role": "user", "content": args.question}], add_generation_prompt=True, tokenize=False)
     prompt = torch.tensor(tokenizer(prompt_txt)["input_ids"], device=DEVICE).unsqueeze(0)
 
-    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
-    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
-    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
+    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
 
 if __name__ == "__main__":
     main()
