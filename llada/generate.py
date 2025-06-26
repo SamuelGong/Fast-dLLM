@@ -302,24 +302,29 @@ def generate_with_finegrained_cache(
             # 全量前向，拿到初始KV cache和logits
             output = model(x, use_cache=True)
             past_key_values = output.past_key_values
-            logits = output.logits
+
             # 对当前block做第一次去噪
-            mask_index = (x[:, current_block_start:current_block_end] == mask_id)
+            mask_index = (x[:, :current_block_end] == mask_id)
             x0, transfer_index = get_transfer_index(
-                logits[:, current_block_start:current_block_end, :], temperature, remasking, mask_index,
-                x[:, current_block_start:current_block_end], num_transfer_tokens[:, 0] if threshold is None else None, threshold
+                output.logits, temperature, remasking, mask_index,
+                x, num_transfer_tokens[:, 0] if threshold is None else None, threshold
             )
-            x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
-            # 初始化block_kv_cache（直接用slice，不clone）
-            block_kv_cache = []
-            for layer_kv in past_key_values:
-                k, v = layer_kv
-                block_kv_cache.append((
-                    k[:, :, current_block_start:current_block_end, :],
-                    v[:, :, current_block_start:current_block_end, :]
-                ))
+            x[transfer_index] = x0[transfer_index]
+
+            # # 初始化block_kv_cache（直接用slice，不clone）
+            # block_kv_cache = []
+            # for layer_kv in past_key_values:
+            #     k, v = layer_kv
+            #     block_kv_cache.append((
+            #         k[:, :, current_block_start:current_block_end, :],
+            #         v[:, :, current_block_start:current_block_end, :]
+            #     ))
+
             # 第一轮后，下一轮需要重算KV的位置就是本轮transfer的位置
-            replace_position = transfer_index.clone()
+            replace_position = torch.zeros_like(x, dtype=torch.bool)
+            replace_position[current_block_start:current_block_end] = 1
+            print(replace_position)
+            exit(0)
             start_step = 1
             nfe += 1
         else:
@@ -330,7 +335,7 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
-            replace_position = None
+            replace_position = torch.zeros((x.shape[0], block_length), dtype=torch.bool, device=device)
             start_step = 0
 
         for step in range(start_step, steps_per_block):
