@@ -970,19 +970,17 @@ class LLaDALlamaBlock(LLaDABlock):
             past_key, past_value = layer_past
 
             # for debug
-            print(need_compute_kv)
-            print(compute_indices)  # (tensor([0], device='cuda:0'), tensor([18], device='cuda:0'))
-            print(x_normed.shape)  # torch.Size([1, 32, 4096])
-            print(x_normed_compute_kv.shape)  # torch.Size([1, 4096])
-
-            print('---')
-            print(k_compute.shape)  # torch.Size([1, 4096])
-            print(past_key.shape)
+            # print(compute_indices)  # (tensor([0], device='cuda:0'), tensor([18], device='cuda:0'))
+            # print(x_normed.shape)  # torch.Size([1, 32, 4096])
+            # print(x_normed_compute_kv.shape)  # torch.Size([1, 4096])
+            # print('---')
+            # print(k_compute.shape)  # torch.Size([1, 4096])
+            print(past_key.shape)  # torch.Size([1, 32, 530, 128])
 
             k = past_key
             v = past_value
-            k[compute_indices] = k_compute
-            v[compute_indices] = v_compute
+            # k[compute_indices] = k_compute
+            # v[compute_indices] = v_compute
             exit(0)
             # print()
             #
@@ -992,6 +990,8 @@ class LLaDALlamaBlock(LLaDABlock):
             # 原有逻辑：所有位置都计算KV
             k = self.k_proj(x_normed)
             v = self.v_proj(x_normed)
+            print(k.shape)
+            print('***')
 
         # attention_bias: None
         # layer_past: None
