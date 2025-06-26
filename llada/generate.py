@@ -290,8 +290,6 @@ def generate_with_finegrained_cache(
 
     nfe = 0
 
-    # 用于追踪每个block内每个位置的KV状态
-    # 0: 未去噪, 1: 刚去噪, 2: 已稳定
     for num_block in range(num_blocks):
         current_block_start = prompt.shape[1] + num_block * block_length
         current_block_end = current_block_start + block_length
@@ -299,28 +297,20 @@ def generate_with_finegrained_cache(
         block_mask_index = (x[:, current_block_start:current_block_end] == mask_id)
         num_transfer_tokens = get_num_transfer_tokens(block_mask_index, steps_per_block)
 
-        # 追踪每个位置的状态
-        position_status = torch.zeros((x.shape[0], block_length), dtype=torch.int, device=device)
-        # 记录每个位置最晚被transfer的轮数
-        last_transfer_step = torch.full((x.shape[0], block_length), -1, dtype=torch.int, device=device)
-
-        # 1. 初始化block_kv_cache
+        # 初始化block_kv_cache
         if num_block == 0:
             # 全量前向，拿到初始KV cache和logits
             output = model(x, use_cache=True)
             past_key_values = output.past_key_values
             logits = output.logits
-
             # 对当前block做第一次去噪
             mask_index = (x[:, current_block_start:current_block_end] == mask_id)
             x0, transfer_index = get_transfer_index(
                 logits[:, current_block_start:current_block_end, :], temperature, remasking, mask_index,
-                x[:, current_block_start:current_block_end], num_transfer_tokens[:, 0] if threshold is None else None,
-                threshold
+                x[:, current_block_start:current_block_end], num_transfer_tokens[:, 0] if threshold is None else None, threshold
             )
             x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
-
-            # 初始化block_kv_cache
+            # 初始化block_kv_cache（直接用slice，不clone）
             block_kv_cache = []
             for layer_kv in past_key_values:
                 k, v = layer_kv
@@ -328,16 +318,16 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
-
-            # 更新状态
+            # 初始化状态
+            block_length_ = current_block_end - current_block_start
+            position_status = torch.zeros((x.shape[0], block_length_), dtype=torch.int, device=device)
             position_status[transfer_index] = 1
-            last_transfer_step[transfer_index] = 0  # step=0
-
-            # 其余逻辑进入多轮去噪循环（step从1开始）
+            last_transfer_step = torch.full((x.shape[0], block_length_), -1, dtype=torch.int, device=device)
+            last_transfer_step[transfer_index] = 0
+            # 第一轮后，下一轮需要重算KV的位置就是本轮transfer的位置
+            need_recompute_kv = transfer_index.clone()
             start_step = 1
-            nfe += 1
         else:
-            # 复用上一块的cache
             block_kv_cache = []
             for layer_kv in past_key_values:
                 k, v = layer_kv
@@ -345,77 +335,58 @@ def generate_with_finegrained_cache(
                     k[:, :, current_block_start:current_block_end, :],
                     v[:, :, current_block_start:current_block_end, :]
                 ))
+            block_length_ = current_block_end - current_block_start
+            position_status = torch.zeros((x.shape[0], block_length_), dtype=torch.int, device=device)
+            last_transfer_step = torch.full((x.shape[0], block_length_), -1, dtype=torch.int, device=device)
+            need_recompute_kv = torch.ones((x.shape[0], block_length_), dtype=torch.bool, device=device)
             start_step = 0
 
-        # 2. block内多轮去噪
         for step in range(start_step, steps_per_block):
             nfe += 1
-            mask_index = (x[:, current_block_start:current_block_end] == mask_id)
-            # 只对当前block做mask
-            logits = model(
-                x[:, current_block_start:current_block_end],
-                past_key_values=past_key_values,
-                use_cache=True,
-                replace_position=None  # 这里我们自己管理block_kv_cache
-            ).logits
-
-            x0, transfer_index = get_transfer_index(
-                logits, temperature, remasking, mask_index, x[:, current_block_start:current_block_end],
-                num_transfer_tokens[:, step] if threshold is None else None, threshold
-            )
-            # 更新x
-            x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
-
-            # 3. 更新状态
-            # transfer_index==True的位置: 1（刚去噪），并记录step
-            # transfer_index==False且上轮为1: 2（已稳定）
-            # transfer_index==False且上轮为0: 0（未去噪）
-            position_status[transfer_index] = 1
-            position_status[(position_status == 1) & (~transfer_index)] = 2
-            last_transfer_step[transfer_index] = step
-
-            # 4. 只对transfer_index==True的位置重算KV，其余复用
-            # 先准备输入
-            if transfer_index.any():
-                # 只对transfer位置做前向
-                indices = transfer_index.nonzero(as_tuple=True)
-                # 取出这些位置的token
-                x_transfer = x[:, current_block_start:current_block_end].clone()
-                # 只保留transfer位置，其余设为mask_id
-                x_transfer[~transfer_index] = mask_id
-                # 重新计算这些位置的KV
+            # 1. 只对need_recompute_kv为True的位置重算KV，其余复用
+            if need_recompute_kv.any():
+                # 用replace_position高效重算部分KV
                 output = model(
-                    x_transfer,
+                    x[:, current_block_start:current_block_end],
                     past_key_values=past_key_values,
                     use_cache=True,
-                    replace_position=None
+                    replace_position=need_recompute_kv
                 )
                 new_kv = output.past_key_values
-                # 更新block_kv_cache
                 for l, (k, v) in enumerate(new_kv):
-                    # 只更新transfer位置
-                    block_kv_cache[l][0][:, :, indices[1], :] = k[:, :, indices[1], :]
-                    block_kv_cache[l][1][:, :, indices[1], :] = v[:, :, indices[1], :]
-
-            # 5. 组装完整past_key_values
-            # prompt部分
+                    block_kv_cache[l] = (k, v)
+            # 2. 组装完整past_key_values
             new_past_key_values = []
             for l, (k, v) in enumerate(past_key_values):
-                # prompt部分
                 k_prompt = k[:, :, :current_block_start, :]
                 v_prompt = v[:, :, :current_block_start, :]
-                # 当前block部分
                 k_block = block_kv_cache[l][0]
                 v_block = block_kv_cache[l][1]
-                # 后缀部分
                 k_suffix = k[:, :, current_block_end:, :]
                 v_suffix = v[:, :, current_block_end:, :]
-                # 拼接
                 k_full = torch.cat([k_prompt, k_block, k_suffix], dim=2)
                 v_full = torch.cat([v_prompt, v_block, v_suffix], dim=2)
                 new_past_key_values.append((k_full, v_full))
             past_key_values = new_past_key_values
-
+            # 3. 用block_kv_cache做去噪
+            mask_index = (x[:, current_block_start:current_block_end] == mask_id)
+            logits = model(
+                x[:, current_block_start:current_block_end],
+                past_key_values=past_key_values,
+                use_cache=True,
+                replace_position=None
+            ).logits
+            x0, transfer_index = get_transfer_index(
+                logits, temperature, remasking, mask_index, x[:, current_block_start:current_block_end],
+                num_transfer_tokens[:, step] if threshold is None else None, threshold
+            )
+            x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
+            # 4. 更新状态
+            position_status[transfer_index] = 1
+            position_status[(position_status == 1) & (~transfer_index)] = 2
+            last_transfer_step[transfer_index] = step
+            # 5. 更新need_recompute_kv：本轮transfer的位置，下轮需要重算KV
+            need_recompute_kv = transfer_index.clone()
             # 6. 终止条件
             if (x[:, current_block_start:current_block_end] == mask_id).sum() == 0:
                 break
