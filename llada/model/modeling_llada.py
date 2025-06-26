@@ -970,9 +970,9 @@ class LLaDALlamaBlock(LLaDABlock):
             past_key, past_value = layer_past
 
             # for debug
-            print(compute_indices)
-            print(x_normed.shape)
-            print(x_normed_compute_kv)
+            print(compute_indices)  # (tensor([0], device='cuda:0'), tensor([18], device='cuda:0'))
+            print(x_normed.shape)  # torch.Size([1, 32, 4096])
+            print(x_normed_compute_kv.shape)
             print('---')
             print(k_compute.shape)
             print(past_key.shape)
