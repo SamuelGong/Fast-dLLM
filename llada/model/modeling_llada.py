@@ -965,7 +965,7 @@ class LLaDALlamaBlock(LLaDABlock):
         replace_position: Optional[torch.Tensor] = None,
         need_compute_kv: Optional[torch.Tensor] = None,
         use_q_cache = False,
-        reuse_q = None
+        need_compute_q = None
     ) -> Tuple[torch.Tensor, Optional[Tuple[torch.Tensor, torch.Tensor]]]:
         # Get query, key, value projections.
         # shape:
@@ -976,18 +976,39 @@ class LLaDALlamaBlock(LLaDABlock):
         #                      k, v: (batch_size, seq_len, d_model // n_kv_heads)
         x_normed = self.attn_norm(x) #x:torch.Size([2, 168, 4096])
 
-        if reuse_q is not None:
-            assert use_cache is True
+        # if need_compute_q is not None:
+        #     assert use_cache is True
+        #
+        #     past_query, _, _ = layer_past
+        #     current_block_start, current_block_end = reuse_q
+        #     q = past_query.clone()
+        #     q = q.transpose(1, 2).contiguous().flatten(start_dim=2)
+        #     q = q[:, current_block_start:current_block_end]
+        # else:
+        #     q = self.q_proj(x_normed) #q:torch.Size([2, 168, 4096])
 
-            past_query, _, _ = layer_past
-            current_block_start, current_block_end = reuse_q
+        # 细粒度Q控制
+        if need_compute_q is not None:
+            current_block_start, current_block_end, transfer_index = need_compute_q
+            # 获取需要计算Q的位置索引
+            compute_indices = transfer_index.nonzero(as_tuple=True)
+            # 只取需要计算Q的位置
+            x_normed_compute_q = x_normed[compute_indices]
+            # # 只对这部分位置计算KV
+            q_computed = self.q_proj(x_normed_compute_q)
+
+            if use_cache and use_q_cache:
+                past_query, _, _ = layer_past
+            else:
+                raise NotImplementedError
             q = past_query.clone()
             q = q.transpose(1, 2).contiguous().flatten(start_dim=2)
             q = q[:, current_block_start:current_block_end]
+            q[compute_indices] = q_computed
         else:
-            q = self.q_proj(x_normed) #q:torch.Size([2, 168, 4096])
+            q = self.q_proj(x_normed)
 
-        # 细粒度KV控制：只对需要的位置计算KV，Query对所有位置计算
+        # 细粒度KV控制：只对需要的位置计算KV
         if need_compute_kv is not None and need_compute_kv[2].any():
             current_block_start, current_block_end, transfer_index = need_compute_kv
 
@@ -1409,7 +1430,7 @@ class LLaDAModel(nn.Module):
         replace_position: Optional[torch.Tensor] = None,
         need_compute_kv = None,
         use_q_cache = False,
-        reuse_q = None,
+        need_compute_q = None,
     ) -> LLaDAOutput:
         """
         :param input_ids: A tensor of shape `(batch_size, seq_len)`.
@@ -1552,13 +1573,13 @@ class LLaDAModel(nn.Module):
                     x, cache = self._activation_checkpoint_fn(
                         block, x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,
                         replace_position=replace_position, need_compute_kv=need_compute_kv,
-                        use_q_cache=use_q_cache, reuse_q=reuse_q
+                        use_q_cache=use_q_cache, need_compute_q=need_compute_q
                     )
                 else:
                     # shape: (batch_size, seq_len, d_model)
                     x, cache = block(x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,
                                      replace_position=replace_position, need_compute_kv=need_compute_kv,
-                                     use_q_cache=use_q_cache, reuse_q=reuse_q)
+                                     use_q_cache=use_q_cache, need_compute_q=need_compute_q)
                 if attn_key_values is not None:
                     assert cache is not None
                     attn_key_values.append(cache)
@@ -1653,7 +1674,7 @@ class LLaDAModelLM(PreTrainedModel):
         replace_position: Optional[torch.Tensor] = None,  # This is a hack mitigation of an issue in transformers `4.39.x`
         need_compute_kv = None,
         use_q_cache = None,
-        reuse_q=None,
+        need_compute_q=None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         if use_cache is None:
             use_cache = self.config.use_cache
@@ -1675,7 +1696,7 @@ class LLaDAModelLM(PreTrainedModel):
             replace_position=replace_position,
             need_compute_kv=need_compute_kv,
             use_q_cache=use_q_cache,
-            reuse_q=reuse_q
+            need_compute_q=need_compute_q
         )
         # import pdb; pdb.set_trace()
         logits = outputs.logits

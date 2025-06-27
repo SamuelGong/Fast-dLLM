@@ -276,16 +276,19 @@ def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=12
         i = 1
         replace_position = torch.zeros_like(x, dtype=torch.bool)
         replace_position[:, current_block_start:current_block_end] = 1
+        need_compute_q = (current_block_start, current_block_end, transfer_index)
+
         while True:
             nfe += 1
             mask_index = (x[:, current_block_start:current_block_end] == mask_id)
             # cache position is the position between current_block_start and current_block_end
             logits = model(x[:, current_block_start:current_block_end], past_key_values=past_key_values, use_cache=True, replace_position=replace_position,
-                           use_q_cache=True, reuse_q=(current_block_start, current_block_end)).logits
+                           use_q_cache=True, need_compute_q=need_compute_q).logits
 
             x0, transfer_index = get_transfer_index(logits, temperature, remasking, mask_index,
                                             x[:, current_block_start:current_block_end], num_transfer_tokens[:, i] if threshold is None else None, threshold)
             x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
+            need_compute_q = (current_block_start, current_block_end, transfer_index)
             if (x[:, current_block_start:current_block_end] == mask_id).sum() == 0:
                 break
             i += 1
