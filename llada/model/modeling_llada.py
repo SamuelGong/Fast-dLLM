@@ -741,7 +741,7 @@ class LLaDABlock(nn.Module):
                     past_value[:, :, replace_indices] = v
                     v = past_value
             elif use_cache and use_q_cache:
-                past_query, past_key, past_value = layer_past
+                _, past_key, past_value = layer_past
 
                 assert replace_position is not None
                 replace_indices = replace_position.nonzero(as_tuple=True)[1]  # [selected_length]
@@ -749,8 +749,6 @@ class LLaDABlock(nn.Module):
                 k = past_key
                 past_value[:, :, replace_indices] = v
                 v = past_value
-                past_query[:, :, replace_indices] = q
-                q = past_query
             else:
                 raise NotImplementedError
 
@@ -768,12 +766,7 @@ class LLaDABlock(nn.Module):
             if replace_position is None:
                 q, k = self.rotary_emb(q, k)
             else:
-                if use_q_cache and not use_cache:
-                    raise NotImplementedError
-                elif use_q_cache and use_cache:
-                    q, k = self.rotary_emb(q, k)
-                else:
-                    q, k = self.rotary_emb(q, k, replace_indices.max()+1)
+                q, k = self.rotary_emb(q, k, replace_indices.max()+1)
 
         if attention_bias is not None:
             # Resize and cast attention bias.
@@ -971,7 +964,8 @@ class LLaDALlamaBlock(LLaDABlock):
         use_cache: bool = False,
         replace_position: Optional[torch.Tensor] = None,
         need_compute_kv: Optional[torch.Tensor] = None,
-        use_q_cache = False
+        use_q_cache = False,
+        reuse_q = None
     ) -> Tuple[torch.Tensor, Optional[Tuple[torch.Tensor, torch.Tensor]]]:
         # Get query, key, value projections.
         # shape:
@@ -981,7 +975,15 @@ class LLaDALlamaBlock(LLaDABlock):
         #  - for group query attn q: (batch_size, seq_len, d_model)
         #                      k, v: (batch_size, seq_len, d_model // n_kv_heads)
         x_normed = self.attn_norm(x) #x:torch.Size([2, 168, 4096])
-        q = self.q_proj(x_normed) #q:torch.Size([2, 168, 4096])
+
+        if reuse_q is not None:
+            assert use_cache is True
+
+            past_query, _, _ = layer_past
+            current_block_start, current_block_end = reuse_q
+            q = past_query[:, current_block_start:current_block_end]
+        else:
+            q = self.q_proj(x_normed) #q:torch.Size([2, 168, 4096])
 
         # 细粒度KV控制：只对需要的位置计算KV，Query对所有位置计算
         if need_compute_kv is not None and need_compute_kv[2].any():
@@ -1404,7 +1406,8 @@ class LLaDAModel(nn.Module):
         output_hidden_states: Optional[bool] = None,
         replace_position: Optional[torch.Tensor] = None,
         need_compute_kv = None,
-        use_q_cache = False
+        use_q_cache = False,
+        reuse_q = None,
     ) -> LLaDAOutput:
         """
         :param input_ids: A tensor of shape `(batch_size, seq_len)`.
@@ -1546,12 +1549,14 @@ class LLaDAModel(nn.Module):
                     # shape: (batch_size, seq_len, d_model)
                     x, cache = self._activation_checkpoint_fn(
                         block, x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,
-                        replace_position=replace_position, need_compute_kv=need_compute_kv, use_q_cache=use_q_cache
+                        replace_position=replace_position, need_compute_kv=need_compute_kv,
+                        use_q_cache=use_q_cache, reuse_q=reuse_q
                     )
                 else:
                     # shape: (batch_size, seq_len, d_model)
                     x, cache = block(x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,
-                                     replace_position=replace_position, need_compute_kv=need_compute_kv, use_q_cache=use_q_cache)
+                                     replace_position=replace_position, need_compute_kv=need_compute_kv,
+                                     use_q_cache=use_q_cache, reuse_q=reuse_q)
                 if attn_key_values is not None:
                     assert cache is not None
                     attn_key_values.append(cache)
@@ -1645,7 +1650,8 @@ class LLaDAModelLM(PreTrainedModel):
         return_dict: Optional[bool] = None,
         replace_position: Optional[torch.Tensor] = None,  # This is a hack mitigation of an issue in transformers `4.39.x`
         need_compute_kv = None,
-        use_q_cache = None
+        use_q_cache = None,
+        reuse_q=None,
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         if use_cache is None:
             use_cache = self.config.use_cache
@@ -1667,6 +1673,7 @@ class LLaDAModelLM(PreTrainedModel):
             replace_position=replace_position,
             need_compute_kv=need_compute_kv,
             use_q_cache=use_q_cache,
+            reuse_q=reuse_q
         )
         # import pdb; pdb.set_trace()
         logits = outputs.logits
