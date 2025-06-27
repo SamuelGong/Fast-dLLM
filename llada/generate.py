@@ -276,10 +276,10 @@ def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=12
         i = 1
         replace_position = torch.zeros_like(x, dtype=torch.bool)
         replace_position[:, current_block_start:current_block_end] = 1
-        need_compute_q = (current_block_start, current_block_end, transfer_index)
+        need_compute_q = (current_block_start, current_block_end, (transfer_index[0], transfer_index[1] - current_block_start))
 
         while True:
-            print(">>>", i, need_compute_q)
+            # print(">>>", i, need_compute_q)
             nfe += 1
             mask_index = (x[:, current_block_start:current_block_end] == mask_id)
             # cache position is the position between current_block_start and current_block_end
