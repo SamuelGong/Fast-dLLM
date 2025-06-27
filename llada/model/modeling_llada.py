@@ -753,10 +753,6 @@ class LLaDABlock(nn.Module):
                 q = past_query
             else:
                 raise NotImplementedError
-            print(f"[A] Q {q.shape} K {k.shape}")
-            exit(0)
-        else:
-            print(f"[B] Q {q.shape} K {k.shape}")
 
         if not use_q_cache:
             present = (k, v) if use_cache else None #present: None
@@ -772,7 +768,12 @@ class LLaDABlock(nn.Module):
             if replace_position is None:
                 q, k = self.rotary_emb(q, k)
             else:
-                q, k = self.rotary_emb(q, k, replace_indices.max()+1)
+                if use_q_cache and not use_cache:
+                    raise NotImplementedError
+                elif use_q_cache and use_cache:
+                    q, k = self.rotary_emb(q, k)
+                else:
+                    q, k = self.rotary_emb(q, k, replace_indices.max()+1)
 
         if attention_bias is not None:
             # Resize and cast attention bias.
