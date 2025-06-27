@@ -753,6 +753,9 @@ class LLaDABlock(nn.Module):
                 q = past_query
             else:
                 raise NotImplementedError
+            print(f"[A] Q {q.shape} V {v.shape}")
+        else:
+            print(f"[B] Q {q.shape} V {v.shape}")
 
         if not use_q_cache:
             present = (k, v) if use_cache else None #present: None
