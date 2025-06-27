@@ -279,6 +279,7 @@ def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=12
         need_compute_q = (current_block_start, current_block_end, transfer_index)
 
         while True:
+            print(">>>", i, need_compute_q)
             nfe += 1
             mask_index = (x[:, current_block_start:current_block_end] == mask_id)
             # cache position is the position between current_block_start and current_block_end
