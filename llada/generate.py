@@ -278,6 +278,8 @@ def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=12
         replace_position[:, current_block_start:current_block_end] = 1
         print(transfer_index)
         print(transfer_index[current_block_start:])
+        print(transfer_index.shape)
+        exit(0)
         need_compute_q = (current_block_start, current_block_end, transfer_index[current_block_start:])
 
         while True:
