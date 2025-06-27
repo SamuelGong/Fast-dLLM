@@ -981,7 +981,9 @@ class LLaDALlamaBlock(LLaDABlock):
 
             past_query, _, _ = layer_past
             current_block_start, current_block_end = reuse_q
-            q = past_query[:, current_block_start:current_block_end]
+            q = past_query.clone()
+            q = q.transpose(1, 2).contiguous().flatten(start_dim=2)
+            q = q[:, current_block_start:current_block_end]
         else:
             q = self.q_proj(x_normed) #q:torch.Size([2, 168, 4096])
 
