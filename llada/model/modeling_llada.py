@@ -993,7 +993,8 @@ class LLaDALlamaBlock(LLaDABlock):
             # 获取需要计算Q的位置索引
             compute_indices = transfer_index.nonzero(as_tuple=True)
             # 只取需要计算Q的位置
-            x_normed_compute_q = x_normed[compute_indices - current_block_start]
+            aligned_compute_indices = (compute_indices[0], compute_indices[1] - current_block_start)
+            x_normed_compute_q = x_normed[aligned_compute_indices]
             # minus here is important, this is because of the implementation differences
             # between generate_with_dual_cache_and_q_cache and generate_with_finegrained_cache
 
