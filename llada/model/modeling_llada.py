@@ -993,7 +993,6 @@ class LLaDALlamaBlock(LLaDABlock):
             # 获取需要计算Q的位置索引
             compute_indices = transfer_index.nonzero(as_tuple=True)
             # 只取需要计算Q的位置
-            aligned_compute_indices = (compute_indices[0], compute_indices[1] - current_block_start)
 
             # print(aligned_compute_indices)
             # print(x_normed.shape)
@@ -1012,7 +1011,7 @@ class LLaDALlamaBlock(LLaDABlock):
             q = past_query.clone()
             q = q.transpose(1, 2).contiguous().flatten(start_dim=2)
             q = q[:, current_block_start:current_block_end]
-            q[aligned_compute_indices] = q_computed
+            q[compute_indices] = q_computed
         else:
             q = self.q_proj(x_normed)
 
