@@ -754,6 +754,7 @@ class LLaDABlock(nn.Module):
             else:
                 raise NotImplementedError
             print(f"[A] Q {q.shape} K {k.shape}")
+            exit(0)
         else:
             print(f"[B] Q {q.shape} K {k.shape}")
 
