@@ -1008,7 +1008,7 @@ class LLaDALlamaBlock(LLaDABlock):
             q = past_query.clone()
             q = q.transpose(1, 2).contiguous().flatten(start_dim=2)
             q = q[:, current_block_start:current_block_end]
-            q[compute_indices] = q_computed
+            q[aligned_compute_indices] = q_computed
         else:
             q = self.q_proj(x_normed)
 
