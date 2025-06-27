@@ -993,6 +993,8 @@ class LLaDALlamaBlock(LLaDABlock):
             # 获取需要计算Q的位置索引
             compute_indices = transfer_index.nonzero(as_tuple=True)
             # 只取需要计算Q的位置
+            print(compute_indices)
+            print(x.shape)
             x_normed_compute_q = x_normed[compute_indices]
             # # 只对这部分位置计算KV
             q_computed = self.q_proj(x_normed_compute_q)
