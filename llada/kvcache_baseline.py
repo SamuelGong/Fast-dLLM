@@ -73,7 +73,8 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
     # decode and show (outside timing)
     answer = tokenizer.batch_decode(out[:, prompt.shape[1]:], skip_special_tokens=True)[0]
     print(f"{tag} output → {answer}\n")
-    print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=40))
+    # print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=40))
+
     # print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=20))
     # print(prof.key_averages().table(row_limit=20))
 
@@ -85,10 +86,10 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--question", default="Explain diffusion models briefly.")
-    # ap.add_argument("--steps", type=int, default=128)
-    # ap.add_argument("--gen", type=int, default=128)
-    ap.add_argument("--steps", type=int, default=512)
-    ap.add_argument("--gen", type=int, default=512)
+    ap.add_argument("--steps", type=int, default=128)
+    ap.add_argument("--gen", type=int, default=128)
+    # ap.add_argument("--steps", type=int, default=512)
+    # ap.add_argument("--gen", type=int, default=512)
     ap.add_argument("--block", type=int, default=32)
     args = ap.parse_args()
 
@@ -100,7 +101,7 @@ def main():
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
     benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
-    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
 
 if __name__ == "__main__":
     main()
