@@ -425,7 +425,10 @@ def get_transfer_index(logits, temperature, remasking, mask_index, x, num_transf
         x0_p = torch.rand((x0.shape[0], x0.shape[1]), device=x0.device)
     else:
         raise NotImplementedError(remasking)
-    
+
+    print(mask_index.shape)
+    print(x0.shape)
+    print(x.shape)
     x0 = torch.where(mask_index, x0, x)
     confidence = torch.where(mask_index, x0_p, -np.inf)
 
