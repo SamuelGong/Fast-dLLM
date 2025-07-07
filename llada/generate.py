@@ -332,6 +332,7 @@ def generate_coarse_to_fine(
 
     nfe = 0  # number of forward evaluations
     for outer in range(num_iters):
+        print(f"outer: {outer}")
 
         # ------------------------------------------------------------------
         # 0.  GLOBAL pass – obtain fresh logits & prefix KV cache
@@ -370,6 +371,7 @@ def generate_coarse_to_fine(
 
         # We already consumed step 0 above
         inner_step = 1
+        print(f"\tblock_sel: {block_sel}")
 
         # ------------------------------------------------------------------
         # 2.  Refinement loop – only run the model on the scattered block
@@ -407,6 +409,7 @@ def generate_coarse_to_fine(
                                    x,
                                    quota_step,
                                    threshold)
+            print(f"\ttransfer_idx: {transfer_idx}")
 
             x[transfer_idx] = x0[transfer_idx]
             inner_step += 1
