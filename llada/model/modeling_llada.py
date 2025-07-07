@@ -771,6 +771,8 @@ class LLaDABlock(nn.Module):
             if replace_position is None:
                 q, k = self.rotary_emb(q, k)
             else:
+                print(q.shape)
+                print(k.shape)
                 q, k = self.rotary_emb(q, k, replace_indices.max()+1)
 
         if attention_bias is not None:
