@@ -994,125 +994,65 @@ class LLaDALlamaBlock(LLaDABlock):
 
         # 细粒度Q控制
         if need_compute_q is not None:
-            if len(need_compute_q) == 1:
-                transfer_index = need_compute_q[0]
-                # 获取需要计算Q的位置索引
-                compute_indices = transfer_index.nonzero(as_tuple=True)
-                # 只取需要计算Q的位置
+            current_block_start, current_block_end, transfer_index = need_compute_q
+            # 获取需要计算Q的位置索引
+            compute_indices = transfer_index.nonzero(as_tuple=True)
+            # 只取需要计算Q的位置
 
-                # print(aligned_compute_indices)
-                # print(x_normed.shape)
-                # print('----')
-                # print(f"x_normed_shape: {x_normed.shape}")
-                # print(f"compute index: {compute_indices}")
-                x_normed_compute_q = x_normed[compute_indices]
-                # minus here is important, this is because of the implementation differences
-                # between generate_with_dual_cache_and_q_cache and generate_with_finegrained_cache
+            # print(aligned_compute_indices)
+            # print(x_normed.shape)
+            # print('----')
+            x_normed_compute_q = x_normed[compute_indices]
+            # minus here is important, this is because of the implementation differences
+            # between generate_with_dual_cache_and_q_cache and generate_with_finegrained_cache
 
-                # # 只对这部分位置计算KV
-                q_computed = self.q_proj(x_normed_compute_q)
+            # # 只对这部分位置计算KV
+            q_computed = self.q_proj(x_normed_compute_q)
 
-                if use_cache and use_q_cache:
-                    past_query, _, _ = layer_past
-                else:
-                    raise NotImplementedError
-                q = past_query.clone()
-                q = q.transpose(1, 2).contiguous().flatten(start_dim=2)
-                q[compute_indices] = q_computed
-            elif len(need_compute_q) == 3:
-                current_block_start, current_block_end, transfer_index = need_compute_q
-                # 获取需要计算Q的位置索引
-                compute_indices = transfer_index.nonzero(as_tuple=True)
-                # 只取需要计算Q的位置
-
-                # print(aligned_compute_indices)
-                # print(x_normed.shape)
-                # print('----')
-                x_normed_compute_q = x_normed[compute_indices]
-                # minus here is important, this is because of the implementation differences
-                # between generate_with_dual_cache_and_q_cache and generate_with_finegrained_cache
-
-                # # 只对这部分位置计算KV
-                q_computed = self.q_proj(x_normed_compute_q)
-
-                if use_cache and use_q_cache:
-                    past_query, _, _ = layer_past
-                else:
-                    raise NotImplementedError
-                q = past_query.clone()
-                q = q.transpose(1, 2).contiguous().flatten(start_dim=2)
-                q = q[:, current_block_start:current_block_end]
-                q[compute_indices] = q_computed
+            if use_cache and use_q_cache:
+                past_query, _, _ = layer_past
+            else:
+                raise NotImplementedError
+            q = past_query.clone()
+            q = q.transpose(1, 2).contiguous().flatten(start_dim=2)
+            q = q[:, current_block_start:current_block_end]
+            q[compute_indices] = q_computed
         else:
             q = self.q_proj(x_normed)
 
         # 细粒度KV控制：只对需要的位置计算KV
-        if need_compute_kv is not None:
-            if len(need_compute_kv) == 1:
-                if not use_q_cache:
-                    raise NotImplementedError
-                if need_compute_kv[0].any():
-                    transfer_index = need_compute_kv[0]
+        if need_compute_kv is not None and need_compute_kv[2].any():
+            current_block_start, current_block_end, transfer_index = need_compute_kv
 
-                    # 获取需要计算KV的位置索引
-                    compute_indices = transfer_index.nonzero(as_tuple=True)
-                    # print(compute_indices)  # (tensor([0], device='cuda:0'), tensor([18], device='cuda:0'))
-                    # print(x_normed.shape)  # torch.Size([1, 32, 4096])
+            # 获取需要计算KV的位置索引
+            compute_indices = transfer_index.nonzero(as_tuple=True)
+            # print(compute_indices)  # (tensor([0], device='cuda:0'), tensor([18], device='cuda:0'))
+            # print(x_normed.shape)  # torch.Size([1, 32, 4096])
 
-                    # 只取需要计算KV的位置
-                    x_normed_compute_kv = x_normed[compute_indices]
-                    # print(x_normed_compute_kv.shape)  # torch.Size([1, 4096])
+            # 只取需要计算KV的位置
+            x_normed_compute_kv = x_normed[compute_indices]
+            # print(x_normed_compute_kv.shape)  # torch.Size([1, 4096])
 
-                    # 只对这部分位置计算KV
-                    k_compute = self.k_proj(x_normed_compute_kv)
-                    v_compute = self.v_proj(x_normed_compute_kv)
-                    # print(k_compute.shape)  # torch.Size([1, 4096])
+            # 只对这部分位置计算KV
+            k_compute = self.k_proj(x_normed_compute_kv)
+            v_compute = self.v_proj(x_normed_compute_kv)
+            # print(k_compute.shape)  # torch.Size([1, 4096])
 
-                    # 将计算的结果放回原位置
-                    _, past_key, past_value = layer_past
-                    # print(past_key.shape)  # torch.Size([1, 32, 530, 128])
+            # 将计算的结果放回原位置
+            past_key, past_value = layer_past
+            # print(past_key.shape)  # torch.Size([1, 32, 530, 128])
 
-                    k = past_key.clone()
-                    k = k.transpose(1, 2).contiguous().flatten(start_dim=2)
-                    v = past_value.clone()
-                    v = v.transpose(1, 2).contiguous().flatten(start_dim=2)
-                    # print(k.shape)  # torch.Size([1, 530, 4096])
+            k = past_key.clone()
+            k = k.transpose(1, 2).contiguous().flatten(start_dim=2)
+            v = past_value.clone()
+            v = v.transpose(1, 2).contiguous().flatten(start_dim=2)
+            # print(k.shape)  # torch.Size([1, 530, 4096])
 
-                    k[compute_indices] = k_compute
-                    v[compute_indices] = v_compute
-            elif len(need_compute_kv) == 3:
-                if need_compute_kv[2].any():
-                    current_block_start, current_block_end, transfer_index = need_compute_kv
-
-                    # 获取需要计算KV的位置索引
-                    compute_indices = transfer_index.nonzero(as_tuple=True)
-                    # print(compute_indices)  # (tensor([0], device='cuda:0'), tensor([18], device='cuda:0'))
-                    # print(x_normed.shape)  # torch.Size([1, 32, 4096])
-
-                    # 只取需要计算KV的位置
-                    x_normed_compute_kv = x_normed[compute_indices]
-                    # print(x_normed_compute_kv.shape)  # torch.Size([1, 4096])
-
-                    # 只对这部分位置计算KV
-                    k_compute = self.k_proj(x_normed_compute_kv)
-                    v_compute = self.v_proj(x_normed_compute_kv)
-                    # print(k_compute.shape)  # torch.Size([1, 4096])
-
-                    # 将计算的结果放回原位置
-                    past_key, past_value = layer_past
-                    # print(past_key.shape)  # torch.Size([1, 32, 530, 128])
-
-                    k = past_key.clone()
-                    k = k.transpose(1, 2).contiguous().flatten(start_dim=2)
-                    v = past_value.clone()
-                    v = v.transpose(1, 2).contiguous().flatten(start_dim=2)
-                    # print(k.shape)  # torch.Size([1, 530, 4096])
-
-                    k = k[:, current_block_start:current_block_end]
-                    v = v[:, current_block_start:current_block_end]
-                    # print(k.shape)  # torch.Size([1, 32, 4096])
-                    k[compute_indices] = k_compute
-                    v[compute_indices] = v_compute
+            k = k[:, current_block_start:current_block_end]
+            v = v[:, current_block_start:current_block_end]
+            # print(k.shape)  # torch.Size([1, 32, 4096])
+            k[compute_indices] = k_compute
+            v[compute_indices] = v_compute
         else:
             # 原有逻辑：所有位置都计算KV
             k = self.k_proj(x_normed)
