@@ -735,6 +735,9 @@ class LLaDABlock(nn.Module):
                     # Get the indices that need to be replaced
                     replace_indices = replace_position.nonzero(as_tuple=True)[1]  # [selected_length]
                     # Use scatter operation to perform replacement
+                    print(f"k_shape {k.shape}")
+                    print(f"past_key_shape {past_key.shape}")
+                    print(f"replace_indices_shape {replace_indices.shape}")
                     past_key[:, :, replace_indices] = k
                     k = past_key
                     # Perform the same operation for value
