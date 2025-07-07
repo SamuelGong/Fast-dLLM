@@ -475,6 +475,7 @@ class RotaryEmbedding(nn.Module):
                 )
 
             if k_positions is not None:
+                print(f'k_positions: {k_positions}')
                 sin_k = pos_sin.index_select(-2, k_positions.squeeze(0))
                 cos_k = pos_cos.index_select(-2, k_positions.squeeze(0))
                 k_ = self.apply_rotary_pos_emb(sin_k, cos_k, k_)
