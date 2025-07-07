@@ -402,7 +402,7 @@ def generate_coarse_to_fine(
                                    temperature,
                                    remasking,
                                    still_masked,
-                                   x,
+                                   x[:, block_positions],
                                    quota_step,
                                    threshold)
             print(f"\ttransfer_idx: {transfer_idx}")
