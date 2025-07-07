@@ -408,7 +408,14 @@ def generate_coarse_to_fine(
             print(f"\tx0 {x0}")
             # exit(0)
 
-            x[:, block_positions][transfer_idx] = x0[transfer_idx]
+            # # The following triggers“advanced indexing” that produces a copy, not a view
+            # x[:, block_positions][transfer_idx] = x0[transfer_idx]
+
+            # 1) build the mask that lives in *x*’s coordinate system
+            abs_transfer_cols = block_positions[transfer_idx.squeeze(0)]  # (K̃,)
+            # 2) in-place write
+            x[0, abs_transfer_cols] = x0[transfer_idx]  # batch-size is 1
+
             print(f"\tx[:, block_positions] {x[:, block_positions]}")
             inner_step += 1
 
