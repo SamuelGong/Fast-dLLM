@@ -298,7 +298,7 @@ def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=12
 
 
 @torch.no_grad()
-def generate_coarse_to_fine_conf(
+def generate_coarse_to_fine(
     model,
     prompt,
     *,

@@ -15,7 +15,7 @@ from transformers import AutoTokenizer, AutoModel
 
 from generate import (generate, generate_with_prefix_cache,
                       generate_with_dual_cache, generate_with_finegrained_cache,
-                      generate_with_dual_cache_and_q_cache)
+                      generate_with_dual_cache_and_q_cache, generate_coarse_to_fine)
 from torch.profiler import profile, ProfilerActivity
 from model.modeling_llada import LLaDAModelLM
 
@@ -62,6 +62,10 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
                 out, nfe = generate_with_dual_cache(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
                                remasking='low_confidence')
+            elif use_kv_cache == "C2F":
+                out, nfe = generate_coarse_to_fine(model, prompt, steps=steps, gen_length=gen_len,
+                                                   block_length=block_len, temperature=0.,
+                                                   remasking='low_confidence')
             elif use_kv_cache == "Fine":
                 out, nfe = generate_with_finegrained_cache(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
@@ -102,6 +106,7 @@ def main():
     benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
+    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F")
 
 if __name__ == "__main__":
     main()
