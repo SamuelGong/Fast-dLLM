@@ -389,16 +389,12 @@ def generate_coarse_to_fine(
             ).logits
             nfe += 1
 
-            # scatter back to full-sequence logits tensor
-            logits.zero_()                               # reuse the tensor
-            logits[block_sel] = logits_block
-
             # how many tokens to transfer *this* inner step?
             quota_step = transfer_schedule[:, inner_step] \
                          if threshold is None else None
 
             x0, transfer_idx = get_transfer_index(
-                                   logits,
+                                   logits_block,
                                    temperature,
                                    remasking,
                                    still_masked,
@@ -426,9 +422,6 @@ def get_transfer_index(logits, temperature, remasking, mask_index, x, num_transf
     else:
         raise NotImplementedError(remasking)
 
-    print(mask_index.shape)
-    print(x0.shape)
-    print(x.shape)
     x0 = torch.where(mask_index, x0, x)
     confidence = torch.where(mask_index, x0_p, -np.inf)
 
