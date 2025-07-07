@@ -402,6 +402,7 @@ def generate_coarse_to_fine(
                                    quota_step,
                                    threshold)
             print(f"\ttransfer_idx: {transfer_idx}")
+            print(f"\tx0 {x0}")
 
             x[:, block_positions][transfer_idx] = x0[transfer_idx]
             inner_step += 1
