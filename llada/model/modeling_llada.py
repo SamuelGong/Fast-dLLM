@@ -433,7 +433,11 @@ class RotaryEmbedding(nn.Module):
     def apply_rotary_pos_emb(self, pos_sin: torch.Tensor, pos_cos: torch.Tensor, t: torch.Tensor) -> torch.Tensor:
         return ((t * pos_cos) + (self.rotate_half(t) * pos_sin)).to(t.dtype)
 
-    def forward(self, q: torch.Tensor, k: torch.Tensor, block_end_index: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, torch.Tensor]:
+    def forward(self, q: torch.Tensor, k: torch.Tensor,
+                block_end_index: Optional[torch.Tensor] = None,
+                q_positions: Optional[torch.Tensor] = None,  # NEW
+                k_positions: Optional[torch.Tensor] = None  # NEW
+                ) -> Tuple[torch.Tensor, torch.Tensor]:
         if self.config.rope_full_precision:
             q_, k_ = q.float(), k.float()
         else:
@@ -441,10 +445,22 @@ class RotaryEmbedding(nn.Module):
 
         with torch.autocast(q.device.type, enabled=False):
             query_len, key_len = q_.shape[-2], k_.shape[-2]  # could be different if layer_past not None
-            pos_sin, pos_cos = self.get_rotary_embedding(key_len, q_.device)
+            # pos_sin, pos_cos = self.get_rotary_embedding(key_len, q_.device)
+            max_needed = max(
+                (q_positions.max() if q_positions is not None else -1),
+                (k_positions.max() if k_positions is not None else -1),
+                (block_end_index.item() if block_end_index is not None else -1),
+                k_.shape[-2] - 1  # left-to-right case
+            ) + 1
+            pos_sin, pos_cos = self.get_rotary_embedding(max_needed, q_.device)
             pos_sin = pos_sin.type_as(q_)
             pos_cos = pos_cos.type_as(q_)
-            if block_end_index is None:
+
+            if q_positions is not None:  # scattered tokens
+                sin_q = pos_sin.index_select(-2, q_positions.squeeze(0))
+                cos_q = pos_cos.index_select(-2, q_positions.squeeze(0))
+                q_ = self.apply_rotary_pos_emb(sin_q, cos_q, q_)
+            elif block_end_index is None:
                 q_ = self.apply_rotary_pos_emb(
                     pos_sin[:, :, key_len - query_len : key_len, :],
                     pos_cos[:, :, key_len - query_len : key_len, :],
@@ -456,7 +472,13 @@ class RotaryEmbedding(nn.Module):
                     pos_cos[:, :, block_end_index.item() - query_len : block_end_index.item(), :],
                     q_,
                 )
-            k_ = self.apply_rotary_pos_emb(pos_sin, pos_cos, k_)
+
+            if k_positions is not None:
+                sin_k = pos_sin.index_select(-2, k_positions.squeeze(0))
+                cos_k = pos_cos.index_select(-2, k_positions.squeeze(0))
+                k_ = self.apply_rotary_pos_emb(sin_k, cos_k, k_)
+            else:
+                k_ = self.apply_rotary_pos_emb(pos_sin, pos_cos, k_)
         return q_.type_as(q), k_.type_as(k)
 
 
@@ -701,7 +723,9 @@ class LLaDABlock(nn.Module):
         layer_past: Optional[Tuple[torch.Tensor, torch.Tensor], Tuple[torch.Tensor, torch.Tensor, torch.Tensor]] = None,
         use_cache: bool = False,
         replace_position: Optional[torch.Tensor] = None,
-        use_q_cache = False
+        use_q_cache = False,
+        q_positions: Optional[torch.Tensor] = None,  # NEW  <───┐
+        k_positions: Optional[torch.Tensor] = None
     ) -> Tuple[torch.Tensor, Optional[Tuple[torch.Tensor, torch.Tensor]]]:
         B, T, C = q.size()  # batch size, sequence length, d_model
         dtype = k.dtype
@@ -771,9 +795,15 @@ class LLaDABlock(nn.Module):
             if replace_position is None:
                 q, k = self.rotary_emb(q, k)
             else:
-                print(q.shape)
-                print(k.shape)
-                q, k = self.rotary_emb(q, k, replace_indices.max()+1)
+                # print(q.shape)  # torch.Size([1, 32, 32, 128])
+                # print(k.shape)  # torch.Size([1, 32, 146, 128])
+                if q_positions is not None and k_positions is not None:
+                    q, k = self.rotary_emb(q, k,
+                                           q_positions=q_positions,
+                                           k_positions=k_positions,
+                                           )
+                else:
+                    q, k = self.rotary_emb(q, k, replace_indices.max()+1)
 
         if attention_bias is not None:
             # Resize and cast attention bias.
@@ -972,7 +1002,9 @@ class LLaDALlamaBlock(LLaDABlock):
         replace_position: Optional[torch.Tensor] = None,
         need_compute_kv: Optional[torch.Tensor] = None,
         use_q_cache = False,
-        need_compute_q = None
+        need_compute_q = None,
+        q_positions: Optional[torch.Tensor] = None,  # NEW  <───┐
+        k_positions: Optional[torch.Tensor] = None
     ) -> Tuple[torch.Tensor, Optional[Tuple[torch.Tensor, torch.Tensor]]]:
         # Get query, key, value projections.
         # shape:
@@ -1067,12 +1099,14 @@ class LLaDALlamaBlock(LLaDABlock):
         if self._activation_checkpoint_fn is not None:
             att, cache = self._activation_checkpoint_fn(  # type: ignore
                 self.attention, q, k, v, attention_bias, layer_past=layer_past, use_cache=use_cache,
-                replace_position=replace_position, use_q_cache=use_q_cache
+                replace_position=replace_position, use_q_cache=use_q_cache,
+                q_positions=q_positions, k_positions=k_positions
             )
         else:
             att, cache = self.attention(
                 q, k, v, attention_bias, layer_past=layer_past, use_cache=use_cache,
-                replace_position=replace_position, use_q_cache=use_q_cache
+                replace_position=replace_position, use_q_cache=use_q_cache,
+                q_positions=q_positions, k_positions=k_positions
             )
 
         # Add attention scores.
@@ -1445,6 +1479,8 @@ class LLaDAModel(nn.Module):
         need_compute_kv = None,
         use_q_cache = False,
         need_compute_q = None,
+        q_positions: Optional[torch.Tensor] = None,
+        k_positions: Optional[torch.Tensor] = None
     ) -> LLaDAOutput:
         """
         :param input_ids: A tensor of shape `(batch_size, seq_len)`.
@@ -1587,13 +1623,15 @@ class LLaDAModel(nn.Module):
                     x, cache = self._activation_checkpoint_fn(
                         block, x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,
                         replace_position=replace_position, need_compute_kv=need_compute_kv,
-                        use_q_cache=use_q_cache, need_compute_q=need_compute_q
+                        use_q_cache=use_q_cache, need_compute_q=need_compute_q,
+                        q_positions=q_positions, k_positions=k_positions
                     )
                 else:
                     # shape: (batch_size, seq_len, d_model)
                     x, cache = block(x, attention_bias=attention_bias, layer_past=layer_past, use_cache=use_cache,
                                      replace_position=replace_position, need_compute_kv=need_compute_kv,
-                                     use_q_cache=use_q_cache, need_compute_q=need_compute_q)
+                                     use_q_cache=use_q_cache, need_compute_q=need_compute_q,
+                                     q_positions=q_positions, k_positions=k_positions)
                 if attn_key_values is not None:
                     assert cache is not None
                     attn_key_values.append(cache)
@@ -1689,6 +1727,8 @@ class LLaDAModelLM(PreTrainedModel):
         need_compute_kv = None,
         use_q_cache = None,
         need_compute_q=None,
+        q_positions: Optional[torch.Tensor] = None,  # NEW
+        k_positions: Optional[torch.Tensor] = None
     ) -> Union[Tuple, CausalLMOutputWithPast]:
         if use_cache is None:
             use_cache = self.config.use_cache
@@ -1710,7 +1750,9 @@ class LLaDAModelLM(PreTrainedModel):
             replace_position=replace_position,
             need_compute_kv=need_compute_kv,
             use_q_cache=use_q_cache,
-            need_compute_q=need_compute_q
+            need_compute_q=need_compute_q,
+            q_positions=q_positions,
+            k_positions=k_positions
         )
         # import pdb; pdb.set_trace()
         logits = outputs.logits

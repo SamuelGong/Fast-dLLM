@@ -385,7 +385,10 @@ def generate_coarse_to_fine(
                 x[:, block_positions],
                 past_key_values=past_key_values,         # reuse prefix cache
                 use_cache=True,
-                replace_position=block_sel
+                replace_position=block_sel,
+                q_positions=block_positions,
+                k_positions=torch.arange(len(x[0]),  # ← full or cached
+                                         device=x.device)
             ).logits
             nfe += 1
 
