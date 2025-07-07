@@ -365,6 +365,7 @@ def generate_coarse_to_fine(
                             threshold)
         # `block_sel` is our logical block (shape 1×L, bool)
 
+        block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
         transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
         inner_step = 0
         print(f"\tblock_sel: {block_sel}")
@@ -373,12 +374,11 @@ def generate_coarse_to_fine(
         # 2.  Refinement loop – only run the model on the scattered block
         # ------------------------------------------------------------------
         while True:
-            still_masked = (x[block_sel] == mask_id)
+            still_masked = (x[:, block_positions] == mask_id)
             print(f"\tstill: {still_masked}")
             if still_masked.sum() == 0:
                 break
 
-            block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
             # print(f"\tblock_positions: {block_positions}")
             # x_block = x[:, block_positions]                          # shape 1×K'
             logits_block = model(
