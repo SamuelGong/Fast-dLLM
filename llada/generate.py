@@ -404,8 +404,8 @@ def generate_coarse_to_fine(
                                    x[:, block_positions],
                                    quota_step,
                                    threshold)
-            # print(f"\ttransfer_idx: {transfer_idx}")
-            # print(f"\tx0 {x0}")
+            print(f"\ttransfer_idx: {transfer_idx}")
+            print(f"\tx0 {x0}")
             # exit(0)
 
             # # The following triggers“advanced indexing” that produces a copy, not a view
@@ -416,7 +416,9 @@ def generate_coarse_to_fine(
             # 2) in-place write
             x[0, abs_transfer_cols] = x0[transfer_idx]  # batch-size is 1
 
-            # print(f"\tx[:, block_positions] {x[:, block_positions]}")
+            print(f"\tx[:, block_positions] {x[:, block_positions]}")
+            print(f"\tx {x}")
+            print("---")
             inner_step += 1
 
     return x, nfe
