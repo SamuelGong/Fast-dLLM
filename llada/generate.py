@@ -403,7 +403,7 @@ def generate_coarse_to_fine(
                                    threshold)
             print(f"\ttransfer_idx: {transfer_idx}")
 
-            x[transfer_idx] = x0[transfer_idx]
+            x[:, block_positions][transfer_idx] = x0[transfer_idx]
             inner_step += 1
 
     return x, nfe
