@@ -337,7 +337,7 @@ def generate_coarse_to_fine(
         # ------------------------------------------------------------------
         # 0.  GLOBAL pass – obtain fresh logits & prefix KV cache
         # ------------------------------------------------------------------
-        out               = model(x, use_cache=True)
+        out               = model(x, use_cache=True, use_q_cache=True)
         logits            = out.logits                    # (1, L, V)
         past_key_values   = out.past_key_values           # cache-1
         nfe              += 1
