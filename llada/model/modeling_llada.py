@@ -449,8 +449,7 @@ class RotaryEmbedding(nn.Module):
             max_needed = max(
                 (q_positions.max() if q_positions is not None else -1),
                 (k_positions.max() if k_positions is not None else -1),
-                (block_end_index.item() if block_end_index is not None else -1),
-                k_.shape[-2] - 1  # left-to-right case
+                key_len - 1  # left-to-right case
             ) + 1
             pos_sin, pos_cos = self.get_rotary_embedding(max_needed, q_.device)
             pos_sin = pos_sin.type_as(q_)
