@@ -352,7 +352,6 @@ def generate_coarse_to_fine(
 
         # each batch element asks for the same quota (= block_length)
         quota = mask_index.sum(dim=1).clamp(max=block_length)
-        num_transfer_tokens = quota                      # shape (1,)
 
         # get_transfer_index returns both the sampled tokens (x0)
         # *and* the boolean mask of positions chosen for transfer
@@ -362,15 +361,12 @@ def generate_coarse_to_fine(
                             remasking,
                             mask_index,
                             x,
-                            num_transfer_tokens,
+                            quota,
                             threshold)
         # `block_sel` is our logical block (shape 1×L, bool)
-        # commit the first samples
-        x[block_sel] = x0[block_sel]
-        transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
 
-        # We already consumed step 0 above
-        inner_step = 1
+        transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
+        inner_step = 0
         print(f"\tblock_sel: {block_sel}")
 
         # ------------------------------------------------------------------
