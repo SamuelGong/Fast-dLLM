@@ -378,7 +378,9 @@ def generate_coarse_to_fine(
             if still_masked.sum() == 0:
                 break
 
-            x_block = x[block_sel]                          # shape 1×K'
+            block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
+            print(f"\tblock_positions: {block_positions}")
+            x_block = x[:, block_positions]                          # shape 1×K'
             logits_block = model(
                 x_block,
                 past_key_values=past_key_values,         # reuse prefix cache
