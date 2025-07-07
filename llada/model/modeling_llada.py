@@ -998,6 +998,8 @@ class LLaDALlamaBlock(LLaDABlock):
                 # print(aligned_compute_indices)
                 # print(x_normed.shape)
                 # print('----')
+                print(f"x_normed_shape: {x_normed.shape}")
+                print(f"compute index: {compute_indices}")
                 x_normed_compute_q = x_normed[compute_indices]
                 # minus here is important, this is because of the implementation differences
                 # between generate_with_dual_cache_and_q_cache and generate_with_finegrained_cache
