@@ -409,6 +409,7 @@ def generate_coarse_to_fine(
             # exit(0)
 
             x[:, block_positions][transfer_idx] = x0[transfer_idx]
+            print(f"\tx[:, block_positions] {x[:, block_positions]}")
             inner_step += 1
 
     return x, nfe
