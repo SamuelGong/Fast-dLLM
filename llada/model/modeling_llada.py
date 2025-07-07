@@ -1044,6 +1044,8 @@ class LLaDALlamaBlock(LLaDABlock):
         # 细粒度KV控制：只对需要的位置计算KV
         if need_compute_kv is not None:
             if len(need_compute_kv) == 1:
+                if not use_q_cache:
+                    raise NotImplementedError
                 if need_compute_kv[0].any():
                     transfer_index = need_compute_kv[0]
 
@@ -1062,7 +1064,7 @@ class LLaDALlamaBlock(LLaDABlock):
                     # print(k_compute.shape)  # torch.Size([1, 4096])
 
                     # 将计算的结果放回原位置
-                    past_key, past_value = layer_past
+                    _, past_key, past_value = layer_past
                     # print(past_key.shape)  # torch.Size([1, 32, 530, 128])
 
                     k = past_key.clone()
