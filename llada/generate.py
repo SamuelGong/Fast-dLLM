@@ -297,6 +297,123 @@ def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=12
     return x, nfe
 
 
+@torch.no_grad()
+def generate_coarse_to_fine_conf(
+    model,
+    prompt,
+    *,
+    steps          = 128,
+    gen_length     = 128,
+    block_length   = 128,
+    temperature    = 0.,
+    remasking      = "low_confidence",
+    mask_id        = 126336,
+    threshold      = None
+):
+    """
+    Coarse-to-fine masked-diffusion decoding that:
+
+    1.  Runs one *global* forward pass every outer iteration.
+    2.  Uses `get_transfer_index` with `num_transfer_tokens = block_length`
+        to pick the logical block (the k highest-confidence masked tokens)
+        **and** to commit their first samples.
+    3.  Iteratively refines only those positions, re-using the KV cache
+        for the rest of the sequence.
+    """
+    device = model.device
+    x = torch.full((1, prompt.shape[1] + gen_length),
+                   mask_id, dtype=torch.long, device=device)
+    x[:, :prompt.shape[1]] = prompt.clone()
+
+    # how many logical blocks (= outer iterations) do we need?
+    assert gen_length % block_length == 0
+    num_iters        = gen_length // block_length
+    steps_per_iter   = steps // num_iters
+
+    nfe = 0  # number of forward evaluations
+    for outer in range(num_iters):
+
+        # ------------------------------------------------------------------
+        # 0.  GLOBAL pass – obtain fresh logits & prefix KV cache
+        # ------------------------------------------------------------------
+        out               = model(x, use_cache=True)
+        logits            = out.logits                    # (1, L, V)
+        past_key_values   = out.past_key_values           # cache-1
+        nfe              += 1
+
+        # ------------------------------------------------------------------
+        # 1.  Use *existing* helper to select a logical block
+        #     and do the very first token transfer inside that block.
+        # ------------------------------------------------------------------
+        mask_index      = (x == mask_id)                 # (1, L) bool
+        if mask_index.sum() == 0:                        # nothing left?
+            break
+
+        # each batch element asks for the same quota (= block_length)
+        quota = mask_index.sum(dim=1).clamp(max=block_length)
+        num_transfer_tokens = quota                      # shape (1,)
+
+        # get_transfer_index returns both the sampled tokens (x0)
+        # *and* the boolean mask of positions chosen for transfer
+        x0, block_sel = get_transfer_index(
+                            logits,
+                            temperature,
+                            remasking,
+                            mask_index,
+                            x,
+                            num_transfer_tokens,
+                            threshold)
+        # `block_sel` is our logical block (shape 1×L, bool)
+        # commit the first samples
+        x[block_sel] = x0[block_sel]
+        transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
+
+        # We already consumed step 0 above
+        inner_step = 1
+
+        # ------------------------------------------------------------------
+        # 2.  Refinement loop – only run the model on the scattered block
+        # ------------------------------------------------------------------
+        while True:
+            still_masked = (x[block_sel] == mask_id)
+            if still_masked.sum() == 0:
+                break
+
+            x_block = x[block_sel]                          # shape 1×K'
+            logits_block = model(
+                x_block,
+                past_key_values=past_key_values,         # reuse prefix cache
+                use_cache=True,
+                use_q_cache=True,
+                replace_position=block_sel,
+                need_compute_q=(block_sel,),
+                need_compute_kv=(block_sel,)
+            ).logits
+            nfe += 1
+
+            # scatter back to full-sequence logits tensor
+            logits.zero_()                               # reuse the tensor
+            logits[block_sel] = logits_block
+
+            # how many tokens to transfer *this* inner step?
+            quota_step = transfer_schedule[:, inner_step] \
+                         if threshold is None else None
+
+            x0, transfer_idx = get_transfer_index(
+                                   logits,
+                                   temperature,
+                                   remasking,
+                                   still_masked,
+                                   x,
+                                   quota_step,
+                                   threshold)
+
+            x[transfer_idx] = x0[transfer_idx]
+            inner_step += 1
+
+    return x, nfe
+
+
 def get_transfer_index(logits, temperature, remasking, mask_index, x, num_transfer_tokens, threshold=None):
     logits_with_noise = add_gumbel_noise(logits, temperature=temperature)
     x0 = torch.argmax(logits_with_noise, dim=-1) # b, l
