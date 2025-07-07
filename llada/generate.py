@@ -368,7 +368,7 @@ def generate_coarse_to_fine(
         block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
         transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
         inner_step = 0
-        # print(f"\tblock_sel: {block_sel}")
+        print(f"\tblock_sel: {block_sel}")
 
         # ------------------------------------------------------------------
         # 2.  Refinement loop – only run the model on the scattered block
