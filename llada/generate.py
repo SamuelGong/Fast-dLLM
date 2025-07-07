@@ -378,6 +378,7 @@ def generate_coarse_to_fine(
         # ------------------------------------------------------------------
         while True:
             still_masked = (x[block_sel] == mask_id)
+            print(f"\tstill: {still_masked}")
             if still_masked.sum() == 0:
                 break
 
