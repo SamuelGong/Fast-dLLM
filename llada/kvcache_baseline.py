@@ -24,6 +24,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 DTYPE = torch.bfloat16
 MODEL_NAME = "GSAI-ML/LLaDA-8B-Instruct"
 
+
 # ─────────────────────────────────── timing helper
 @contextmanager
 def cuda_timer(label="Elapsed"):
@@ -35,6 +36,7 @@ def cuda_timer(label="Elapsed"):
     print(f"{label}: {start.elapsed_time(end)/1000:.3f}s")
 
 # ─────────────────────────────────── benchmark helper
+
 
 def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
     tag = use_kv_cache
@@ -87,10 +89,11 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
 
 # ─────────────────────────────────────── main
 
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--question", default="Explain diffusion models briefly.")
-    ap.add_argument("--steps", type=int, default=128)
+    ap.add_argument("--steps", type=int, default=64)
     ap.add_argument("--gen", type=int, default=128)
     # ap.add_argument("--steps", type=int, default=512)
     # ap.add_argument("--gen", type=int, default=512)
@@ -107,6 +110,7 @@ def main():
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
     benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F")
+
 
 if __name__ == "__main__":
     main()
