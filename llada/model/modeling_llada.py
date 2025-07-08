@@ -457,6 +457,8 @@ class RotaryEmbedding(nn.Module):
 
             if q_positions is not None:  # scattered tokens
                 # print(f'q_positions: {q_positions}')
+                print(f'q_positions_shape: {q_positions.shape}')
+                print(f'pos_sin: {pos_sin.shape}')
                 sin_q = pos_sin.index_select(-2, q_positions.squeeze(0))
                 cos_q = pos_cos.index_select(-2, q_positions.squeeze(0))
                 q_ = self.apply_rotary_pos_emb(sin_q, cos_q, q_)
