@@ -59,7 +59,7 @@ def get_num_transfer_tokens(mask_index, steps):
 
 @ torch.no_grad()
 def generate(model, prompt, steps=128, gen_length=128, block_length=128, temperature=0.,
-             remasking='low_confidence', mask_id=126336, threshold=None):
+             remasking='low_confidence', mask_id=126336, threshold=None, tokenizer=None):
     '''
     Args:
         model: Mask predictor.
@@ -102,7 +102,7 @@ def generate(model, prompt, steps=128, gen_length=128, block_length=128, tempera
 
 @ torch.no_grad()
 def generate_with_prefix_cache(model, prompt, steps=128, gen_length=128, block_length=128, temperature=0.,
-             remasking='low_confidence', mask_id=126336, threshold=None):
+             remasking='low_confidence', mask_id=126336, threshold=None, tokenizer=None):
     '''
     Args:
         model: Mask predictor.
@@ -174,7 +174,7 @@ def generate_with_prefix_cache(model, prompt, steps=128, gen_length=128, block_l
 
 @ torch.no_grad()
 def generate_with_dual_cache(model, prompt, steps=128, gen_length=128, block_length=128, temperature=0.,
-            remasking='low_confidence', mask_id=126336, threshold=None):
+            remasking='low_confidence', mask_id=126336, threshold=None, tokenizer=None):
     '''
     Args:
         model: Mask predictor.
@@ -234,7 +234,7 @@ def generate_with_dual_cache(model, prompt, steps=128, gen_length=128, block_len
 
 @ torch.no_grad()
 def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=128, block_length=128, temperature=0.,
-            remasking='low_confidence', mask_id=126336, threshold=None):
+            remasking='low_confidence', mask_id=126336, threshold=None, tokenizer=None):
     '''
     Args:
         model: Mask predictor.
@@ -308,7 +308,8 @@ def generate_coarse_to_fine(
     temperature    = 0.,
     remasking      = "low_confidence",
     mask_id        = 126336,
-    threshold      = None
+    threshold      = None,
+    tokenizer      = None
 ):
     """
     Coarse-to-fine masked-diffusion decoding that:
@@ -332,7 +333,7 @@ def generate_coarse_to_fine(
 
     nfe = 0  # number of forward evaluations
     for outer in range(num_iters):
-        # print(f"outer: {outer}")
+        print(f"outer: {outer}")
 
         # ------------------------------------------------------------------
         # 0.  GLOBAL pass – obtain fresh logits & prefix KV cache
@@ -368,18 +369,18 @@ def generate_coarse_to_fine(
         block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
         transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
         inner_step = 0
-        # print(f"\tblock_sel: {block_sel}")
+        print(f"\tblock_sel: {block_sel}")
 
         # ------------------------------------------------------------------
         # 2.  Refinement loop – only run the model on the scattered block
         # ------------------------------------------------------------------
         while True:
             still_masked = (x[:, block_positions] == mask_id)
-            # print(f"\tstill: {still_masked}")
+            print(f"\tstill: {still_masked}")
             if still_masked.sum() == 0:
                 break
 
-            # print(f"\tblock_positions: {block_positions}")
+            print(f"\tblock_positions: {block_positions}")
             # x_block = x[:, block_positions]                          # shape 1×K'
             logits_block = model(
                 x[:, block_positions],
@@ -404,8 +405,8 @@ def generate_coarse_to_fine(
                                    x[:, block_positions],
                                    quota_step,
                                    threshold)
-            # print(f"\ttransfer_idx: {transfer_idx}")
-            # print(f"\tx0 {x0}")
+            print(f"\ttransfer_idx: {transfer_idx}")
+            print(f"\tx0 {x0}")
             # exit(0)
 
             # # The following triggers“advanced indexing” that produces a copy, not a view
@@ -416,9 +417,11 @@ def generate_coarse_to_fine(
             # 2) in-place write
             x[0, abs_transfer_cols] = x0[transfer_idx]  # batch-size is 1
 
-            # print(f"\tx[:, block_positions] {x[:, block_positions]}")
-            # print(f"\tx {x}")
-            # print("---")
+            print(f"\tx[:, block_positions] {x[:, block_positions]}")
+            print(f"\tx {x}")
+            tokens = [(idx, tokenizer.decode(e)) for idx, e in enumerate(x[0])]
+            print(f"\ttokens {tokens}")
+            print("---")
             inner_step += 1
 
     return x, nfe
@@ -456,7 +459,7 @@ def get_transfer_index(logits, temperature, remasking, mask_index, x, num_transf
 @torch.no_grad()
 def generate_with_finegrained_cache(
     model, prompt, steps=128, gen_length=128, block_length=128, temperature=0.,
-    remasking='low_confidence', mask_id=126336, threshold=None
+    remasking='low_confidence', mask_id=126336, threshold=None, tokenizer=None
 ):
     '''
     Fine-grained KV cache decoding.

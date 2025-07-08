@@ -55,27 +55,27 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
             if use_kv_cache == "None":
                 out, nfe = generate(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
-                               remasking='low_confidence')
+                               remasking='low_confidence', tokenizer=tokenizer)
             elif use_kv_cache == "Prefix":
                 out, nfe = generate_with_prefix_cache(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
-                               remasking='low_confidence')
+                               remasking='low_confidence', tokenizer=tokenizer)
             elif use_kv_cache == "Dual":
                 out, nfe = generate_with_dual_cache(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
-                               remasking='low_confidence')
+                               remasking='low_confidence', tokenizer=tokenizer)
             elif use_kv_cache == "C2F":
                 out, nfe = generate_coarse_to_fine(model, prompt, steps=steps, gen_length=gen_len,
                                                    block_length=block_len, temperature=0.,
-                                                   remasking='low_confidence')
+                                                   remasking='low_confidence', tokenizer=tokenizer)
             elif use_kv_cache == "Fine":
                 out, nfe = generate_with_finegrained_cache(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
-                               remasking='low_confidence')
+                               remasking='low_confidence', tokenizer=tokenizer)
             elif use_kv_cache == "DualAndQuery":
                 out, nfe = generate_with_dual_cache_and_q_cache(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
-                               remasking='low_confidence')
+                               remasking='low_confidence', tokenizer=tokenizer)
     # decode and show (outside timing)
     answer = tokenizer.batch_decode(out[:, prompt.shape[1]:], skip_special_tokens=True)[0]
     print(f"{tag} output → {answer}\n")
