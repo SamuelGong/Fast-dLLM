@@ -456,21 +456,21 @@ class RotaryEmbedding(nn.Module):
             pos_cos = pos_cos.type_as(q_)
 
             if q_positions is not None:  # scattered tokens
-                print(f'[C2F] q_positions: {q_positions}')
+                # print(f'[C2F] q_positions: {q_positions}')
                 # print(f'q_positions_shape: {q_positions.shape}')
                 # print(f'pos_sin: {pos_sin.shape}')
                 sin_q = pos_sin.index_select(-2, q_positions.squeeze(0))
                 cos_q = pos_cos.index_select(-2, q_positions.squeeze(0))
                 q_ = self.apply_rotary_pos_emb(sin_q, cos_q, q_)
             elif block_end_index is None:
-                print(f'[Dual] q_positions: {key_len - query_len} {key_len}')
+                # print(f'[Dual] q_positions: {key_len - query_len} {key_len}')
                 q_ = self.apply_rotary_pos_emb(
                     pos_sin[:, :, key_len - query_len : key_len, :],
                     pos_cos[:, :, key_len - query_len : key_len, :],
                     q_,
                 )
             else:
-                print(f'[Dual] q_positions: {block_end_index.item() - query_len} {block_end_index.item()}')
+                # print(f'[Dual] q_positions: {block_end_index.item() - query_len} {block_end_index.item()}')
                 q_ = self.apply_rotary_pos_emb(
                     pos_sin[:, :, block_end_index.item() - query_len : block_end_index.item(), :],
                     pos_cos[:, :, block_end_index.item() - query_len : block_end_index.item(), :],
@@ -478,12 +478,12 @@ class RotaryEmbedding(nn.Module):
                 )
 
             if k_positions is not None:
-                print(f'[C2F] k_positions: {k_positions}')
+                # print(f'[C2F] k_positions: {k_positions}')
                 sin_k = pos_sin.index_select(-2, k_positions.squeeze(0))
                 cos_k = pos_cos.index_select(-2, k_positions.squeeze(0))
                 k_ = self.apply_rotary_pos_emb(sin_k, cos_k, k_)
             else:
-                print(f'[Dual] k_positions: {key_len}')
+                # print(f'[Dual] k_positions: {key_len}')
                 k_ = self.apply_rotary_pos_emb(pos_sin, pos_cos, k_)
         return q_.type_as(q), k_.type_as(k)
 
