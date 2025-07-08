@@ -93,11 +93,11 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--question", default="Explain diffusion models briefly.")
-    # ap.add_argument("--steps", type=int, default=64)
-    # ap.add_argument("--gen", type=int, default=128)
-    ap.add_argument("--steps", type=int, default=512)
-    ap.add_argument("--gen", type=int, default=512)
-    ap.add_argument("--block", type=int, default=32)
+    ap.add_argument("--steps", type=int, default=32)
+    ap.add_argument("--gen", type=int, default=128)
+    # ap.add_argument("--steps", type=int, default=512)
+    # ap.add_argument("--gen", type=int, default=512)
+    ap.add_argument("--block", type=int, default=16)
     args = ap.parse_args()
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
