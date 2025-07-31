@@ -49,6 +49,7 @@ def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instru
     ],
         add_generation_prompt=True,
         tokenize=True,
+        return_tensors='pt'
     )
     input_ids = enc.input_ids.to(DEVICE)
 
@@ -56,6 +57,7 @@ def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instru
         [{"role": "user", "content": prompt}],
         add_generation_prompt=True,
         tokenize=True,
+        return_tensors='pt'
     )
     prompt_len = prompt_enc.input_ids.shape[1]
 
