@@ -356,6 +356,7 @@ def generate_coarse_to_fine(
 
         # get_transfer_index returns both the sampled tokens (x0)
         # *and* the boolean mask of positions chosen for transfer
+        endoftext_id = tokenizer.convert_tokens_to_ids('<|endoftext|>')
         x0, block_sel = get_transfer_index(
                             logits,
                             temperature,
