@@ -447,7 +447,11 @@ def get_transfer_index(logits, temperature, remasking, mask_index,
     x0 = torch.where(mask_index, x0, x)
     confidence = torch.where(mask_index, x0_p, -np.inf)
     # # confidence = torch.where(x0 != skip_endoftext, confidence, -np.inf)
-    #
+
+    transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
+    if threshold is not None:
+        num_transfer_tokens = mask_index.sum(dim=1, keepdim=True)
+
     # transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
     # if threshold is not None:
     #     num_transfer_tokens = mask_index.sum(dim=1, keepdim=True)
@@ -461,20 +465,30 @@ def get_transfer_index(logits, temperature, remasking, mask_index,
 
     # skip end of text id
     non_eot = mask_index & (x0 != endoftext_id)
-    print(non_eot)
+    # print(non_eot)
+    # Count per-sample how many non-EoT slots:
     counts = non_eot.sum(dim=1)
-    print(counts)
+    # print(counts)
     enough = counts >= num_transfer_tokens
-    print(enough)
+    # print(enough)
+    # Choose either non_eot or full mask_index per sample
     mask_use = mask_index.clone()
+    # for rows where enough is True, replace mask_use with non_eot
     mask_use[enough] = non_eot[enough]
-    print('---')
-    print(mask_index)
-    print(mask_use)
-    valid_conf = confidence.masked_fill(~mask_use, -np.inf)
-    print(valid_conf)
-    exit(0)
+    # print('---')
+    # print(mask_index)
+    # print(mask_use)
+    # Apply mask_use to confidence
+    confidence = confidence.masked_fill(~mask_use, -np.inf)
+    # print(valid_conf)
 
+    for j in range(confidence.shape[0]):
+        _, select_index = torch.topk(confidence[j], k=num_transfer_tokens[j])
+        transfer_index[j, select_index] = True
+        if threshold is not None:
+            for k in range(1, num_transfer_tokens[j]):
+                if confidence[j, select_index[k]] < threshold:
+                    transfer_index[j, select_index[k]] = False
 
     return x0, transfer_index
 
