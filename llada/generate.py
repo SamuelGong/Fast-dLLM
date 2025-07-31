@@ -446,7 +446,7 @@ def get_transfer_index(logits, temperature, remasking, mask_index,
 
     x0 = torch.where(mask_index, x0, x)
     confidence = torch.where(mask_index, x0_p, -np.inf)
-    confidence = torch.where(x0 == skip_endoftext, confidence, -np.inf)
+    confidence = torch.where(x0 != skip_endoftext, confidence, -np.inf)
 
     transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
     if threshold is not None:
