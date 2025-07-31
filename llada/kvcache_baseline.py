@@ -99,6 +99,7 @@ def main():
     # ap.add_argument("--steps", type=int, default=512)
     # ap.add_argument("--gen", type=int, default=512)
     ap.add_argument("--block", type=int, default=4)
+    ap.add_argument("--debug", action="store_true")
     args = ap.parse_args()
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
@@ -110,7 +111,7 @@ def main():
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
-    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F")
+    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F", debug=args.debug)
 
 
 if __name__ == "__main__":
