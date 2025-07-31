@@ -214,6 +214,9 @@ def generate_with_dual_cache(model, prompt, steps=128, gen_length=128, block_len
         nfe += 1
 
         i = 1
+        if steps <= i:  # corner case
+            break
+
         replace_position = torch.zeros_like(x, dtype=torch.bool)
         replace_position[:, current_block_start:current_block_end] = 1
         while True:
