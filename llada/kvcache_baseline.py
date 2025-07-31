@@ -47,13 +47,15 @@ def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instru
         {"role": "user", "content": prompt},
         {"role": "assistant", "content": answer}
     ],
-        add_generation_prompt=True
+        add_generation_prompt=True,
+        tokenize=True,
     )
     input_ids = enc.input_ids.to(DEVICE)
 
     prompt_enc = tokenizer.apply_chat_template(
         [{"role": "user", "content": prompt}],
-        add_generation_prompt=True
+        add_generation_prompt=True,
+        tokenize=True,
     )
     prompt_len = prompt_enc.input_ids.shape[1]
 
