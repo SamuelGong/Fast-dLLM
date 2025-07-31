@@ -38,7 +38,7 @@ def cuda_timer(label="Elapsed"):
 # ─────────────────────────────────── benchmark helper
 
 
-def get_evaluation(prompt, answer, model_name="Qwen/Qwen3-8B"):
+def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instruct"):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(model_name).to(DEVICE)
     model.eval()
