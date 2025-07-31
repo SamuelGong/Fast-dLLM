@@ -51,7 +51,7 @@ def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instru
         tokenize=True,
         return_tensors='pt'
     )
-    input_ids = enc.input_ids.to(DEVICE)
+    input_ids = enc.to(DEVICE)
 
     prompt_enc = tokenizer.apply_chat_template(
         [{"role": "user", "content": prompt}],
@@ -59,7 +59,7 @@ def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instru
         tokenize=True,
         return_tensors='pt'
     )
-    prompt_len = prompt_enc.input_ids.shape[1]
+    prompt_len = prompt_enc.shape[1]
 
     labels = input_ids.clone()
     labels[:, :prompt_len] = -100
