@@ -596,6 +596,7 @@ def generate_with_finegrained_cache(
 
     return x, nfe
 
+
 def main():
     device = 'cuda'
 
