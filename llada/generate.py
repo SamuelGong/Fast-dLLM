@@ -363,7 +363,9 @@ def generate_coarse_to_fine(
                             mask_index,
                             x,
                             quota,
-                            threshold)
+                            threshold,
+                            skip_endoftext=endoftext_id
+        )
         # `block_sel` is our logical block (shape 1×L, bool)
 
         block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
@@ -427,7 +429,8 @@ def generate_coarse_to_fine(
     return x, nfe
 
 
-def get_transfer_index(logits, temperature, remasking, mask_index, x, num_transfer_tokens, threshold=None):
+def get_transfer_index(logits, temperature, remasking, mask_index,
+                       x, num_transfer_tokens, threshold=None, skip_endoftext=None):
     logits_with_noise = add_gumbel_noise(logits, temperature=temperature)
     x0 = torch.argmax(logits_with_noise, dim=-1) # b, l
 
@@ -442,6 +445,7 @@ def get_transfer_index(logits, temperature, remasking, mask_index, x, num_transf
 
     x0 = torch.where(mask_index, x0, x)
     confidence = torch.where(mask_index, x0_p, -np.inf)
+    confidence = torch.where(x0 == skip_endoftext, confidence, -np.inf)
 
     transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
     if threshold is not None:
