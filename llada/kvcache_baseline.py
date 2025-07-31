@@ -149,7 +149,7 @@ def main():
     # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
     lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F", debug=args.debug)
     evaluation = get_evaluation(args.question, answer)
-    print(lat, eval)
+    print(lat, evaluation)
 
 
 if __name__ == "__main__":
