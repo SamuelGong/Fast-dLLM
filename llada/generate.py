@@ -365,7 +365,7 @@ def generate_coarse_to_fine(
                             x,
                             quota,
                             threshold,
-                            skip_endoftext=endoftext_id
+                            endoftext_id=endoftext_id
         )
         # `block_sel` is our logical block (shape 1×L, bool)
 
@@ -431,7 +431,7 @@ def generate_coarse_to_fine(
 
 
 def get_transfer_index(logits, temperature, remasking, mask_index,
-                       x, num_transfer_tokens, threshold=None, skip_endoftext=None):
+                       x, num_transfer_tokens, threshold=None, endoftext_id=None):
     logits_with_noise = add_gumbel_noise(logits, temperature=temperature)
     x0 = torch.argmax(logits_with_noise, dim=-1) # b, l
 
@@ -446,18 +446,36 @@ def get_transfer_index(logits, temperature, remasking, mask_index,
 
     x0 = torch.where(mask_index, x0, x)
     confidence = torch.where(mask_index, x0_p, -np.inf)
-    confidence = torch.where(x0 != skip_endoftext, confidence, -np.inf)
+    # # confidence = torch.where(x0 != skip_endoftext, confidence, -np.inf)
+    #
+    # transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
+    # if threshold is not None:
+    #     num_transfer_tokens = mask_index.sum(dim=1, keepdim=True)
+    # for j in range(confidence.shape[0]):
+    #     _, select_index = torch.topk(confidence[j], k=num_transfer_tokens[j])
+    #     transfer_index[j, select_index] = True
+    #     if threshold is not None:
+    #         for k in range(1, num_transfer_tokens[j]):
+    #             if confidence[j, select_index[k]] < threshold:
+    #                 transfer_index[j, select_index[k]] = False
 
-    transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
-    if threshold is not None:
-        num_transfer_tokens = mask_index.sum(dim=1, keepdim=True)
-    for j in range(confidence.shape[0]):
-        _, select_index = torch.topk(confidence[j], k=num_transfer_tokens[j])
-        transfer_index[j, select_index] = True
-        if threshold is not None:
-            for k in range(1, num_transfer_tokens[j]):
-                if confidence[j, select_index[k]] < threshold:
-                    transfer_index[j, select_index[k]] = False
+    # skip end of text id
+    non_eot = mask_index & (x0 != endoftext_id)
+    print(non_eot)
+    counts = non_eot.sum(dim=1)
+    print(counts)
+    enough = counts >= num_transfer_tokens
+    print(enough)
+    mask_use = mask_index.clone()
+    mask_use[enough] = non_eot[enough]
+    print('---')
+    print(mask_index)
+    print(mask_use)
+    valid_conf = confidence.masked_fill(~mask_use, -np.inf)
+    print(valid_conf)
+    exit(0)
+
+
     return x0, transfer_index
 
 
