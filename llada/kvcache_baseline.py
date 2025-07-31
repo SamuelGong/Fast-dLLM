@@ -40,7 +40,7 @@ def cuda_timer(label="Elapsed"):
 
 def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instruct"):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name).to(DEVICE)
+    model = AutoModelForCausalLM.from_pretrained(model_name).to(device=DEVICE, dtype=torch.bfloat16)
     model.eval()
 
     enc = tokenizer.apply_chat_template([
@@ -51,13 +51,11 @@ def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instru
     )
     input_ids = enc.input_ids.to(DEVICE)
 
-    full_len = input_ids.shape[1]
     prompt_enc = tokenizer.apply_chat_template(
         [{"role": "user", "content": prompt}],
         add_generation_prompt=True
     )
     prompt_len = prompt_enc.input_ids.shape[1]
-    answer_len = full_len - prompt_len
 
     labels = input_ids.clone()
     labels[:, :prompt_len] = -100
