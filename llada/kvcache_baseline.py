@@ -38,7 +38,7 @@ def cuda_timer(label="Elapsed"):
 # ─────────────────────────────────── benchmark helper
 
 
-def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
+def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache, debug=False):
     tag = use_kv_cache
     print(f"\nLoading model for {tag} …")
     # model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
@@ -67,7 +67,7 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
             elif use_kv_cache == "C2F":
                 out, nfe = generate_coarse_to_fine(model, prompt, steps=steps, gen_length=gen_len,
                                                    block_length=block_len, temperature=0.,
-                                                   remasking='low_confidence', tokenizer=tokenizer)
+                                                   remasking='low_confidence', tokenizer=tokenizer, debug=debug)
             elif use_kv_cache == "Fine":
                 out, nfe = generate_with_finegrained_cache(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
