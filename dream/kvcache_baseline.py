@@ -17,12 +17,12 @@ from generate import (generate, generate_with_prefix_cache,
                       generate_with_dual_cache, generate_with_finegrained_cache,
                       generate_with_dual_cache_and_q_cache, generate_coarse_to_fine)
 from torch.profiler import profile, ProfilerActivity
-from model.modeling_llada import LLaDAModelLM
+from model.modeling_dream import DreamModel
 
 # ───────────────────────────────────────── config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 DTYPE = torch.bfloat16
-MODEL_NAME = "GSAI-ML/LLaDA-8B-Instruct"
+MODEL_NAME = "Dream-org/Dream-v0-Instruct-7B"
 
 
 # ─────────────────────────────────── timing helper
@@ -42,7 +42,7 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
     tag = use_kv_cache
     print(f"\nLoading model for {tag} …")
     # model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
-    model = LLaDAModelLM.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
+    model = DreamModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
 
     # warm‑up
     with torch.inference_mode():
@@ -68,22 +68,13 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache):
                 out, nfe = generate_coarse_to_fine(model, prompt, steps=steps, gen_length=gen_len,
                                                    block_length=block_len, temperature=0.,
                                                    remasking='low_confidence', tokenizer=tokenizer)
-            elif use_kv_cache == "Fine":
-                out, nfe = generate_with_finegrained_cache(model, prompt, steps=steps, gen_length=gen_len,
-                               block_length=block_len, temperature=0.,
-                               remasking='low_confidence', tokenizer=tokenizer)
-            elif use_kv_cache == "DualAndQuery":
-                out, nfe = generate_with_dual_cache_and_q_cache(model, prompt, steps=steps, gen_length=gen_len,
-                               block_length=block_len, temperature=0.,
-                               remasking='low_confidence', tokenizer=tokenizer)
     # decode and show (outside timing)
     answer = tokenizer.batch_decode(out[:, prompt.shape[1]:], skip_special_tokens=True)[0]
     print(f"{tag} output → {answer}\n")
     # print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=40))
 
     # print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=20))
-    # print(prof.ke
-    # _averages().table(row_limit=20))
+    # print(prof.key_averages().table(row_limit=20))
 
     # free memory
     del model; torch.cuda.empty_cache()
@@ -107,10 +98,10 @@ def main():
 
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
-    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
+    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
-    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F")
 
 
 if __name__ == "__main__":
