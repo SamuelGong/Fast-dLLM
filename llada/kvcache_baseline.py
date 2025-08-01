@@ -19,6 +19,7 @@ from torch.profiler import profile, ProfilerActivity
 from generate import (generate, generate_with_prefix_cache,
                       generate_with_dual_cache, generate_with_finegrained_cache,
                       generate_with_dual_cache_and_q_cache, generate_coarse_to_fine)
+from batch_test import evaluate_qa
 
 # ───────────────────────────────────────── config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -115,9 +116,9 @@ def main():
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
-    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F", debug=args.debug)
-    # evaluation = get_evaluation(args.question, answer)
-    # print(lat, evaluation)
+    lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F", debug=args.debug)
+    evaluation = evaluate_qa(args.question, answer)
+    print(lat, evaluation)
 
 
 if __name__ == "__main__":
