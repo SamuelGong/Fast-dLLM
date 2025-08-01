@@ -373,7 +373,8 @@ def generate_coarse_to_fine(
                             threshold,
                             endoftext_id=endoftext_id
         )
-        # `block_sel` is our logical block (shape 1×L, bool)
+        x[0, block_sel] = x0[block_sel]  # batch-size is 1
+
         if debug:
             print(f"\tblock_sel: {block_sel}")
         if steps_per_iter == 1:
