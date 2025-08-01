@@ -38,41 +38,6 @@ def cuda_timer(label="Elapsed"):
 # ─────────────────────────────────── benchmark helper
 
 
-def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instruct"):
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name).to(device=DEVICE, dtype=torch.bfloat16)
-    model.eval()
-
-    enc = tokenizer.apply_chat_template([
-        {"role": "user", "content": prompt},
-        {"role": "assistant", "content": answer}
-    ],
-        add_generation_prompt=True,
-        tokenize=True,
-        return_tensors='pt'
-    )
-    input_ids = enc.to(DEVICE)
-
-    prompt_enc = tokenizer.apply_chat_template(
-        [{"role": "user", "content": prompt}],
-        add_generation_prompt=True,
-        tokenize=True,
-        return_tensors='pt'
-    )
-    prompt_len = prompt_enc.shape[1]
-
-    labels = input_ids.clone()
-    labels[:, :prompt_len] = -100
-
-    with torch.no_grad():
-        outputs = model(input_ids, labels=labels)
-        loss = outputs.loss
-    ppl = torch.exp(loss).item()
-    return {
-        "perplexity": ppl
-    }
-
-
 def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache, debug=False):
     tag = use_kv_cache
     print(f"\nLoading model for {tag} …")
@@ -144,14 +109,14 @@ def main():
     prompt_txt = tokenizer.apply_chat_template([{"role": "user", "content": args.question}], add_generation_prompt=True, tokenize=False)
     prompt = torch.tensor(tokenizer(prompt_txt)["input_ids"], device=DEVICE).unsqueeze(0)
 
-    # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
-    # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
-    # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
-    # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
-    # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
-    lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F", debug=args.debug)
-    evaluation = get_evaluation(args.question, answer)
-    print(lat, evaluation)
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="DualAndQuery")
+    benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F", debug=args.debug)
+    # evaluation = get_evaluation(args.question, answer)
+    # print(lat, evaluation)
 
 
 if __name__ == "__main__":
