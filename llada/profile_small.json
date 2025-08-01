@@ -1,0 +1,485 @@
+{
+    "C2F": [
+        {
+            "question": "Explain diffusion models briefly.",
+            "result": {
+                "2": {
+                    "64": {
+                        "latency": 4.1275439453125,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by learning the distribution of the original data. The model works by first transforming the original data into a \"diffused\" version by adding random noise, and then using a series of linear algebra operations to transform the it back to to the original data. This \"reversible diffusion process\" is used to learn a model of the data distribution, which can be used to generate new data samples that are similar to the original data. Diffusion models have been used in a variety of applications, including image generation, text generation, and audio synthesis.",
+                        "perplexity": 4.32889461517334
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.663318115234375,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by learning the distribution of the data.. The process by which the model learns the data distribution is called diffusion. In this process, the data is gradually transformed into noise through a series of random transformations, and the model then learns how to reverse the noise to transform the it back to the original data. Once the data distribution is learned, model can be used to generate new data samples that are similar to the original data. Diffusion models have been used in a variety of applications, including image generation, text generation, and audio synthesis.",
+                        "perplexity": 4.147377014160156
+                    },
+                    "64": {
+                        "latency": 1.8976466064453126,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by learning the distribution of the data.. The process by which the model learns the data distribution is called diffusion. In this process, the data is gradually transformed into noise through a series of random transformations, and the model then learns how to reverse the noise to transform the it back to the original data. Once the data distribution is learned, model can be used to generate new data samples that are similar to the original data. Diffusion models have been used in a variety of applications, including image generation, text generation, and audio synthesis.",
+                        "perplexity": 4.147377014160156
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 0.8224718017578125,
+                        "answer": "Diffusion models are a type of generative model that that are to to of data data. They work by modeling the the process process process process of of the diffusion process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process to to the the reverse process the process process to to to to new data data that that the similar of the original data.. have been a used in applications such as image generation, text generation, and audio generation.",
+                        "perplexity": 6.622580528259277
+                    },
+                    "32": {
+                        "latency": 0.8279117431640625,
+                        "answer": "Diffusion models are a type of generative model that that are to to of data data. They work by modeling the the process process process process of of the diffusion process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process to to the the reverse process the process process to to to to new data data that that the similar of the original data.. have been a used in applications such as image generation, text generation, and audio generation.",
+                        "perplexity": 6.622580528259277
+                    },
+                    "64": {
+                        "latency": 0.8184592895507813,
+                        "answer": "Diffusion models are a type of generative model that that are to to of data data. They work by modeling the the process process process process of of the diffusion process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process to to the the reverse process the process process to to to to new data data that that the similar of the original data.. have been a used in applications such as image generation, text generation, and audio generation.",
+                        "perplexity": 6.622580528259277
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.41736550903320313,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by a a distribution ( i.g. noise. They models the process of transforming noise into data data data data a series of of steps. The model is the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the to of the 0. data. They are used in a variety of of applications, including images, images, audio data, and other data.",
+                        "perplexity": 7.164234638214111
+                    },
+                    "16": {
+                        "latency": 0.4107991943359375,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by a a distribution ( i.g. noise. They models the process of transforming noise into data data data data a series of of steps. The model is the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the to of the 0. data. They are used in a variety of of applications, including images, images, audio data, and other data.",
+                        "perplexity": 7.164234638214111
+                    },
+                    "32": {
+                        "latency": 0.41619479370117185,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by a a distribution ( i.g. noise. They models the process of transforming noise into data data data data a series of of steps. The model is the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the to of the 0. data. They are used in a variety of of applications, including images, images, audio data, and other data.",
+                        "perplexity": 7.164234638214111
+                    },
+                    "64": {
+                        "latency": 0.4275213623046875,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by a a distribution ( i.g. noise. They models the process of transforming noise into data data data data a series of of steps. The model is the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the to of the 0. data. They are used in a variety of of applications, including images, images, audio data, and other data.",
+                        "perplexity": 7.164234638214111
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.23453750610351562,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by, data,,,.......... They use a probabilistic of data, and, noise, images, and, and, and, and, and,,,.,.,. ...,,,,,,,,,,,,,,,,, and,,,, and,,,,,,,,,,,,,,,,,,,,,,,,,,,, and,,,,,,,, and, data.",
+                        "perplexity": 32.21110534667969
+                    },
+                    "8": {
+                        "latency": 0.24787461853027343,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by, data,,,.......... They use a probabilistic of data, and, noise, images, and, and, and, and, and,,,.,.,. ...,,,,,,,,,,,,,,,,, and,,,, and,,,,,,,,,,,,,,,,,,,,,,,,,,,, and,,,,,,,, and, data.",
+                        "perplexity": 32.21110534667969
+                    },
+                    "16": {
+                        "latency": 0.24088079833984374,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by, data,,,.......... They use a probabilistic of data, and, noise, images, and, and, and, and, and,,,.,.,. ...,,,,,,,,,,,,,,,,, and,,,, and,,,,,,,,,,,,,,,,,,,,,,,,,,,, and,,,,,,,, and, data.",
+                        "perplexity": 32.21110534667969
+                    },
+                    "32": {
+                        "latency": 0.30579208374023437,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by, data,,,.......... They use a probabilistic of data, and, noise, images, and, and, and, and, and,,,.,.,. ...,,,,,,,,,,,,,,,,, and,,,, and,,,,,,,,,,,,,,,,,,,,,,,,,,,, and,,,,,,,, and, data.",
+                        "perplexity": 32.21110534667969
+                    },
+                    "64": {
+                        "latency": 0.2598492736816406,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by, data,,,.......... They use a probabilistic of data, and, noise, images, and, and, and, and, and,,,.,.,. ...,,,,,,,,,,,,,,,,, and,,,, and,,,,,,,,,,,,,,,,,,,,,,,,,,,, and,,,,,,,, and, data.",
+                        "perplexity": 32.21110534667969
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.10766944122314454,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    },
+                    "4": {
+                        "latency": 0.1605999755859375,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    },
+                    "8": {
+                        "latency": 0.13991725158691407,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    },
+                    "16": {
+                        "latency": 0.10998822021484375,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    },
+                    "32": {
+                        "latency": 0.1386953582763672,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    },
+                    "64": {
+                        "latency": 0.11664070129394531,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.05837836837768555,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "2": {
+                        "latency": 0.10381478118896484,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "4": {
+                        "latency": 0.0657790756225586,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "8": {
+                        "latency": 0.06348617553710938,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "16": {
+                        "latency": 0.0529186897277832,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "32": {
+                        "latency": 0.05674732971191406,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "64": {
+                        "latency": 0.08918262481689453,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    }
+                }
+            }
+        }
+    ],
+    "Dual": [
+        {
+            "question": "Explain diffusion models briefly.",
+            "result": {
+                "2": {
+                    "64": {
+                        "latency": 3.730877685546875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by a process of reverse. They of the learn to of a noise vector into a data point by applyingatively applying a series of transformations transformations to the noise vector. The process is called to reverse \"diffusion\" because it noise vector is gradually transformed into a data point by a series of transformations. The process is repeated until the desired data point is generated. Diffusion models are particularly used in generating high-quality images, text, and other forms of data. They are also used in various applications such as image synthesis, text-to-image, and language modeling.",
+                        "perplexity": 7.244332790374756
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.7026842041015624,
+                        "answer": "Diffusion models are a type of machine learning model that to generate the data of a... They",
+                        "perplexity": 19.970935821533203
+                    },
+                    "64": {
+                        "latency": 3.777920654296875,
+                        "answer": "Diffusion models are a type of generative model that learn data by a process process of reverse diffusion. The process involves adding noise to the data and gradually removing the noise to generate the original data. The model learns to reverse this process by generating data data from noise.",
+                        "perplexity": 7.397773265838623
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 0.8787974243164063,
+                        "answer": "Diffusion models are a class of generative models that that that data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data",
+                        "perplexity": 1.7947059869766235
+                    },
+                    "32": {
+                        "latency": 1.74949365234375,
+                        "answer": "Diffusion models are a class of generative models that that that learn data to data mappings. They work by to from noise to a data data point, aatively applying noise noise of a form.. The",
+                        "perplexity": 75.80296325683594
+                    },
+                    "64": {
+                        "latency": 4.1110966796875,
+                        "answer": "Diffusion models are a type of generative model that learn data by a process process of reverse engineering. They work by first generating noise, then applying a noise to the noise to make the noise of the data data, and finally reversing the noise to generate the original data. This process is repeated untilatively, the model of the noise becomes more similar to the original data. Diffusion models are particularly used for generating high-quality images, as they can learn to structure of the data and generate realistic images.",
+                        "perplexity": 9.758206367492676
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.42541973876953126,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a probabilistic of.. noise noise noise noise noise noise.. noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise",
+                        "perplexity": 2.859861373901367
+                    },
+                    "16": {
+                        "latency": 0.876670166015625,
+                        "answer": "Diffusion models are a class of generative models that that that data of of data is generated by from a Gaussian noise. noise process. process. The. is a by a",
+                        "perplexity": 45.319671630859375
+                    },
+                    "32": {
+                        "latency": 1.795702392578125,
+                        "answer": "Diffusion models are a class of machine learning models that simulate the process of of generating a data data distribution from a noise distribution. They consist of a series of transformations that that transform noise noise into a data data.. The models are typically trained using a combination of data and and data data,. They used for a variety of applications including data generation, modeling, and anomaly detection.",
+                        "perplexity": 11.85547161102295
+                    },
+                    "64": {
+                        "latency": 4.2010693359375,
+                        "answer": "Diffusion models are a type of machine learning model that can generate data by a process of gradually transforming noise noise into a desired output. The process is called to reverse the diffusion of particles, which the model uses to generate the data. The model is trained on a large dataset of images and and can generate images to the desired of the same style. Diffusion models are used used in various applications such as image generation, text transfer, and data synthesis.",
+                        "perplexity": 8.976725578308105
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.23956806945800782,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,...................",
+                        "perplexity": 79.68077850341797
+                    },
+                    "8": {
+                        "latency": 0.5990363159179688,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by a a a a a distribution... They models models a a a a, a",
+                        "perplexity": 51.80602264404297
+                    },
+                    "16": {
+                        "latency": 1.21681298828125,
+                        "answer": "Diffusion models are a class of generative models that that to data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data",
+                        "perplexity": 1.9500985145568848
+                    },
+                    "32": {
+                        "latency": 2.632291748046875,
+                        "answer": "Diffusion models are a class of machine learning models that learn to generate data data by a process of reverse diffusion process.. They are often used in image generation, text generation, and other applications.. The",
+                        "perplexity": 15.193075180053711
+                    },
+                    "64": {
+                        "latency": 4.68131591796875,
+                        "answer": "Diffusion models are a type of machine learning model that can generate data by learning a diffusion process. They process data by iteratively it through a probability distribution, which is used to generate new data.",
+                        "perplexity": 8.107369422912598
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.12893338012695313,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 91.00130462646484
+                    },
+                    "4": {
+                        "latency": 0.3127718811035156,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by.......",
+                        "perplexity": 37.88539123535156
+                    },
+                    "8": {
+                        "latency": 0.6433577880859375,
+                        "answer": "Diffusion models are a class of generative learning that that learn to to data data data data,,,......",
+                        "perplexity": 65.39923095703125
+                    },
+                    "16": {
+                        "latency": 1.3860133056640624,
+                        "answer": "Diffusion models are a class of generative models that that to data data data data.",
+                        "perplexity": 16.894460678100586
+                    },
+                    "32": {
+                        "latency": 2.70237646484375,
+                        "answer": "Diffusion models are a class of machine learning models that learn to generate data data by a probabilistic of sampling and inference. process. They are particularly on the generative side of data..",
+                        "perplexity": 28.946800231933594
+                    },
+                    "64": {
+                        "latency": 4.05241943359375,
+                        "answer": "Diffusion models are a type of machine learning model that can generate data by learning a reverse process. They of the form of a stochastic process, where the data is generated from noise, and the model learns to reverse the process to generate the data. This process involves involves a series of steps, where the step is to transform the noise to generate the data. The model learns to predict the noise at each step step, and then combines these predictions to generate the final data. Diffusion models are effective for generating realistic data, and can be used in a variety of applications such as image generation, text generation, and audio synthesis.",
+                        "perplexity": 5.194053649902344
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.08799257659912109,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "2": {
+                        "latency": 0.18496173095703125,
+                        "answer": "Diffusion models are a class of generative learning models that learn to data data data data data........... a process process process a a a, a,,,, the,, the.",
+                        "perplexity": 35.97261428833008
+                    },
+                    "4": {
+                        "latency": 0.3110467224121094,
+                        "answer": "Diffusion models are a type of generative learning that learn to to data data data from a noise. They are by to to a data data,,.",
+                        "perplexity": 41.11295700073242
+                    },
+                    "8": {
+                        "latency": 0.634437744140625,
+                        "answer": "Diffusion models are a type of generative learning model that learn to generate data data by a reverse process..",
+                        "perplexity": 15.646618843078613
+                    },
+                    "16": {
+                        "latency": 1.3415653076171874,
+                        "answer": "Diffusion models are a type of generative learning model that learn to to data data by iteratively reverse process process.",
+                        "perplexity": 28.788576126098633
+                    },
+                    "32": {
+                        "latency": 2.063302978515625,
+                        "answer": "Diffusion models are a type of generative learning model that learn to generate data by simulating a diffusion process. They work by iteratively refining noise to approximate a data distribution..",
+                        "perplexity": 6.819769382476807
+                    },
+                    "64": {
+                        "latency": 4.61158935546875,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate data by learning to reverse the process of diffusion modeling. Diffusion modeling is a statistical process that involves applying a a series of transformations to a data point, gradually transforming it into a new data point. Diffusion models learn to reverse this process by predicting the original data point from the new data point. This process is iteratively applied to generate new data points, and the model is continuously trained to improve the quality of the generated data. Diffusion models have been used in a variety of applications, including natural language generation, image generation, and audio synthesis.",
+                        "perplexity": 3.65138840675354
+                    }
+                }
+            }
+        }
+    ],
+    "None": [
+        {
+            "question": "Explain diffusion models briefly.",
+            "result": {
+                "2": {
+                    "64": {
+                        "latency": 3.441529052734375,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by a process of reverse. They of the learn to of a noise vector into a data point by applyingatively applying a series of transformations transformations to the noise vector. The process is called to reverse \"diffusion\" because it noise vector is gradually transformed into a data point by a series of transformations. The process is repeated until the desired data point is generated. Diffusion models are particularly used in generating high-quality images, text, and other forms of data. They are also used in various applications such as image synthesis, text-to-image, and language modeling.",
+                        "perplexity": 7.244332790374756
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.934189697265625,
+                        "answer": "Diffusion models are a type of machine learning model that to generate the data of a... They",
+                        "perplexity": 19.970935821533203
+                    },
+                    "64": {
+                        "latency": 3.37713623046875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by a process of reverse. They of the learn to think of the data as a result of a series of random processes, and then reverse the reverse process to generate new data. The process is to transform noise into a sequence of samples that, when combined, resemble the original data. This process is called until the original data is generated. Diff process is then used to generate new data by reversing the the reverse process. Diff",
+                        "perplexity": 11.687237739562988
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 1.0192135620117186,
+                        "answer": "Diffusion models are a class of generative models that that that data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data",
+                        "perplexity": 1.7947059869766235
+                    },
+                    "32": {
+                        "latency": 1.959718505859375,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a distribution of the data data. They work by gradually applying a process of noise to a given data point, then reversing the the noise to to a new data point. This process is repeated to generate new data of the same.. Diff",
+                        "perplexity": 15.365446090698242
+                    },
+                    "64": {
+                        "latency": 3.849343994140625,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by a process of reverse diffusion. They work by first a diffusion process where noise is gradually transformed into the data, and then a reverse diffusion process where the data is gradually transformed back into noise. This process is repeated until the desired data is produced. Diffusion models are particularly used in generating high-quality images, videos, and other types of data.",
+                        "perplexity": 4.506401538848877
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.47889459228515624,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a probabilistic of.. noise noise noise noise noise noise.. noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise",
+                        "perplexity": 2.859861373901367
+                    },
+                    "16": {
+                        "latency": 0.8724700927734375,
+                        "answer": "Diffusion models are a class of generative models that that that data data data data data data data data data data data data",
+                        "perplexity": 9.423001289367676
+                    },
+                    "32": {
+                        "latency": 1.8428826904296876,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic distribution of the data.. They are by first a process of diffusion the noise noise into a a signal, and then reverse the process to generate new data..",
+                        "perplexity": 10.14341926574707
+                    },
+                    "64": {
+                        "latency": 3.499305419921875,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic of the data. They are by applying a series of transformations to the data, gradually adding noise, and step by step removing the noise. The model learns to reverse this process to generate new data..",
+                        "perplexity": 6.787792682647705
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.22766152954101562,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,...................",
+                        "perplexity": 79.68077850341797
+                    },
+                    "8": {
+                        "latency": 0.43033035278320314,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by progressively a noise a a distribution... They",
+                        "perplexity": 68.00897979736328
+                    },
+                    "16": {
+                        "latency": 1.025365478515625,
+                        "answer": "Diffusion models are a class of generative models that that that data data is a process of noise.. They ideais to start with from noise noise and graduallyatively the data to the desired",
+                        "perplexity": 62.22906494140625
+                    },
+                    "32": {
+                        "latency": 1.9588897705078125,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic distribution of the data.. They are by first a process of diffusion the noise noise into a a distribution that that approx resembles the original data, and then using a reverse process process to generate the new data. The process models the distribution of the data.",
+                        "perplexity": 12.589923858642578
+                    },
+                    "64": {
+                        "latency": 3.8560673828125,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic of the data. They are by applying a series of transformations to the data, gradually adding noise, and step by step removing the noise. The model learns to reverse this process to generate new data..",
+                        "perplexity": 6.787792682647705
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.18103683471679688,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 91.00130462646484
+                    },
+                    "4": {
+                        "latency": 0.23367942810058595,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by......",
+                        "perplexity": 34.71916198730469
+                    },
+                    "8": {
+                        "latency": 0.5019820861816406,
+                        "answer": "Diffusion models are a class of generative learning that that learn data data data data data data",
+                        "perplexity": 53.902191162109375
+                    },
+                    "16": {
+                        "latency": 0.9945407104492188,
+                        "answer": "Diffusion models are a class of generative models that that that data data is generated by of Gaussian noise. They are used used to generate realistic data.",
+                        "perplexity": 19.436613082885742
+                    },
+                    "32": {
+                        "latency": 1.9627041015625,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic distribution of the data.. They are by definition a type of generative model.",
+                        "perplexity": 5.710627555847168
+                    },
+                    "64": {
+                        "latency": 3.412163330078125,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic of the data. They are by learning a distribution of the input data.",
+                        "perplexity": 7.4438676834106445
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.0587391357421875,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "2": {
+                        "latency": 0.16640377807617188,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    },
+                    "4": {
+                        "latency": 0.25908038330078126,
+                        "answer": "Diffusion models are a type of generative learning model that to data data data data data.",
+                        "perplexity": 14.241750717163086
+                    },
+                    "8": {
+                        "latency": 0.46944097900390624,
+                        "answer": "Diffusion models are a type of machine learning model that can the to of a data...",
+                        "perplexity": 22.03716468811035
+                    },
+                    "16": {
+                        "latency": 1.0298453369140625,
+                        "answer": "Diffusion models are a type of machine learning model that simulate the process of diffusion to generate data..",
+                        "perplexity": 4.029221057891846
+                    },
+                    "32": {
+                        "latency": 1.95722119140625,
+                        "answer": "Diffusion models are a type of machine learning model that can data to generate new generate of data..",
+                        "perplexity": 16.205968856811523
+                    },
+                    "64": {
+                        "latency": 3.811126953125,
+                        "answer": "Diffusion models are a type of machine learning model that",
+                        "perplexity": 4.35977029800415
+                    }
+                }
+            }
+        }
+    ]
+}

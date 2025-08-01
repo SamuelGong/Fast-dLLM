@@ -333,11 +333,11 @@ def generate_coarse_to_fine(
 
     # how many logical blocks (= outer iterations) do we need?
     assert gen_length % block_length == 0
-    num_iters        = gen_length // block_length
-    steps_per_iter   = steps // num_iters
+    num_blocks        = gen_length // block_length
+    steps_per_block   = steps // num_blocks
 
     nfe = 0  # number of forward evaluations
-    for outer in range(num_iters):
+    for outer in range(num_blocks):
         if debug:
             print(f"outer: {outer}")
 
@@ -377,11 +377,11 @@ def generate_coarse_to_fine(
 
         if debug:
             print(f"\tblock_sel: {block_sel}")
-        if steps_per_iter == 1:
+        if steps_per_block == 1:
             continue
 
         block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
-        transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
+        transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_block)  # (1, steps_per_iter)
         inner_step = 1
 
         # ------------------------------------------------------------------
