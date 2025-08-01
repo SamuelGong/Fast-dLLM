@@ -357,7 +357,8 @@ def generate_coarse_to_fine(
         if mask_index.sum() == 0:                        # nothing left?
             break
 
-        num_transfer_tokens = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
+        # each batch element asks for the same quota (= block_length)
+        quota = mask_index.sum(dim=1).clamp(max=block_length)
 
         # get_transfer_index returns both the sampled tokens (x0)
         # *and* the boolean mask of positions chosen for transfer
@@ -368,19 +369,19 @@ def generate_coarse_to_fine(
                             remasking,
                             mask_index,
                             x,
-                            num_transfer_tokens[:, 0] if threshold is None else None,
+                            quota,
                             threshold,
                             endoftext_id=endoftext_id
         )
         # `block_sel` is our logical block (shape 1×L, bool)
-
+        if debug:
+            print(f"\tblock_sel: {block_sel}")
         if steps_per_iter == 1:
             continue
 
         block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
+        transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
         inner_step = 1
-        if debug:
-            print(f"\tblock_sel: {block_sel}")
 
         # ------------------------------------------------------------------
         # 2.  Refinement loop – only run the model on the scattered block
@@ -407,7 +408,7 @@ def generate_coarse_to_fine(
             nfe += 1
 
             # how many tokens to transfer *this* inner step?
-            quota_step = num_transfer_tokens[:, inner_step] \
+            quota_step = transfer_schedule[:, inner_step] \
                          if threshold is None else None
 
             x0, transfer_idx = get_transfer_index(
