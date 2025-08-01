@@ -93,7 +93,7 @@ def main():
                             "answer": ans
                         }
                         json.dump(result_dict, fout, ensure_ascii=False, indent=4)
-
+                        fout.flush()
 
 if __name__ == '__main__':
     main()
