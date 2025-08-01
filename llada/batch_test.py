@@ -10,7 +10,7 @@ question_list = [
     "Explain diffusion models briefly."
 ]
 block_list = [2 ** n for n in range(1, 8)]  # how many tokens per block
-steps_list = [2 ** n for n in range(1, 8)]  # how many generation steps in total
+steps_list = [2 ** n for n in range(0, 7)]  # how many generation steps in total
 result_dict = {}
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -59,41 +59,42 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
 
     result_dict = {}
-    with open(output_file, "w", encoding="utf-8") as fout:
-        for method in method_list:
-            result_dict[method] = []
-            for question in question_list:
-                prompt_txt = tokenizer.apply_chat_template(
-                    [{"role": "user", "content": question}],
-                    add_generation_prompt=True,
-                    tokenize=False
-                )
-                prompt = torch.tensor(tokenizer(prompt_txt)["input_ids"], device=DEVICE).unsqueeze(0)
-                result_dict[method].append({
-                    "question": question,
-                    "result": {}
-                })
+    for method in method_list:
+        result_dict[method] = []
+        for question in question_list:
+            prompt_txt = tokenizer.apply_chat_template(
+                [{"role": "user", "content": question}],
+                add_generation_prompt=True,
+                tokenize=False
+            )
+            prompt = torch.tensor(tokenizer(prompt_txt)["input_ids"], device=DEVICE).unsqueeze(0)
+            result_dict[method].append({
+                "question": question,
+                "result": {}
+            })
 
-                for block in block_list:
-                    result_dict[method][-1]["result"][block] = {}
-                    for steps in steps_list:
-                        if steps < block:
-                            continue
+            for block in block_list:
+                result_dict[method][-1]["result"][block] = {}
+                for steps in steps_list:
+                    if steps < block:
+                        continue
 
-                        lat, ans = benchmark(
-                            prompt=prompt,
-                            tokenizer=tokenizer,
-                            steps=steps,
-                            gen_len=gen,
-                            block_len=block,
-                            use_kv_cache=method,
-                        )
-                        result_dict[method][-1]["result"][block][steps] = {
-                            "latency": lat,
-                            "answer": ans
-                        }
+                    lat, ans = benchmark(
+                        prompt=prompt,
+                        tokenizer=tokenizer,
+                        steps=steps,
+                        gen_len=gen,
+                        block_len=block,
+                        use_kv_cache=method,
+                    )
+                    result_dict[method][-1]["result"][block][steps] = {
+                        "latency": lat,
+                        "answer": ans
+                    }
+                    with open(output_file, "w", encoding="utf-8") as fout:
                         json.dump(result_dict, fout, ensure_ascii=False, indent=4)
                         fout.flush()
+
 
 if __name__ == '__main__':
     main()
