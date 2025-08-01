@@ -15,8 +15,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Modified from LLaDA repos: https://github.com/ML-GSAI/LLaDA
 
-from .configuration_llada import LLaDAConfig
-from .modeling_llada import LLaDAModelLM
+# from .configuration_llada import LLaDAConfig
+# from .modeling_llada import LLaDAModelLM
 
 # __all__ = ['LLaDAConfig', 'LLaDAModelLM']
 # Zhifeng Jiang
