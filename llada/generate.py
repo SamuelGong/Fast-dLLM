@@ -20,7 +20,7 @@ import numpy as np
 import torch.nn.functional as F
 import os
 from transformers import AutoTokenizer, AutoModel
-from model.modeling_llada import LLaDAModelLM
+
 
 def add_gumbel_noise(logits, temperature):
     '''
@@ -600,6 +600,7 @@ def generate_with_finegrained_cache(
 def main():
     device = 'cuda'
 
+    from model.modeling_llada import LLaDAModelLM  # avoid circular import
     model = LLaDAModelLM.from_pretrained('GSAI-ML/LLaDA-8B-Instruct', trust_remote_code=True, torch_dtype=torch.bfloat16).to(device).eval()
     tokenizer = AutoTokenizer.from_pretrained('GSAI-ML/LLaDA-8B-Instruct', trust_remote_code=True)
 
