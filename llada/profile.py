@@ -1,8 +1,8 @@
 import os
 import json
 import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM
-from kvcache_baseline import benchmark, MODEL_NAME
+from transformers import AutoModelForCausalLM
+from kvcache_baseline import benchmark, MODEL_NAME, AutoTokenizer
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 gen = 128  # how many tokens to generate
