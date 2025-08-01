@@ -10,8 +10,8 @@ method_list = ["C2F", "Dual", "None"]
 question_list = [
     "Explain diffusion models briefly."
 ]
-block_len_list = [2 ** n for n in range(1, 8)]  # how many tokens per block
-steps_list = [2 ** n for n in range(0, 7)]  # how many generation steps in total
+block_len_list = [2 ** n for n in range(0, 8)]  # how many tokens per block
+steps_list = [2 ** n for n in range(0, 8)]  # how many generation steps in total
 result_dict = {}
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
