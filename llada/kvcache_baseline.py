@@ -12,11 +12,12 @@ import argparse
 from contextlib import contextmanager
 import torch
 from transformers import AutoTokenizer
+from torch.profiler import profile, ProfilerActivity
+
+import model as model_module
 from generate import (generate, generate_with_prefix_cache,
                       generate_with_dual_cache, generate_with_finegrained_cache,
-                      generate_with_dual_cache_and_q_cache, generate_coarse_to_fine,
-                      LLaDAModelLM)
-from torch.profiler import profile, ProfilerActivity
+                      generate_with_dual_cache_and_q_cache, generate_coarse_to_fine)
 
 # ───────────────────────────────────────── config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
@@ -41,7 +42,7 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
     tag = use_kv_cache
     print(f"\nLoading model for {tag} …")
     # model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
-    model = LLaDAModelLM.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
+    model = model_module.LLaDAModelLM.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
 
     # warm‑up
     with torch.inference_mode():
