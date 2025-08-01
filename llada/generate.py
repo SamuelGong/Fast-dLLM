@@ -92,7 +92,7 @@ def generate(model, prompt, steps=128, gen_length=128, block_length=128, tempera
             mask_index = (x == mask_id)
             logits = model(x).logits
             mask_index[:, prompt.shape[1] + (num_block + 1) * block_length:] = 0
-            x0, transfer_index = get_transfer_index(logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, i] if threshold is None else None, threshold)
+            x0, transfer_index, _ = get_transfer_index(logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, i] if threshold is None else None, threshold)
             x[transfer_index] = x0[transfer_index]
             i += 1
             if (x[:, prompt.shape[1] + num_block * block_length: prompt.shape[1] + (num_block + 1) * block_length] == mask_id).sum() == 0:
@@ -139,7 +139,7 @@ def generate_with_prefix_cache(model, prompt, steps=128, gen_length=128, block_l
 
         mask_index = (x == mask_id)
         mask_index[:, current_block_end:] = 0
-        x0, transfer_index = get_transfer_index(output.logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, 0] if threshold is None else None, threshold)
+        x0, transfer_index, _ = get_transfer_index(output.logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, 0] if threshold is None else None, threshold)
         x[transfer_index] = x0[transfer_index]
 
         new_past_key_values = []
@@ -162,7 +162,7 @@ def generate_with_prefix_cache(model, prompt, steps=128, gen_length=128, block_l
             logits_with_noise = add_gumbel_noise(logits, temperature=temperature)
             x0 = torch.argmax(logits_with_noise, dim=-1) # b, l
 
-            x0, transfer_index = get_transfer_index(logits, temperature, remasking, mask_index, 
+            x0, transfer_index, _ = get_transfer_index(logits, temperature, remasking, mask_index,
                                             x[:, current_block_start:], num_transfer_tokens[:, i] if threshold is None else None, threshold)
             x[:, current_block_start:][transfer_index] = x0[transfer_index]
             if (x[:, current_block_start:current_block_end] == mask_id).sum() == 0:
@@ -210,7 +210,7 @@ def generate_with_dual_cache(model, prompt, steps=128, gen_length=128, block_len
         past_key_values = output.past_key_values
         mask_index = (x == mask_id)
         mask_index[:, current_block_end:] = 0
-        x0, transfer_index = get_transfer_index(output.logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, 0] if threshold is None else None, threshold)
+        x0, transfer_index, _ = get_transfer_index(output.logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, 0] if threshold is None else None, threshold)
         x[transfer_index] = x0[transfer_index]
         nfe += 1
         i = 1
@@ -226,7 +226,7 @@ def generate_with_dual_cache(model, prompt, steps=128, gen_length=128, block_len
             # cache position is the position between current_block_start and current_block_end
             logits = model(x[:, current_block_start:current_block_end], past_key_values=past_key_values, use_cache=True, replace_position=replace_position).logits
 
-            x0, transfer_index = get_transfer_index(logits, temperature, remasking, mask_index, 
+            x0, transfer_index, _ = get_transfer_index(logits, temperature, remasking, mask_index,
                                             x[:, current_block_start:current_block_end], num_transfer_tokens[:, i] if threshold is None else None, threshold)
             x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
             if (x[:, current_block_start:current_block_end] == mask_id).sum() == 0:
@@ -273,7 +273,7 @@ def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=12
         past_key_values = output.past_key_values
         mask_index = (x == mask_id)
         mask_index[:, current_block_end:] = 0
-        x0, transfer_index = get_transfer_index(output.logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, 0] if threshold is None else None, threshold)
+        x0, transfer_index, _ = get_transfer_index(output.logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, 0] if threshold is None else None, threshold)
         x[transfer_index] = x0[transfer_index]
         nfe += 1
 
@@ -290,7 +290,7 @@ def generate_with_dual_cache_and_q_cache(model, prompt, steps=128, gen_length=12
             logits = model(x[:, current_block_start:current_block_end], past_key_values=past_key_values, use_cache=True, replace_position=replace_position,
                            use_q_cache=True, need_compute_q=need_compute_q).logits
 
-            x0, transfer_index = get_transfer_index(logits, temperature, remasking, mask_index,
+            x0, transfer_index, _ = get_transfer_index(logits, temperature, remasking, mask_index,
                                             x[:, current_block_start:current_block_end], num_transfer_tokens[:, i] if threshold is None else None, threshold)
             x[:, current_block_start:current_block_end][transfer_index] = x0[transfer_index]
             need_compute_q = (current_block_start, current_block_end, transfer_index)
@@ -363,7 +363,7 @@ def generate_coarse_to_fine(
         # get_transfer_index returns both the sampled tokens (x0)
         # *and* the boolean mask of positions chosen for transfer
         endoftext_id = tokenizer.convert_tokens_to_ids('<|endoftext|>')
-        x0, block_sel = get_transfer_index(
+        x0, block_sel, confidence = get_transfer_index(
                             logits,
                             temperature,
                             remasking,
@@ -373,20 +373,31 @@ def generate_coarse_to_fine(
                             threshold,
                             endoftext_id=endoftext_id
         )
-        x[block_sel] = x0[block_sel]  # batch-size is 1
-
         if debug:
             print(f"\tblock_sel: {block_sel}")
-        if steps_per_block == 1:
-            continue
 
         block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
         transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_block)  # (1, steps_per_iter)
-        inner_step = 1
 
+        # generate the first step's result by the way
+        quota_first_step = transfer_schedule[:, 0] \
+            if threshold is None else None
+        transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
+        for j in range(confidence.shape[0]):  # borrowed from function get_transfer_index
+            _, select_index = torch.topk(confidence[j], k=quota_first_step[j])
+            transfer_index[j, select_index] = True
+            if threshold is not None:
+                for k in range(1, quota_first_step[j]):
+                    if confidence[j, select_index[k]] < threshold:
+                        transfer_index[j, select_index[k]] = False
+        x[transfer_index] = x0[transfer_index]  # batch-size is 1
+
+        if steps_per_block == 1:
+            continue
         # ------------------------------------------------------------------
         # 2.  Refinement loop – only run the model on the scattered block
         # ------------------------------------------------------------------
+        inner_step = 1
         while True:
             still_masked = (x[:, block_positions] == mask_id)
             if debug:
@@ -412,7 +423,7 @@ def generate_coarse_to_fine(
             quota_step = transfer_schedule[:, inner_step] \
                          if threshold is None else None
 
-            x0, transfer_idx = get_transfer_index(
+            x0, transfer_idx, _ = get_transfer_index(
                                    logits_block,
                                    temperature,
                                    remasking,
@@ -507,7 +518,7 @@ def get_transfer_index(logits, temperature, remasking, mask_index,
                 if confidence[j, select_index[k]] < threshold:
                     transfer_index[j, select_index[k]] = False
 
-    return x0, transfer_index
+    return x0, transfer_index, confidence  # confidence is only for c2f method's use
 
 
 @torch.no_grad()
@@ -555,7 +566,7 @@ def generate_with_finegrained_cache(
             # 对当前block做第一次去噪
             mask_index = (x == mask_id)
             mask_index[:, current_block_end:] = 0
-            x0, transfer_index = get_transfer_index(
+            x0, transfer_index, _ = get_transfer_index(
                 output.logits, temperature, remasking, mask_index,
                 x, num_transfer_tokens[:, 0] if threshold is None else None, threshold
             )
@@ -585,7 +596,7 @@ def generate_with_finegrained_cache(
 
             # 选出本轮transfer的位置
             mask_index = (x[:, current_block_start:current_block_end] == mask_id)
-            x0, transfer_index = get_transfer_index(
+            x0, transfer_index, _ = get_transfer_index(
                 output.logits, temperature, remasking, mask_index, x[:, current_block_start:current_block_end],
                 num_transfer_tokens[:, step] if threshold is None else None, threshold
             )
