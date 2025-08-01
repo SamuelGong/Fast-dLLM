@@ -373,6 +373,9 @@ def generate_coarse_to_fine(
                             threshold,
                             endoftext_id=endoftext_id
         )
+        print(block_sel.shape)
+        print(x.shape)
+        print(x0.shape)
         x[0, block_sel] = x0[block_sel]  # batch-size is 1
 
         if debug:
