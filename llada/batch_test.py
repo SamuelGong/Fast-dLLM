@@ -8,7 +8,9 @@ from transformers import AutoTokenizer
 gen = 128  # how many tokens to generate
 method_list = ["C2F", "Dual", "None"]
 question_list = [
-    "Explain diffusion models briefly."
+    "Explain diffusion models briefly.",
+    "What is Retrieval-Augmented Generation?",
+    "When will human realize Artificial General Intelligence?"
 ]
 block_len_list = [2 ** n for n in range(0, 8)]  # how many tokens per block
 steps_list = [2 ** n for n in range(0, 8)]  # how many generation steps in total
