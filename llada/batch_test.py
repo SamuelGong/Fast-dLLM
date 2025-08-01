@@ -5,7 +5,7 @@ from kvcache_baseline import benchmark
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 gen = 128  # how many tokens to generate
-method_list = ["C2F", "Dual"]
+method_list = ["C2F", "Dual", "None"]
 question_list = [
     "Explain diffusion models briefly."
 ]
@@ -92,7 +92,7 @@ def main():
                             "latency": lat,
                             "answer": ans
                         }
-                        json.dump(result_dict[method], fout, ensure_ascii=False, indent=4)
+                        json.dump(result_dict, fout, ensure_ascii=False, indent=4)
 
 
 if __name__ == '__main__':
