@@ -19,7 +19,7 @@ import torch
 import numpy as np
 import torch.nn.functional as F
 import os
-import model as model_module
+from model.modeling_llada import LLaDAModelLM
 from transformers import AutoTokenizer, AutoModel
 
 
