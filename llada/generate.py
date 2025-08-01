@@ -213,9 +213,9 @@ def generate_with_dual_cache(model, prompt, steps=128, gen_length=128, block_len
         x0, transfer_index = get_transfer_index(output.logits, temperature, remasking, mask_index, x, num_transfer_tokens[:, 0] if threshold is None else None, threshold)
         x[transfer_index] = x0[transfer_index]
         nfe += 1
-
         i = 1
-        if steps <= i:  # corner case
+
+        if steps == 1:
             continue
 
         replace_position = torch.zeros_like(x, dtype=torch.bool)
@@ -357,8 +357,7 @@ def generate_coarse_to_fine(
         if mask_index.sum() == 0:                        # nothing left?
             break
 
-        # each batch element asks for the same quota (= block_length)
-        quota = mask_index.sum(dim=1).clamp(max=block_length)
+        num_transfer_tokens = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
 
         # get_transfer_index returns both the sampled tokens (x0)
         # *and* the boolean mask of positions chosen for transfer
@@ -369,15 +368,17 @@ def generate_coarse_to_fine(
                             remasking,
                             mask_index,
                             x,
-                            quota,
+                            num_transfer_tokens[:, 0] if threshold is None else None,
                             threshold,
                             endoftext_id=endoftext_id
         )
         # `block_sel` is our logical block (shape 1×L, bool)
 
+        if steps_per_iter == 1:
+            continue
+
         block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
-        transfer_schedule = get_num_transfer_tokens(block_sel, steps_per_iter)  # (1, steps_per_iter)
-        inner_step = 0
+        inner_step = 1
         if debug:
             print(f"\tblock_sel: {block_sel}")
 
@@ -406,7 +407,7 @@ def generate_coarse_to_fine(
             nfe += 1
 
             # how many tokens to transfer *this* inner step?
-            quota_step = transfer_schedule[:, inner_step] \
+            quota_step = num_transfer_tokens[:, inner_step] \
                          if threshold is None else None
 
             x0, transfer_idx = get_transfer_index(
