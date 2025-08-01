@@ -10,11 +10,12 @@ Run example:
 
 import argparse
 from contextlib import contextmanager
+from model.modeling_llada import LLaDAModelLM
+
 import torch
 from transformers import AutoTokenizer
 from torch.profiler import profile, ProfilerActivity
 
-from model.modeling_llada import LLaDAModelLM
 from generate import (generate, generate_with_prefix_cache,
                       generate_with_dual_cache, generate_with_finegrained_cache,
                       generate_with_dual_cache_and_q_cache, generate_coarse_to_fine)
