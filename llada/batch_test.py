@@ -9,7 +9,7 @@ method_list = ["C2F", "Dual", "None"]
 question_list = [
     "Explain diffusion models briefly."
 ]
-block_list = [2 ** n for n in range(1, 8)]  # how many tokens per block
+block_len_list = [2 ** n for n in range(1, 8)]  # how many tokens per block
 steps_list = [2 ** n for n in range(0, 7)]  # how many generation steps in total
 result_dict = {}
 
@@ -73,10 +73,12 @@ def main():
                 "result": {}
             })
 
-            for block in block_list:
-                result_dict[method][-1]["result"][block] = {}
+            for block_len in block_len_list:
+                num_blocks = gen // block_len
+
+                result_dict[method][-1]["result"][block_len] = {}
                 for steps in steps_list:
-                    if steps < block:
+                    if steps < num_blocks:
                         continue
 
                     lat, ans = benchmark(
@@ -84,10 +86,10 @@ def main():
                         tokenizer=tokenizer,
                         steps=steps,
                         gen_len=gen,
-                        block_len=block,
+                        block_len=block_len,
                         use_kv_cache=method,
                     )
-                    result_dict[method][-1]["result"][block][steps] = {
+                    result_dict[method][-1]["result"][block_len][steps] = {
                         "latency": lat,
                         "answer": ans
                     }
