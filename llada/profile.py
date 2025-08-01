@@ -1,8 +1,7 @@
 import os
 import json
 import torch
-from transformers import AutoModelForCausalLM
-from kvcache_baseline import benchmark, MODEL_NAME, AutoTokenizer, DEVICE
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 gen = 128  # how many tokens to generate
 method_list = ["C2F", "Dual"]
@@ -13,10 +12,14 @@ block_list = [2 ** n for n in range(1, 8)]  # how many tokens per block
 steps_list = [2 ** n for n in range(1, 8)]  # how many generation steps in total
 result_dict = {}
 
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+DTYPE = torch.bfloat16
+MODEL_NAME = "GSAI-ML/LLaDA-8B-Instruct"
+
 
 def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instruct"):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForCausalLM.from_pretrained(model_name).to(device=DEVICE, dtype=torch.bfloat16)
+    model = AutoModelForCausalLM.from_pretrained(model_name).to(device=DEVICE, dtype=DTYPE)
     model.eval()
 
     enc = tokenizer.apply_chat_template([
@@ -50,6 +53,8 @@ def get_evaluation(prompt, answer, model_name="meta-llama/Meta-Llama-3-8B-Instru
 
 
 def main():
+    from kvcache_baseline import benchmark
+
     experiment_name = "profile"
     output_file = f"{experiment_name}.json"
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)

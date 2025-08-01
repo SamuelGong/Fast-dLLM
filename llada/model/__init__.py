@@ -16,8 +16,7 @@
 # Modified from LLaDA repos: https://github.com/ML-GSAI/LLaDA
 
 from .configuration_llada import LLaDAConfig
-# from .modeling_llada import LLaDAModelLM
+from .modeling_llada import LLaDAModelLM
 
-__all__ = ['LLaDAConfig']
-# __all__ = ['LLaDAConfig', 'LLaDAModelLM']
+__all__ = ['LLaDAConfig', 'LLaDAModelLM']
 # Zhifeng Jiang
