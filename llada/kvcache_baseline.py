@@ -15,9 +15,9 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 from generate import (generate, generate_with_prefix_cache,
                       generate_with_dual_cache, generate_with_finegrained_cache,
-                      generate_with_dual_cache_and_q_cache, generate_coarse_to_fine)
+                      generate_with_dual_cache_and_q_cache, generate_coarse_to_fine,
+                      LLaDAModelLM)
 from torch.profiler import profile, ProfilerActivity
-from model.modeling_llada import LLaDAModelLM
 
 # ───────────────────────────────────────── config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
