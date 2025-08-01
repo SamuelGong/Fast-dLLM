@@ -13,18 +13,52 @@ from contextlib import contextmanager
 from model.modeling_llada import LLaDAModelLM
 
 import torch
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from torch.profiler import profile, ProfilerActivity
 
 from generate import (generate, generate_with_prefix_cache,
                       generate_with_dual_cache, generate_with_finegrained_cache,
                       generate_with_dual_cache_and_q_cache, generate_coarse_to_fine)
-from batch_test import evaluate_qa
 
 # ───────────────────────────────────────── config
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 DTYPE = torch.bfloat16
 MODEL_NAME = "GSAI-ML/LLaDA-8B-Instruct"
+
+
+def evaluate_qa(question, answer, model_name="meta-llama/Meta-Llama-3-8B-Instruct"):
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(model_name).to(device=DEVICE, dtype=DTYPE)
+    model.eval()
+
+    enc = tokenizer.apply_chat_template([
+        {"role": "user", "content": question},
+        {"role": "assistant", "content": answer}
+    ],
+        add_generation_prompt=True,
+        tokenize=True,
+        return_tensors='pt'
+    )
+    input_ids = enc.to(DEVICE)
+
+    prompt_enc = tokenizer.apply_chat_template(
+        [{"role": "user", "content": question}],
+        add_generation_prompt=True,
+        tokenize=True,
+        return_tensors='pt'
+    )
+    prompt_len = prompt_enc.shape[1]
+
+    labels = input_ids.clone()
+    labels[:, :prompt_len] = -100
+
+    with torch.no_grad():
+        outputs = model(input_ids, labels=labels)
+        loss = outputs.loss
+    ppl = torch.exp(loss).item()
+    return {
+        "perplexity": ppl
+    }
 
 
 # ─────────────────────────────────── timing helper
