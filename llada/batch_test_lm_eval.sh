@@ -4,7 +4,7 @@ set -euo pipefail
 # Usage: ./run_simple.sh <method> [--length N] [--task NAME]
 # Example: ./run_simple.sh C2F --length 256 --task mmlu_pro
 
-if [[ $# -lt 1 ]]; then
+if [[ $# -lt 3 ]]; then
   echo "Usage: $0 <method> [--length N] [--task NAME]"
   exit 1
 fi
@@ -19,6 +19,9 @@ model_path="GSAI-ML/LLaDA-8B-Instruct"
 model="llada_dist"
 script="eval_llada.py"
 output_root="evals_results"
+num_processes=1
+main_process_port=29500
+limit=1.0
 
 # Optional flags: --length, --task
 while [[ $# -gt 0 ]]; do
@@ -27,6 +30,12 @@ while [[ $# -gt 0 ]]; do
       length="${2:-}"; shift 2 ;;
     --task|-t)
       task="${2:-}"; shift 2 ;;
+    --num_processes|-n)
+      num_processes="${2:-}"; shift 2 ;;
+    --main_process_port|-p)
+      main_process_port="${2:-}"; shift 2 ;;
+    --limit|-L)
+      limit="${2:-}"; shift 2 ;;
     *)
       echo "Unknown argument: $1"
       exit 1 ;;
@@ -54,10 +63,10 @@ while (( bl <= length )); do
     out_dir="${output_root}/${task}/${method}/${length}/${bl}/${st}"
     mkdir -p "${out_dir}"
 
-    accelerate launch --num_processes 4 "${script}" --tasks "${task}" \
+    accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
       --confirm_run_unsafe_code --model "${model}" \
       --model_args "model_path=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
-      --output_path "${out_dir}" --log_samples
+      --output_path "${out_dir}" --log_samples --limit ${limit}
 
     st=$(( st * 2 ))
   done
