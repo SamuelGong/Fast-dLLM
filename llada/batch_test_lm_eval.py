@@ -13,7 +13,8 @@ POWERS = [1, 2, 4, 8, 16, 32, 64, 128]
 
 
 def run_eval(method: str, task: str, length: int, block_length: int,
-             steps_for_arg: int, steps_for_folder: int, num_processes: int):
+             steps_for_arg: int, steps_for_folder: int, num_processes: int,
+             ratio: float):
     """
     method: 'C2F', 'Dual', or 'None'
     steps_for_arg:    value passed to --model_args steps=...
@@ -40,6 +41,7 @@ def run_eval(method: str, task: str, length: int, block_length: int,
         "--model_args", ",".join(model_args),
         "--output_path", str(out_dir),
         "--log_samples",
+        "--limit", str(ratio)
     ]
 
     env = os.environ.copy()
@@ -51,6 +53,7 @@ def main():
     p.add_argument("--task", default="mmlu")
     p.add_argument("--length", type=int, default=128)
     p.add_argument("--num_processes", type=int, default=1)
+    p.add_argument("--ratio", type=float, default=1.0)
     p.add_argument(
         "-m", "--methods",
         nargs="+",
@@ -91,7 +94,8 @@ def main():
             for method in args.methods:
                 # Folder name: keep the loop's `steps` for consistency with your original layout
                 run_eval(method, args.task, args.length, bl, st,
-                         steps_for_folder=st, num_processes=args.num_processes)
+                         steps_for_folder=st, num_processes=args.num_processes,
+                         ratio=args.ratio)
                 pbar.update(1)
 
 
