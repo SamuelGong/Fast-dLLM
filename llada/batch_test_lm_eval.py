@@ -54,7 +54,7 @@ def main():
         help="One or more methods to run."
     )
     p.add_argument(
-        "--block",
+        "--block_lengths",
         nargs="*",
         type=int,
         default=POWERS,
