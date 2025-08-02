@@ -166,6 +166,8 @@ class LLaDAEvalHarness(LM):
 
     @torch.no_grad()
     def get_logits(self, batch, prompt_index):
+        print(self.cfg)
+        exit(0)
         if self.cfg > 0.:
             assert len(prompt_index) == batch.shape[1]
             prompt_index = prompt_index.unsqueeze(0).repeat(batch.shape[0], 1)
