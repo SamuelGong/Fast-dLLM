@@ -24,7 +24,7 @@ def run_eval(method: str, task: str, length: int, block_length: int,
         f"gen_length={length}",
         f"steps={steps_for_arg}",
         f"block_length={block_length}",
-        f"use_kv_cache='{method}'"
+        f"use_kv_cache='{method}'",
         "show_speed=True",
     ]
     out_dir = Path(f"evals_results/{method}/{length}/{block_length}/{steps_for_folder}/{task}")
