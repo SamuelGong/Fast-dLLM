@@ -32,7 +32,7 @@ def run_eval(method: str, task: str, length: int, block_length: int,
 
     cmd = [
         "accelerate", "launch",
-        "--num_processes", num_processes,
+        "--num_processes", str(num_processes),
         "eval_llada.py",
         "--tasks", task,
         "--confirm_run_unsafe_code",
