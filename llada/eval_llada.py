@@ -33,10 +33,12 @@ from lm_eval.api.registry import register_model
 from tqdm import tqdm
 import os
 from transformers import AutoTokenizer, AutoModel, AutoConfig
-from generate import generate, generate_with_prefix_cache, generate_with_dual_cache
+from generate import generate, generate_coarse_to_fine, generate_with_dual_cache
 from model.modeling_llada import LLaDAModelLM
 import json
 import time
+
+
 def set_seed(seed):
     torch.manual_seed(seed)
     random.seed(seed)
@@ -61,11 +63,12 @@ class LLaDAEvalHarness(LM):
         block_length=1024,
         remasking='low_confidence',
         device="cuda",
-        use_cache=False,
+        # use_cache=False,
+        use_kv_cache=None,
         threshold=None,
         save_dir=None,
         show_speed=False,
-        dual_cache=False,
+        # dual_cache=False,
         **kwargs,
     ):
         '''
@@ -124,12 +127,13 @@ class LLaDAEvalHarness(LM):
         self.gen_length = gen_length
         self.block_length = block_length
         self.remasking = remasking
-        self.use_cache = use_cache
+        # self.use_cache = use_cache
+        self.use_kv_cache = use_kv_cache
         self.threshold = threshold
         self.is_instruct = True if 'instruct' in model_path.lower() else False
         self.save_dir = save_dir
         self.show_speed = show_speed
-        self.dual_cache = dual_cache
+        # self.dual_cache = dual_cache
     @property
     def rank(self):
         return self._rank
@@ -304,16 +308,27 @@ class LLaDAEvalHarness(LM):
 
             stop_tokens = req.args[1]['until']
             input_ids = torch.tensor(input_ids).to(self.device).unsqueeze(0)
-            if self.use_cache:
-                if self.dual_cache:
-                    generated_answer, nfe = generate_with_dual_cache(self.model, input_ids, steps=self.steps, gen_length=self.gen_length, block_length=self.block_length, 
-                                        temperature=0, remasking=self.remasking, mask_id=self.mask_id, threshold=self.threshold)
-                else:
-                    generated_answer, nfe = generate_with_prefix_cache(self.model, input_ids, steps=self.steps, gen_length=self.gen_length, block_length=self.block_length, 
-                                        temperature=0, remasking=self.remasking, mask_id=self.mask_id, threshold=self.threshold)
+
+            if self.use_kv_cache is None:
+                generated_answer, nfe = generate(
+                    self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
+                    block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
+                    threshold=self.threshold, tokenizer=self.tokenizer
+                )
+            elif self.use_kv_cache == "Dual":
+                generated_answer, nfe = generate_with_dual_cache(
+                    self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
+                    block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
+                    threshold=self.threshold, tokenizer=self.tokenizer
+                )
+            elif self.use_kv_cache == "C2F":
+                generated_answer, nfe = generate_coarse_to_fine(
+                    self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
+                    block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
+                    threshold=self.threshold, tokenizer=self.tokenizer
+                )
             else:
-                generated_answer, nfe = generate(self.model, input_ids, steps=self.steps, gen_length=self.gen_length, block_length=self.block_length, 
-                                        temperature=0, remasking=self.remasking, mask_id=self.mask_id, threshold=self.threshold)
+                raise NotImplementedError
 
             if self.is_instruct and 'task_id' in req.doc and str(req.doc['task_id']).lower().startswith('humaneval'):
                 if self.show_speed:

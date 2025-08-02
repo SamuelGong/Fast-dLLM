@@ -74,7 +74,7 @@ def cuda_timer(label="Elapsed"):
 # ─────────────────────────────────── benchmark helper
 
 
-def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache, debug=False):
+def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache=None, debug=False):
     tag = use_kv_cache
     print(f"\nLoading model for {tag} …")
     # model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
@@ -88,7 +88,7 @@ def benchmark(prompt, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
     # attach_qcache_monkey(model, prompt.shape[1] + gen_len) if use_qcache else None
     with cuda_timer(f"{tag}") as get_elapsed:
         with profile(activities=[ProfilerActivity.CUDA]) as prof:
-            if use_kv_cache == "None":
+            if use_kv_cache is None:
                 out, nfe = generate(model, prompt, steps=steps, gen_length=gen_len,
                                block_length=block_len, temperature=0.,
                                remasking='low_confidence', tokenizer=tokenizer)
@@ -145,7 +145,7 @@ def main():
     prompt_txt = tokenizer.apply_chat_template([{"role": "user", "content": args.question}], add_generation_prompt=True, tokenize=False)
     prompt = torch.tensor(tokenizer(prompt_txt)["input_ids"], device=DEVICE).unsqueeze(0)
 
-    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
+    # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block)
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
     # benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Fine")
