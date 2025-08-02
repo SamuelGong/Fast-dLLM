@@ -14,7 +14,7 @@ POWERS = [1, 2, 4, 8, 16, 32, 64, 128]
 
 def run_eval(method: str, task: str, length: int, block_length: int,
              steps_for_arg: int, steps_for_folder: int, num_processes: int,
-             ratio: float):
+             ratio: float, port: int):
     """
     method: 'C2F', 'Dual', or 'None'
     steps_for_arg:    value passed to --model_args steps=...
@@ -32,6 +32,12 @@ def run_eval(method: str, task: str, length: int, block_length: int,
     out_dir.mkdir(parents=True, exist_ok=True)
 
     cmd = [
+        "accelerate", "launch",
+        "--num_processes", str(num_processes),
+    ]
+    if port is not None:
+        cmd += ["--main_process_port", str(port)]
+    cmd += [
         "accelerate", "launch",
         "--num_processes", str(num_processes),
         "eval_llada.py",
@@ -52,6 +58,7 @@ def main():
     p = argparse.ArgumentParser(description="Grid runner with configurable methods and tqdm progress.")
     p.add_argument("--task", default="mmlu")
     p.add_argument("--length", type=int, default=128)
+    p.add_argument("--port", type=int, default=None)
     p.add_argument("--num_processes", type=int, default=1)
     p.add_argument("--ratio", type=float, default=1.0)
     p.add_argument(
@@ -95,7 +102,7 @@ def main():
                 # Folder name: keep the loop's `steps` for consistency with your original layout
                 run_eval(method, args.task, args.length, bl, st,
                          steps_for_folder=st, num_processes=args.num_processes,
-                         ratio=args.ratio)
+                         ratio=args.ratio, port=args.port)
                 pbar.update(1)
 
 
