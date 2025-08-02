@@ -309,7 +309,7 @@ class LLaDAEvalHarness(LM):
             stop_tokens = req.args[1]['until']
             input_ids = torch.tensor(input_ids).to(self.device).unsqueeze(0)
 
-            if self.use_kv_cache is None:
+            if self.use_kv_cache == "None":
                 generated_answer, nfe = generate(
                     self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
                     block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
