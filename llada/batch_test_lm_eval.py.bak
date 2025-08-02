@@ -86,14 +86,8 @@ def main():
     with tqdm(total=total_cmds, desc="Total runs") as pbar:
         for bl, st in tqdm(valid_pairs, desc="Experiment pairs", leave=False):
             for method in args.methods:
-                # Determine effective steps passed to model
-                if method == "None":
-                    steps_for_arg = args.length if args.none_steps_arg == "length" else st
-                else:
-                    steps_for_arg = st
-
                 # Folder name: keep the loop's `steps` for consistency with your original layout
-                run_eval(method, args.task, args.length, bl, steps_for_arg, steps_for_folder=st)
+                run_eval(method, args.task, args.length, bl, st, steps_for_folder=st)
                 pbar.update(1)
 
 
