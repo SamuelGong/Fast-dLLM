@@ -58,7 +58,7 @@ def main():
     p = argparse.ArgumentParser(description="Grid runner with configurable methods and tqdm progress.")
     p.add_argument("--task", default="mmlu")
     p.add_argument("--length", type=int, default=128)
-    p.add_argument("--port", type=int, default=None)
+    p.add_argument("--port", type=int, default=0)
     p.add_argument("--num_processes", type=int, default=1)
     p.add_argument("--ratio", type=float, default=1.0)
     p.add_argument(
