@@ -20,11 +20,11 @@ def run_eval(method: str, task: str, length: int, block_length: int,
     steps_for_folder: value used in the output_path folder name
     """
     model_args = [
-        "model_path='GSAI-ML/LLaDA-8B-Instruct'",
+        "model_path=GSAI-ML/LLaDA-8B-Instruct",
         f"gen_length={length}",
         f"steps={steps_for_arg}",
         f"block_length={block_length}",
-        f"use_kv_cache='{method}'",
+        f"use_kv_cache={method}",
         "show_speed=True",
     ]
     out_dir = Path(f"evals_results/{method}/{length}/{block_length}/{steps_for_folder}/{task}")
@@ -39,7 +39,9 @@ def run_eval(method: str, task: str, length: int, block_length: int,
         "--output_path", str(out_dir),
         "--log_samples",
     ]
-    subprocess.run(cmd, check=True)
+
+    env = os.environ.copy()
+    subprocess.run(cmd, check=True, env=env)
 
 
 def main():
