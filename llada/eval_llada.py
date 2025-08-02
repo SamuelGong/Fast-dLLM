@@ -166,20 +166,19 @@ class LLaDAEvalHarness(LM):
 
     @torch.no_grad()
     def get_logits(self, batch, prompt_index):
-        print(self.cfg)
-        exit(0)
-        if self.cfg > 0.:
-            assert len(prompt_index) == batch.shape[1]
-            prompt_index = prompt_index.unsqueeze(0).repeat(batch.shape[0], 1)
-            un_batch = batch.clone()
-            un_batch[prompt_index] = self.mask_id
-            batch = torch.cat([batch, un_batch])
+        # Comment for compatible with lm_eval 0.4.9
+        # if self.cfg > 0.:
+        #     assert len(prompt_index) == batch.shape[1]
+        #     prompt_index = prompt_index.unsqueeze(0).repeat(batch.shape[0], 1)
+        #     un_batch = batch.clone()
+        #     un_batch[prompt_index] = self.mask_id
+        #     batch = torch.cat([batch, un_batch])
 
         logits = self.model(batch).logits
 
-        if self.cfg > 0.:
-            logits, un_logits = torch.chunk(logits, 2, dim=0)
-            logits = un_logits + (self.cfg + 1) * (logits - un_logits)
+        # if self.cfg > 0.:
+        #     logits, un_logits = torch.chunk(logits, 2, dim=0)
+        #     logits = un_logits + (self.cfg + 1) * (logits - un_logits)
         return logits[:, :batch.shape[1]]
 
     @torch.no_grad()
