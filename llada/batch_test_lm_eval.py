@@ -38,8 +38,6 @@ def run_eval(method: str, task: str, length: int, block_length: int,
     if port is not None:
         cmd += ["--main_process_port", str(port)]
     cmd += [
-        "accelerate", "launch",
-        "--num_processes", str(num_processes),
         "eval_llada.py",
         "--tasks", task,
         "--confirm_run_unsafe_code",
