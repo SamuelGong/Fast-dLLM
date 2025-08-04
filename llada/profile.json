@@ -1,0 +1,1817 @@
+{
+    "C2F": [
+        {
+            "question": "Explain diffusion models briefly.",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 7.27209228515625,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by simulating the process of diffusion. Diffusion is a process in which a substance spreads out over time, and in the context of diffusion models, it is used to generate new data samples. The model is trained on a large dataset of existing data samples and learns to approximate the distribution of the original data. Once the model has been trained, it can be used to generate new data samples that are similar to the original data. Diffusion models have been used in a variety of applications, including text generation, image synthesis, and audio generation.",
+                        "perplexity": 2.338040351867676
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 3.828112060546875,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by learning the distribution of the original data. The model works by first transforming the original data into a \"diffused\" version by adding random noise, and then using a series of linear algebra operations to transform the it back to to the original data. This \"reversible diffusion process\" is used to learn a model of the data distribution, which can be used to generate new data samples that are similar to the original data. Diffusion models have been used in a variety of applications, including image generation, text generation, and audio synthesis.",
+                        "perplexity": 4.32889461517334
+                    },
+                    "128": {
+                        "latency": 7.66240869140625,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by learning the distribution of the original data. The model works by simulating the process of \"diffusing\" through the data, where the data is gradually transformed into a Gaussian distribution, and then learning how to reverse the process to recover the original data. This \"reversible diffusion process\" is used to learn a model of the data distribution, which can be used to generate new data samples that are similar to the original data. Diffusion models have been used in a variety of applications, including image generation, text generation, and audio synthesis.",
+                        "perplexity": 3.8061482906341553
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.718962158203125,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by learning the distribution of the data.. The process by which the model learns the data distribution is called diffusion. In this process, the data is gradually transformed into noise through a series of random transformations, and the model then learns how to reverse the noise to transform the it back to the original data. Once the data distribution is learned, model can be used to generate new data samples that are similar to the original data. Diffusion models have been used in a variety of applications, including image generation, text generation, and audio synthesis.",
+                        "perplexity": 4.147377014160156
+                    },
+                    "64": {
+                        "latency": 3.72639111328125,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by simulating the process of diffusion. Diffusion is a process in which a pure isothermal substance spreads out through a given medium until it isogene evenly distributed. Diffusion models work by adding noise to the data and then gradually removing the noise, allowing the model to learn the distribution of the original data. Once the model has been learned, it can be used to generate new data samples that are similar to the original data. Diffusion models have been used in a variety of applications, including image generation, text generation, and audio synthesis.",
+                        "perplexity": 4.143232822418213
+                    },
+                    "128": {
+                        "latency": 8.0148466796875,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by learning the distribution of the data samples. The process by which they generate new data samples is called diffusion. In diffusion models, the data samples are first transformed into a noise distribution using a series of Gaussian noise. The noise distribution is then transformed back to the original samples, allowing the model to learn the distribution of the data samples. This learned distribution can then be used to generate new data samples that have the properties of the data distribution. Diffusion models are commonly used in applications such as image generation, text generation, and audio synthesis.",
+                        "perplexity": 3.6321496963500977
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 0.990828369140625,
+                        "answer": "Diffusion models are a type of generative model that that are to to of data data. They work by modeling the the process process process process of of the diffusion process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process process to to the the reverse process the process process to to to to new data data that that the similar of the original data.. have been a used in applications such as image generation, text generation, and audio generation.",
+                        "perplexity": 6.622580528259277
+                    },
+                    "32": {
+                        "latency": 2.49155908203125,
+                        "answer": "Diffusion models are a type of generative model that are used to generate new data samples. They work by simulating a process of diffusion noise where the input data is gradually transformed into noise and noise noise is then gradually back into the original data. This process allows the to model to learn the distribution of the input data, which can be used to generate new data samples that resemble the input data. Diffusion were first introduced in the Diffusion Models paper by Ho et. al. and Diff Diffusion Models paper by Chen et. al. They have been widely used in applications such as image generation, video synthesis, and text generation.",
+                        "perplexity": 6.030460834503174
+                    },
+                    "64": {
+                        "latency": 4.7796318359375,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively applying a diffusion process to a data distribution. The diffusion process involves adding Gaussian noise to the data and then applying the inverse of a learned transformation to remove the noise and recover the original data distribution. Over many iterations, the learned transformation approximates the inverse distribution of the original data distribution, allowing the model to generate samples that resemble the distribution of the original data. Diffusion models were first introduced in 2015 by Kingma et al. and have been widely used in applications such as image generation, text generation, and speech synthesis.",
+                        "perplexity": 3.8079957962036133
+                    },
+                    "128": {
+                        "latency": 8.43671875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively applying a series of transformations to the data. The idea is to learn a sequence of transformations that generate the input data from a noise distribution through a reverse process. The model learns to predict the transformations that were used to generate the input data, and can then apply these transformations in reverse order to generate the input data. Diffusion models are typically trained using importance sampling to simulate the diffusion process, which allows them to learn the distribution of the input data. They have been widely used in applications such as image generation, text generation, and speech synthesis.",
+                        "perplexity": 4.108079433441162
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.41439520263671875,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by a a distribution ( i.g. noise. They models the process of transforming noise into data data data data a series of of steps. The model is the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the to of the 0. data. They are used in a variety of of applications, including images, images, audio data, and other data.",
+                        "perplexity": 7.164234638214111
+                    },
+                    "16": {
+                        "latency": 1.2316136474609376,
+                        "answer": "Diffusion models are a type of generative model that that to data from a continuous distribution ( i.g. noise. They work by transforming a random noise vector and a series. of transformations transformations to get to the desired data. The process is called diffusion because it noise the the. the. the. the. the.. the. the... the. the.. the. the. the. the. the. the. the. the the.. the the. to of the. data.... They are widely used in image generation, text generation,,,, generation, and other generation.",
+                        "perplexity": 13.572139739990234
+                    },
+                    "32": {
+                        "latency": 2.773461669921875,
+                        "answer": "Diffusion models are a class of machine learning that that learn to generate samples from noise, i.e. data. They are based on a generative model that transforms noise into a data sample by by it through a series of steps. The model is first trained to learn to transform the data of noise, then the reverse model is trained to reverse the reverse the process process to recover the the noise from the the data. Finally, the reverse model is used to to generate the the data from the the noise.... They diffusion models can generate different types of data data, as images,, audio signals, and text data.",
+                        "perplexity": 13.051246643066406
+                    },
+                    "64": {
+                        "latency": 4.90670556640625,
+                        "answer": "Diffusion models are a type of machine learning model that are data-driven and introduced by King, et. al. in 2020. They are designed to generate data by learning the reverse process of adding noise to the data. The model is trained on a large dataset of clean and noisy data. The training process is based on a noise process, where the model learns how to corrupt the data by adding Gaussian noise.  Byatively removing the added noise, the model can reverse the process to generate the original data. Diffusion models have been used in image generation, text generation,, translation, and other applications.",
+                        "perplexity": 8.000432968139648
+                    },
+                    "128": {
+                        "latency": 9.5364951171875,
+                        "answer": "Diffusion models are a type of machine learning model that generate data by learning the reverse of the diffusion process itself. The idea is to learn a series of transformations that convert input data into noise, and then reverse these transformations to generate new data. This process is repeated iteratively multiple times, with each step adding a small amount of noise to the data and then reversing it to generate new data. Diffusion models are typically also trained using a loss function and a regularization term, which is used to learn the distribution of the input data. They can be particularly useful for tasks such as image generation, text generation, and data augmentation.",
+                        "perplexity": 5.024616718292236
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.21299072265625,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by, data,,,.......... They use a probabilistic of data, and, noise, images, and, and, and, and, and,,,.,.,. ...,,,,,,,,,,,,,,,,, and,,,, and,,,,,,,,,,,,,,,,,,,,,,,,,,,, and,,,,,,,, and, data.",
+                        "perplexity": 32.21110534667969
+                    },
+                    "8": {
+                        "latency": 0.6660823974609374,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by sampling from an (.i.d. distribution. They models by a a a a series of a series of linear transformations to Gaussian noise, which, and, and, and, and, and, and, and, and, and, and, and, and, and, and, and, and, and, and, approx to the data distribution of the data distribution. They are models are been used to generate, and,,,,,,,,,,,, and,,,,,, images, images, and text data.",
+                        "perplexity": 10.441649436950684
+                    },
+                    "16": {
+                        "latency": 1.4569346923828126,
+                        "answer": "Diffusion models are a type of generative model that that to data data by learning through a probabilistic process. They are by to learn a sequence of that lead to a given data data, such as text, images, or audio. In essence, the model learns to reverse the process of adding noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, and, generation.",
+                        "perplexity": 12.223837852478027
+                    },
+                    "32": {
+                        "latency": 2.173364990234375,
+                        "answer": "Diffusion models are a class of machine learning that that learn to to generate high-quality data by a a series of probabilistic sampling steps. The model is based on a diffusion process that transforms the data into a simple, then as a as noise, and then reverses the process to generate the data.. The process is learned by minimizing the cross-entropy between the the distribution of the original data and the distribution of the generated the noise. The model then learns to reverse the process from the noise to generate the original data. Diff. models have been used in various applications such as image generation, text generation, and audio synthesis.",
+                        "perplexity": 8.88604736328125
+                    },
+                    "64": {
+                        "latency": 5.14390625,
+                        "answer": "Diffusion models are a type of machine learning model that learn data by modeling the reverse of a diffusion process. They are particularly to be used in generative modeling for tasks that high-dimensional data such as images, text, and audio. In essence, diffusion models learn to generate data by taking a clean sample, and iteratively adding noise, and then iteratively removing noise to reconstruct the data. This allows the model to reverse the original process, and generate new and realistic samples of the data. Diffusion models are are known for their ability to generate realistic and realistic data, and are ability to handle the complexity of the-dimensional data.",
+                        "perplexity": 8.470714569091797
+                    },
+                    "128": {
+                        "latency": 9.99073046875,
+                        "answer": "Diffusion models are a type of machine learning model that generate data by a process of sampling from a probability distribution. They are particularly useful for tasks like natural language generation, where they can generate coherent text, images and videos, and audio data. The models work by applying a series of transformations to the input data, which gradually degrade the quality of the data until it converges to a noise distribution. By reversing this process, the model can generate new input data that closely resembles the original data. Diffusion models are particularly effective for generating high-quality and realistic data, due to their ability to capture the underlying structure of the input data.",
+                        "perplexity": 4.211870193481445
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.1065061798095703,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    },
+                    "4": {
+                        "latency": 0.36264859008789063,
+                        "answer": "Diffusion models are a type of generative learning model that to data data data data data data.",
+                        "perplexity": 13.50523853302002
+                    },
+                    "8": {
+                        "latency": 0.5603585205078125,
+                        "answer": "Diffusion models are a type of machine learning model that to generate data data by a.",
+                        "perplexity": 20.849040985107422
+                    },
+                    "16": {
+                        "latency": 1.5892496337890625,
+                        "answer": "Diffusion models are a type of machine learning model that can learn to generate data data..",
+                        "perplexity": 8.531316757202148
+                    },
+                    "32": {
+                        "latency": 2.26729443359375,
+                        "answer": "Diffusion models are a type of machine learning model that can learn to generate new data..",
+                        "perplexity": 5.272874355316162
+                    },
+                    "64": {
+                        "latency": 4.50374658203125,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data.",
+                        "perplexity": 4.253121376037598
+                    },
+                    "128": {
+                        "latency": 10.4970791015625,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by simulating the process of diffusion. The diffusion process involves gradually adding noise to a data sample, and then removing the noise to generate a new sample. Diffusion models are based on the concept of the Markov Chain Monte Carlo (MCMC) methods, which are used to approximate the distribution of the data. The models are designed to learn the reverse process of the diffusion process, which allows them to capture the properties of the data distribution. Diffusion models are used in various applications, including natural language processing, computer vision, and generative modeling.",
+                        "perplexity": 3.1181750297546387
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.07400675201416015,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "2": {
+                        "latency": 0.13019155883789063,
+                        "answer": "Diffusion models are a class of generative learning models that learn to data data data data data........... a process process process a a a, a,,,, the,, the.",
+                        "perplexity": 35.97261428833008
+                    },
+                    "4": {
+                        "latency": 0.3740047912597656,
+                        "answer": "Diffusion models are a type of generative learning that learn to to data data data from a noise. They are by to to a data data,,.",
+                        "perplexity": 41.11295700073242
+                    },
+                    "8": {
+                        "latency": 0.6148806762695312,
+                        "answer": "Diffusion models are a type of generative learning model that learn to generate data data by a reverse process..",
+                        "perplexity": 15.646618843078613
+                    },
+                    "16": {
+                        "latency": 1.172287109375,
+                        "answer": "Diffusion models are a type of generative learning model that learn to to data data by iteratively reverse process process.",
+                        "perplexity": 28.788576126098633
+                    },
+                    "32": {
+                        "latency": 3.21071435546875,
+                        "answer": "Diffusion models are a type of generative learning model that learn to generate data by simulating a diffusion process. They work by iteratively refining noise to approximate a data distribution..",
+                        "perplexity": 6.819769382476807
+                    },
+                    "64": {
+                        "latency": 4.81981396484375,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate data by learning to reverse the process of diffusion modeling. Diffusion modeling is a statistical process that involves applying a a series of transformations to a data point, gradually transforming it into a new data point. Diffusion models learn to reverse this process by predicting the original data point from the new data point. This process is iteratively applied to generate new data points, and the model is continuously trained to improve the quality of the generated data. Diffusion models have been used in a variety of applications, including natural language generation, image generation, and audio synthesis.",
+                        "perplexity": 3.65138840675354
+                    },
+                    "128": {
+                        "latency": 9.05568359375,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate data by learning the underlying distribution of the data. The idea is to represent the data as a series of samples that are gradually transformed into the target data. The model learns to reverse this process by applying a series of transformations to a noise vector to generate samples that resemble the target data. This process is typically done by minimizing the difference between the samples and the target data, which allows the model to learn the properties of the data distribution. Diffusion models have been used in a variety of applications, including natural language processing, computer vision, and audio generation.",
+                        "perplexity": 3.2110774517059326
+                    }
+                }
+            }
+        },
+        {
+            "question": "What is Retrieval-Augmented Generation?",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 6.676337890625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines two different techniques: retrieval and generation. Retrieval involves finding relevant information from a large corpus of text, while generation involves creating new text based on the retrieved information. RAG models are designed to generate text that is coherent and contextually relevant by incorporating information from a large corpus of text. This allows the model to generate text that is more accurate and informative than if it were only relying on information from a smaller corpus of text. RAG models are particularly useful for tasks such as question answering, summarization, and machine translation.",
+                        "perplexity": 2.813661813735962
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 3.25910791015625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines two types of neural networks: a retrieval network and a generation network. The retrieval network is responsible to retrieve relevant information from a large corpus of text, while the generation network is responsible to generate a response based on the retrieved information. RAG models are particularly useful for tasks that require generating human-like text, such as chatbots and automated dialogue systems. They They are able to generate coherent and context-aware responses, and can be used in a variety of natural language processing tasks such as question answering, textization, and summar translation.",
+                        "perplexity": 4.805386543273926
+                    },
+                    "128": {
+                        "latency": 8.16660546875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines two types of neural networks: a retrieval network and a generation network. The retrieval network is used to retrieve relevant information from a large corpus of text, while the generation network is used to generate new text based on the retrieved information. RAG models are particularly useful for tasks that require generating text based on a prompt or question, while also incorporating relevant information from a large corpus of text. They are often used in natural language processing and generation, and can be used for tasks such as question answering, summarization, and machine translation.",
+                        "perplexity": 2.3438918590545654
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.9936114501953126,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI that combines two types of language models: retrieval and generation. Inal retrieval,,, the model model searches for a large of text of documents to find the most relevant information to a given prompt or question. In generation, the the model uses the retrieved information to generate a response to answer the question. RAG models are particularly to be-suited for tasks that require a lot of information and can be scaled due to the the power of the internet. They are a used in applications applications such as chatbots, chat answering, and question answering.",
+                        "perplexity": 12.083834648132324
+                    },
+                    "64": {
+                        "latency": 4.3384609375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI that combines two types of language models: retrieval and generation. Retrieval models models the process of finding a relevant answer from a large corpus of text, while generation models model the process of creating a new text from scratch. RAG uses a retrieval model to find relevant information from a large corpus of text and then uses a generation model to generate a response based on that information retrieved. This allows the AI to generate a more a more accurate and relevant response. RAG is particularly useful in applications such as question answering, chatbots, and language systems.",
+                        "perplexity": 4.320742607116699
+                    },
+                    "128": {
+                        "latency": 8.6521806640625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI that combines two types of AI models: retrieval and generation. Retrieval models use a large database of text to find relevant information to answer a question or generate a response. Generation models, on the other hand, use a language model to generate a response based on the retrieved information. RAG combines the strengths of both retrieval and generation by using the retrieval model to provide more relevant information to the generation model, allowing it to generate more accurate and informative responses. RAG is often used in applications such as chatbots, virtual assistants, and machine translation.",
+                        "perplexity": 2.611858367919922
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 1.0862142333984375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language model that combines two different processes: retrieval and and generation. Inal process, the model first retrieves a large of of text from a a a large corpus of text, based on a given query,,, or is related to the original text. Then, the retrieved text is then used to generate a response response that is the relevant to the original text.. This combination of retrieval and generation, allows the model to generate more accurate and and informative responses, making particularly useful in applications such as chatbots, chatbots, and virtual systems.",
+                        "perplexity": 12.683520317077637
+                    },
+                    "32": {
+                        "latency": 2.293748779296875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of large language model that combines two types of language models: retrieval and retrieval. The retrieval models are used to search information from a large corpus of,, while the generation models are used to generate text based on the retrieved information. This approach allows the model to leverage a vast amount of,, knowledge,, and, to generate more accurate and relevant responses. RAG can be applied to various data types of, such as text, audio,, images, etc., and particularly useful in applications such as chatbots, dialogue systems, and content generation.",
+                        "perplexity": 6.534577369689941
+                    },
+                    "64": {
+                        "latency": 4.65554833984375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines two types of neural networks: a retrieval network and a generation network. The retrieval network is responsible to search relevant information from a large corpus of text,, while the generation network is used to generate text based on the retrieved information. RAG models are designed to improve the performance of natural language models by combining the output of the retrieval network with the text produced by the generation network. This allows the model to generate more accurate and informative responses, making is particularly useful in applications such as chatbots, language translation, and text generation.",
+                        "perplexity": 4.054037094116211
+                    },
+                    "128": {
+                        "latency": 8.54862890625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines two types of neural language processing techniques: retrieval and generation. The retrieval-based component of the model searches through a large corpus of text to find relevant information to answer a question or complete a task. The generation-based component of the model uses a deep learning model, such as a language (GPT) model, to generate a response based on the retrieved information. By combining these two techniques, RAG is able to generate more accurate and informative responses, being particularly useful in applications such as question answering, chatbots, and dialogue systems.",
+                        "perplexity": 3.6622354984283447
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.4611687316894531,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of that that combines the language of a a a a a a a a to a a a a a a a a a a",
+                        "perplexity": 6.675288200378418
+                    },
+                    "16": {
+                        "latency": 1.2269925537109374,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of that that combines the language of a a human with a large of to a a human of to generate",
+                        "perplexity": 27.654539108276367
+                    },
+                    "32": {
+                        "latency": 2.1191669921875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of that that combines the strengths of natural language and machine learning to to generate the language more efficiently. RAG is a on of generative that that that uses information from a large corpus to to generate the",
+                        "perplexity": 15.359256744384766
+                    },
+                    "64": {
+                        "latency": 4.2958232421875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines a generative language model with either a retrieval language model or a transformer language model. The retrieval component allows the model to retrieve relevant from a large corpus of text data, while the generative component allows the model to generate text based on the retrieved information. The retrieval component is used to retrieve relevant text data, which is then used by the the generative component to generate new text based on the retrieved information.. RAG models can be used in various NLP tasks such as question answering, question answering, and summarization.",
+                        "perplexity": 4.059756278991699
+                    },
+                    "128": {
+                        "latency": 9.30555078125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a computational technique that combines two different processes: retrieval and generation. In RAG, a large language model is used to generate a response based on the input query, but the generated text is augmented with the retrieved information, rather than generating a new text based solely on the retrieved information. This process allows the model to generate a response that is relevant to the input query, while also retaining the ability to generate a new text based on the retrieved information. RAG is widely used in various natural language processing tasks such as text summarization, question answering, and machine translation.",
+                        "perplexity": 3.900996446609497
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.30098907470703123,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that that a a a a a a a a a a a a a a a a a a the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the",
+                        "perplexity": 3.3578739166259766
+                    },
+                    "8": {
+                        "latency": 0.6811430053710937,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of that that combines the language of a a a a a a a a a a a a a a a a a a a a a a a the the the the the the the the the the the the the",
+                        "perplexity": 4.035781383514404
+                    },
+                    "16": {
+                        "latency": 1.457553466796875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of model that combines a pre-trained language model with a a a a a a a a a a a a a a a a a a a a the the the the the the the the to to the the the the the the the the the the the the the the the the the the the the the",
+                        "perplexity": 3.4812610149383545
+                    },
+                    "32": {
+                        "latency": 3.084354736328125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a natural of processing that combines the pre-trained generative capabilities of a a model with a retrieval component to generate the output of a model from a \n.. R then uses the information from the to enhance the pre\n-trained model's output..",
+                        "perplexity": 22.095998764038086
+                    },
+                    "64": {
+                        "latency": 5.33876220703125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a machine learning technique that combines two approaches: retrieval (or information retrieval, and retrieval-enhanced generation. In RAG, the model retrieves information directly from a database, and the retrieved information is used to give the model with the necessary context to generate a response. RAG is often used in natural language processing (NLP) tasks, such as question answering, summarization, and dialogue systems. RAG models are typically trained using a large dataset of text-output pairs, where each text pair consists of the information on the task, the piece of information, and the context.",
+                        "perplexity": 7.100148677825928
+                    },
+                    "128": {
+                        "latency": 10.685677734375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines a search engine with a pre pre-trained language model. RAG model uses a user query to retrieve relevant documents from within a large corpus to then generate text that is relevant to both the input query and the retrieved documents. This allows the model to generate more accurate and relevant text that is based on the input query. RAG models are often used in natural language processing (NLP) applications, such as chatbots and question answering systems, and can be used for tasks such as text summarization, question answering, and dialogue generation.",
+                        "perplexity": 4.6503586769104
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.10507545471191407,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language that that combines a that a a a a a a a a a a a a...",
+                        "perplexity": 8.14511489868164
+                    },
+                    "4": {
+                        "latency": 0.33709912109375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language that that combines the retrieval of a retrieval to to to to",
+                        "perplexity": 21.89650535583496
+                    },
+                    "8": {
+                        "latency": 0.7130441284179687,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing thatNLP) model that combines the retrieval and retrieval generation to to",
+                        "perplexity": 22.109783172607422
+                    },
+                    "16": {
+                        "latency": 1.1915718994140625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language model that combines retrieval retrieval with retrieval-based.",
+                        "perplexity": 12.932097434997559
+                    },
+                    "32": {
+                        "latency": 2.942017578125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI language model that combines",
+                        "perplexity": 3.0914671421051025
+                    },
+                    "64": {
+                        "latency": 4.92190673828125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of",
+                        "perplexity": 3.265281915664673
+                    },
+                    "128": {
+                        "latency": 9.7535517578125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of",
+                        "perplexity": 3.265281915664673
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.08908573150634766,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that a a a a a a a a a a a a a a a a the a the the the the the the the the the the the the the the the the the",
+                        "perplexity": 5.051131248474121
+                    },
+                    "2": {
+                        "latency": 0.17532051086425782,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language that that combines a that of a a a a a a a a a a a a to. to",
+                        "perplexity": 12.90014934539795
+                    },
+                    "4": {
+                        "latency": 0.3703984069824219,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of model that combines the strengths of retrieval retrieval and and retrieval to to",
+                        "perplexity": 17.054922103881836
+                    },
+                    "8": {
+                        "latency": 0.8305109252929688,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of models that combines the strengths of retrieval retrieval and and and..",
+                        "perplexity": 8.966255187988281
+                    },
+                    "16": {
+                        "latency": 1.6648653564453124,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of large language model that combines retrieval and generation..",
+                        "perplexity": 3.5039288997650146
+                    },
+                    "32": {
+                        "latency": 2.362869384765625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a natural of approach that combines",
+                        "perplexity": 14.2590970993042
+                    },
+                    "64": {
+                        "latency": 5.25384912109375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines",
+                        "perplexity": 3.1508052349090576
+                    },
+                    "128": {
+                        "latency": 10.201912109375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a machine learning technique that",
+                        "perplexity": 4.264102935791016
+                    }
+                }
+            }
+        },
+        {
+            "question": "When will human realize Artificial General Intelligence?",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 6.77372802734375,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a debated topic in the scientific community. Some experts predict that AGI could be achieved within the next few decades, while others believe it may be centuries away. The development of AGI is influenced by various factors, including advancements in computational power, algorithmic improvements, and the availability of large and diverse datasets. Additionally, the realization of AGI may also depend on the understanding of human intelligence and the development of systems that can mimic and surpass human cognitive abilities. Ultimately, the realization of AGI is a complex and ongoing process that requires continued research and collaboration across various scientific disciplines.",
+                        "perplexity": 3.0067059993743896
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 3.85080029296875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic of ongoing debate and speculation among experts. The field of artificial intelligence is rapidly advancing, and there is no single timeline for when AGI will be achieved. Some researchers predict that AGI could be within just the next few decades, while others believe it may take centuries or even millennia. The development of AGI is influenced by various factors, including advancements in, but not to, computational power, data availability, and algorithmic breakthroughs. As of now, AGI remains a theoretical concept, and there is no definitive evidence that it will be realized in the near future.",
+                        "perplexity": 3.9658706188201904
+                    },
+                    "128": {
+                        "latency": 7.969130859375,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic of ongoing debate and speculation among experts. Dr. Nick Bostrom, a philosopher and futurist, predicts that AGI could be achieved by the mid-21st century. However, other experts, such as Professor Stuart Russell, argue that AGI may not be possible until the mid to late twentieth century. The development of AGI is influenced by various factors, including advancements in computational power, machine learning, and the internet. Ultimately, the exact timeline for AGI realization remains uncertain, and it is likely to be a gradual process over several decades.",
+                        "perplexity": 3.789203405380249
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.9781217041015624,
+                        "answer": "As yet, Artificial General Intelligence (AGI) is not a achieved.. AGI is a theoretical of artificial intelligence that can perform any intellectual task a human human can do. , it is difficult to predict when AGI will AGI will be achieved. It is a to develop AGI. However, in the past few years, we have made significant progress in the development of AGI. Therefore, it is difficult to predict when AGI will AGI. However, some researchers believe that in the next 50 to 100 years, we to make significant progress in the development of AGI.",
+                        "perplexity": 6.421216011047363
+                    },
+                    "64": {
+                        "latency": 4.36744580078125,
+                        "answer": "As yet, Artificial General Intelligence (AGI) is not a reality.. AGI is a theoretical of artificial intelligence that can perform any intellectual task that a human can.. , it is difficult to predict when AGI will be achieved. Some experts believe that AGI may be achieved in the near future, while others believe that it may not be possible until in the future. The development of AGI will depend on many factors, including advances in hardware, software, and algorithms, data availability, and ethical considerations. Therefore, it is difficult to predict when we will make significant progress in the development of AGI.",
+                        "perplexity": 5.17270040512085
+                    },
+                    "128": {
+                        "latency": 8.6004990234375,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a speculative topic, and there is no definitive answer. Some experts predict that AGI may occur within the next few decades, while others believe it may take centuries or even millennia. The development of AGI depends on various factors, including technological advancements, scientific breakthroughs, and the alignment of human values.\n\nAs of now, there is no specific timeline for AGI, and the concept remains largely theoretical. While research and development efforts are ongoing, the realization of AGI is still a long-term goal and requires the resolution of numerous scientific, ethical, and societal challenges.",
+                        "perplexity": 3.141176223754883
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 1.0497496337890626,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence,AG isI is is a is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is is,, and is is is is is is is is is is is.",
+                        "perplexity": 2.9614970684051514
+                    },
+                    "32": {
+                        "latency": 2.30333154296875,
+                        "answer": "As of, Artificial General Intelligence (AGI) is not a reality. AGI is a theoretical concept of intelligence that can perform any intellectual task that a human can do. However, it is not that AGI is not a reality. but is that a theoretical concept. AGI is a theoretical concept.. Some believe that AGI is not to be achieved, some believe that by age 50 AGI, and some believe that by the age of 20 AGI.. However. companies such,AI Open, Google DeepMind,,, and others are actively working for the development of AGI.",
+                        "perplexity": 14.167403221130371
+                    },
+                    "64": {
+                        "latency": 4.02173583984375,
+                        "answer": "The development of Artificial General Intelligence (AGI) is a highly and uncertain research topic. There is no consensus among experts on when AGI will be achieved. Some experts believe that AGI is possible within the next few decades, while others think it may take centuries or even millennia. There, however, is a significant effort to develop the next generation of AGI, which is known as AGI 2.0. The advancements in computer science, machine learning, neuroscience and and cognitive science all contribute to the possibility the of creating AGI. However,, it is impossible to predict the exact release date of AGI.",
+                        "perplexity": 6.239728927612305
+                    },
+                    "128": {
+                        "latency": 8.6024423828125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a speculative topic, and there is no consensus on exact timeline. Some experts predict that AGI could be achieved within the next century, while others believe it may take much longer. The actual realization of AGI is dependent on various factors such as the pace of technological advancements, the development of algorithms, the availability of sufficient computational power, and the ability of humans to understand and replicate complex cognitive processes. As of now, there is ongoing research and advancements in fields such as machine learning, neuroscience, and cognitive science, but the exact realization of AGI remains an open question.",
+                        "perplexity": 3.711418390274048
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.4352904968261719,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence Intelligence is Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence, Intelligence, ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 17.52260971069336
+                    },
+                    "16": {
+                        "latency": 1.279272705078125,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence,,\n\n\n\nArtificial General Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence, Intelligence.",
+                        "perplexity": 2.380988836288452
+                    },
+                    "32": {
+                        "latency": 2.8255322265625,
+                        "answer": "As of, Artificial General Intelligence (AGI)  is not yet achieved..\n\nAGI systems are capable of doing mathematics, mathematics, mathematics, mathematics, mathematics, mathematics, mathematics, mathematics, mathematics, mathematics, mathematics, mathematics, mathematics, etc, however, they are not capable of general intelligence like humans yet.\n\n\n\n\nAGI is a to be achieved, however,, and it is not to be achieved anytime yet, as it is not achieved yet.\n\n\nHowever,, research, research,  and and technological advancements will bring us closer to the realization of AGI.",
+                        "perplexity": 13.865376472473145
+                    },
+                    "64": {
+                        "latency": 4.82891259765625,
+                        "answer": "The realization of Artificial General Intelligence (AGI)  is a topic of much debate. Some experts believe that AGI may happen within the next century, but it depends on many factors, including research,, funding, and technological advancements.  Stuart J. Russell, however, believes that AGI is unlikely due to the complexity of the problem and the lack of progress in research.. Other experts, believe that AGI will is happen within the next few decades.  So, there is is no set time frame for exactly when we will see an AGI, but many experts expect it to happen in the near future.",
+                        "perplexity": 10.458170890808105
+                    },
+                    "128": {
+                        "latency": 8.9408564453125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) that is capable of human-level intelligence across a wide range of tasks is not yet a reality and is still a topic of ongoing research and debate among experts in various fields, including cognitive science, neuroscience, philosophy, ethics, and even philosophical considerations.\n\nWhile some experts predict that AGI could be achieved within the next few decades, others are more pessimistic and suggest that it may be centuries in the future. There is a significant amount of research and development in the field of artificial intelligence, and it is currently difficult to provide a definitive timeline for the realization of AGI.",
+                        "perplexity": 4.608044147491455
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.2110465850830078,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence Intelligence is is Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence,,,,,,,,, Intelligence,,.,,.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 19.957393646240234
+                    },
+                    "8": {
+                        "latency": 0.5549075317382812,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence As is Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence,,,,,,,,,,,,,,,,\n,\n,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 45.06438064575195
+                    },
+                    "16": {
+                        "latency": 1.1457921142578125,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence GeneralI,, is still a..",
+                        "perplexity": 207.33419799804688
+                    },
+                    "32": {
+                        "latency": 2.290741455078125,
+                        "answer": "As of, Artificial General Intelligence (AGI) is not a reality. It  is not expected to be achieved in the near future. The goal of AI is to be able to to perform a a wide range of tasks like that of human intelligence, including-solving, reasoning, learning, and understanding language. \n\nHowever, the is possible that AI AGI will be achieved in the future,, but it exact timeline is uncertain. It depends on the advancement of technology, the pace of research, and the efforts of the scientific community. So,, it is possible that AGI will be achieved in the future.",
+                        "perplexity": 10.048444747924805
+                    },
+                    "64": {
+                        "latency": 4.48585498046875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic of ongoing research and debate among scientists and experts in computer science, philosophy, and cognitive science.. As of right now, there no is no definitive timeline for achieving AGI. However, some experts predict that AG I may be achieved within the 100 years, while others believe it may take much longer. AGI is defined as a machine intelligence that can perform all the functions of a human human intelligence, such as learning, reasoning, understanding and more. However,, and there is no consensus on  the feasibility or timeline of AGI.",
+                        "perplexity": 9.512465476989746
+                    },
+                    "128": {
+                        "latency": 9.0606513671875,
+                        "answer": "The realization of Artificial General Intelligence (or AGI) is a topic of ongoing research and debate, and different experts have different timelines for the development of AGI. As of right now, there is no single specific timeline for achieving the development of AGI. However, some experts currently believe that AGI is possible within the next decade or two, while others think it may take several decades or even centuries, depending on the pace of technological advancements and breakthroughs in research. Therefore, there is no specific timeline for the development of AGI, and it is difficult to predict the timing of the development of AGI in the future.",
+                        "perplexity": 5.5028557777404785
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.10517817687988282,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence,, is,, is,,,,",
+                        "perplexity": 292.5769348144531
+                    },
+                    "4": {
+                        "latency": 0.3246547546386719,
+                        "answer": "The concept of Artificial General Intelligence (AGI) is still topic topic of debate among debate. and.",
+                        "perplexity": 26.217947006225586
+                    },
+                    "8": {
+                        "latency": 0.521344970703125,
+                        "answer": "The development of Artificial General Intelligence (AGI) is still topic topic of debate among experts and",
+                        "perplexity": 14.665339469909668
+                    },
+                    "16": {
+                        "latency": 1.167484130859375,
+                        "answer": "The development of Artificial General Intelligence (AGI) is a speculative topic.",
+                        "perplexity": 7.755682945251465
+                    },
+                    "32": {
+                        "latency": 2.401955810546875,
+                        "answer": "The development of Artificial General Intelligence (AGI) is a speculative topic.",
+                        "perplexity": 7.755682945251465
+                    },
+                    "64": {
+                        "latency": 4.6227431640625,
+                        "answer": "The development of Artificial General Intelligence (AGI) is uncertain.",
+                        "perplexity": 8.884490013122559
+                    },
+                    "128": {
+                        "latency": 9.2563232421875,
+                        "answer": "The development of Artificial General Intelligence (AGI) remains uncertain.",
+                        "perplexity": 11.203295707702637
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.09331724548339844,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 127.17066955566406
+                    },
+                    "2": {
+                        "latency": 0.16964288330078126,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence,AG is is is is,,,,,,",
+                        "perplexity": 199.5305938720703
+                    },
+                    "4": {
+                        "latency": 0.46958523559570314,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a a topic in debate and and and....... Some........ the. future, but others is",
+                        "perplexity": 130.93775939941406
+                    },
+                    "8": {
+                        "latency": 0.56483837890625,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic topic of debate among experts and techn scientists. Some believe that AG AGI is be possible, while while while while it",
+                        "perplexity": 39.30067825317383
+                    },
+                    "16": {
+                        "latency": 1.24327587890625,
+                        "answer": "The development of Artificial General Intelligence (AGI) is a topic topic of debate and speculation.",
+                        "perplexity": 9.485029220581055
+                    },
+                    "32": {
+                        "latency": 2.31932275390625,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is still topic topic of debate among experts.",
+                        "perplexity": 10.728933334350586
+                    },
+                    "64": {
+                        "latency": 4.75608984375,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a a topic of ongoing research and debate among experts. Some believe that AGI is within",
+                        "perplexity": 7.8396830558776855
+                    },
+                    "128": {
+                        "latency": 9.3682041015625,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a speculative topic, and there is no definitive answer.",
+                        "perplexity": 4.190568447113037
+                    }
+                }
+            }
+        }
+    ],
+    "Dual": [
+        {
+            "question": "Explain diffusion models briefly.",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 6.73985595703125,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively adding noise to a clean data sample and then reverse the process to generate new data samples. The process involves two main steps:\n\n1. **Noise Addition**: The model adds noise to a clean data sample, gradually corrupting it.\n2. **Noise Removal**: The model then learns to reverse the process by iteratively removing noise to generate new data samples.\n\nThis approach allows diffusion models to generate high-quality, realistic data samples, making them useful for applications such as image generation, text generation, and data augmentation.",
+                        "perplexity": 3.1662511825561523
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 3.239934326171875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by a process of reverse. They of the learn to of a noise vector into a data point by applyingatively applying a series of transformations transformations to the noise vector. The process is called to reverse \"diffusion\" because it noise vector is gradually transformed into a data point by a series of transformations. The process is repeated until the desired data point is generated. Diffusion models are particularly used in generating high-quality images, text, and other forms of data. They are also used in various applications such as image synthesis, text-to-image, and language modeling.",
+                        "perplexity": 7.244332790374756
+                    },
+                    "128": {
+                        "latency": 7.420875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively adding noise to a clean data point and then reversing the process to generate new data points. The process is called a \"diffusion process\" because the noise is added gradually and the model learns to remove it to generate new data points. The process is repeated iteratively, with each iteration adding a small amount of noise to the data point, until the model can generate new data points that are similar to the original data. Diffusion models are often used in applications such as image generation, text generation, and data augmentation.",
+                        "perplexity": 2.9463939666748047
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.9992135009765626,
+                        "answer": "Diffusion models are a type of machine learning model that to generate the data of a... They",
+                        "perplexity": 19.970935821533203
+                    },
+                    "64": {
+                        "latency": 4.014372802734375,
+                        "answer": "Diffusion models are a type of generative model that learn data by a process process of reverse diffusion. The process involves adding noise to the data and gradually removing the noise to generate the original data. The model learns to reverse this process by generating data data from noise.",
+                        "perplexity": 7.397773265838623
+                    },
+                    "128": {
+                        "latency": 7.7485947265625,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively transforming noise into the desired data. The process involves applying a series of transformations to the noise, which gradually refine the data until it resembles the target distribution. The model is typically trained by minimizing the difference between the generated data and the target data, often through a combination of techniques such as variational inference, gradient descent, and reinforcement learning. Diffusion models are particularly useful for generating high-quality data, such as images, audio, and text, and have applications in various fields, including computer vision, natural language processing, and generative modeling.",
+                        "perplexity": 2.7649435997009277
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 0.96352392578125,
+                        "answer": "Diffusion models are a class of generative models that that that data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data",
+                        "perplexity": 1.7947059869766235
+                    },
+                    "32": {
+                        "latency": 2.1297626953125,
+                        "answer": "Diffusion models are a class of generative models that that that learn data to data mappings. They work by to from noise to a data data point, aatively applying noise noise of a form.. The",
+                        "perplexity": 75.80296325683594
+                    },
+                    "64": {
+                        "latency": 4.8234599609375,
+                        "answer": "Diffusion models are a type of generative model that learn data by a process process of reverse engineering. They work by first generating noise, then applying a noise to the noise to make the noise of the data data, and finally reversing the noise to generate the original data. This process is repeated untilatively, the model of the noise becomes more similar to the original data. Diffusion models are particularly used for generating high-quality images, as they can learn to structure of the data and generate realistic images.",
+                        "perplexity": 9.758206367492676
+                    },
+                    "128": {
+                        "latency": 7.72370947265625,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by approximating the reverse process of a diffusion process. The idea is to start with a noise distribution and gradually add noise to it, following a series of steps. By reversing the process, the model can learn to generate data that is similar to the original data. Diffusion models are particularly useful for generating high-quality images, as they can capture the nuances of the data and produce realistic results. They are often used in applications such as image synthesis, style transfer, and video generation.",
+                        "perplexity": 2.7687084674835205
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.404397705078125,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a probabilistic of.. noise noise noise noise noise noise.. noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise",
+                        "perplexity": 2.859861373901367
+                    },
+                    "16": {
+                        "latency": 0.9527098999023438,
+                        "answer": "Diffusion models are a class of generative models that that that data of of data is generated by from a Gaussian noise. noise process. process. The. is a by a",
+                        "perplexity": 45.319671630859375
+                    },
+                    "32": {
+                        "latency": 2.2975224609375,
+                        "answer": "Diffusion models are a class of machine learning models that simulate the process of of generating a data data distribution from a noise distribution. They consist of a series of transformations that that transform noise noise into a data data.. The models are typically trained using a combination of data and and data data,. They used for a variety of applications including data generation, modeling, and anomaly detection.",
+                        "perplexity": 11.85547161102295
+                    },
+                    "64": {
+                        "latency": 4.37270703125,
+                        "answer": "Diffusion models are a type of machine learning model that can generate data by a process of gradually transforming noise noise into a desired output. The process is called to reverse the diffusion of particles, which the model uses to generate the data. The model is trained on a large dataset of images and and can generate images to the desired of the same style. Diffusion models are used used in various applications such as image generation, text transfer, and data synthesis.",
+                        "perplexity": 8.976725578308105
+                    },
+                    "128": {
+                        "latency": 9.2868046875,
+                        "answer": "Diffusion models are a type of machine learning model that simulate the process of generating data by gradually adding noise to a clean signal and then reversing the noise to generate the original data. This process is repeated iteratively to produce a sequence of data samples. Diffusion models are often used in applications such as image generation, text generation, and data augmentation. They are particularly useful for generating realistic and coherent data.",
+                        "perplexity": 3.7143943309783936
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.25160435485839844,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,...................",
+                        "perplexity": 79.68077850341797
+                    },
+                    "8": {
+                        "latency": 0.5671309814453125,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by a a a a a distribution... They models models a a a a, a",
+                        "perplexity": 51.80602264404297
+                    },
+                    "16": {
+                        "latency": 1.34956640625,
+                        "answer": "Diffusion models are a class of generative models that that to data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data",
+                        "perplexity": 1.9500985145568848
+                    },
+                    "32": {
+                        "latency": 2.652440185546875,
+                        "answer": "Diffusion models are a class of machine learning models that learn to generate data data by a process of reverse diffusion process.. They are often used in image generation, text generation, and other applications.. The",
+                        "perplexity": 15.193075180053711
+                    },
+                    "64": {
+                        "latency": 4.527892578125,
+                        "answer": "Diffusion models are a type of machine learning model that can generate data by learning a diffusion process. They process data by iteratively it through a probability distribution, which is used to generate new data.",
+                        "perplexity": 8.107369422912598
+                    },
+                    "128": {
+                        "latency": 9.4463076171875,
+                        "answer": "Diffusion models are a type of machine learning model that learn to generate data by approximating the process of diffusion. They are particularly useful for tasks like text generation, image synthesis, and audio generation. The basic idea is to create a model that can generate realistic data by reversing the process of diffusion, which is the process of gradually adding noise to a data point until it becomes indistinguishable from random noise. By reversing this process, the model can generate new data points that are similar to the original data. Diffusion models are particularly useful for tasks that require high-quality data generation, such as generating realistic images or generating human-like text.",
+                        "perplexity": 2.9038655757904053
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.11380678558349609,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 91.00130462646484
+                    },
+                    "4": {
+                        "latency": 0.30248184204101564,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by.......",
+                        "perplexity": 37.88539123535156
+                    },
+                    "8": {
+                        "latency": 0.6793284301757813,
+                        "answer": "Diffusion models are a class of generative learning that that learn to to data data data data,,,......",
+                        "perplexity": 65.39923095703125
+                    },
+                    "16": {
+                        "latency": 1.3812757568359375,
+                        "answer": "Diffusion models are a class of generative models that that to data data data data.",
+                        "perplexity": 16.894460678100586
+                    },
+                    "32": {
+                        "latency": 2.854421875,
+                        "answer": "Diffusion models are a class of machine learning models that learn to generate data data by a probabilistic of sampling and inference. process. They are particularly on the generative side of data..",
+                        "perplexity": 28.946800231933594
+                    },
+                    "64": {
+                        "latency": 4.88061572265625,
+                        "answer": "Diffusion models are a type of machine learning model that can generate data by learning a reverse process. They of the form of a stochastic process, where the data is generated from noise, and the model learns to reverse the process to generate the data. This process involves involves a series of steps, where the step is to transform the noise to generate the data. The model learns to predict the noise at each step step, and then combines these predictions to generate the final data. Diffusion models are effective for generating realistic data, and can be used in a variety of applications such as image generation, text generation, and audio synthesis.",
+                        "perplexity": 5.194053649902344
+                    },
+                    "128": {
+                        "latency": 8.7621630859375,
+                        "answer": "Diffusion models are a type of machine learning model that learn to generate data by iteratively applying a series of transformations to a data distribution. The idea is to reverse-engineer the process of generating data, starting from the observed data and working backwards through a series of random transformations. This process is often referred to as diffusion, and the model learns to reverse this process to generate new data samples. Diffusion models are particularly useful for generating high-quality data, such as images, text, and audio. They have been used in a variety of applications, including image generation, text-to-image synthesis, and text-to-speech synthesis.",
+                        "perplexity": 3.024444103240967
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.08821465301513672,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "2": {
+                        "latency": 0.20958883666992187,
+                        "answer": "Diffusion models are a class of generative learning models that learn to data data data data data........... a process process process a a a, a,,,, the,, the.",
+                        "perplexity": 35.97261428833008
+                    },
+                    "4": {
+                        "latency": 0.338528564453125,
+                        "answer": "Diffusion models are a type of generative learning that learn to to data data data from a noise. They are by to to a data data,,.",
+                        "perplexity": 41.11295700073242
+                    },
+                    "8": {
+                        "latency": 0.6420567016601563,
+                        "answer": "Diffusion models are a type of generative learning model that learn to generate data data by a reverse process..",
+                        "perplexity": 15.646618843078613
+                    },
+                    "16": {
+                        "latency": 1.4282344970703125,
+                        "answer": "Diffusion models are a type of generative learning model that learn to to data data by iteratively reverse process process.",
+                        "perplexity": 28.788576126098633
+                    },
+                    "32": {
+                        "latency": 2.667055419921875,
+                        "answer": "Diffusion models are a type of generative learning model that learn to generate data by simulating a diffusion process. They work by iteratively refining noise to approximate a data distribution..",
+                        "perplexity": 6.819769382476807
+                    },
+                    "64": {
+                        "latency": 4.219134765625,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate data by learning to reverse the process of diffusion modeling. Diffusion modeling is a statistical process that involves applying a a series of transformations to a data point, gradually transforming it into a new data point. Diffusion models learn to reverse this process by predicting the original data point from the new data point. This process is iteratively applied to generate new data points, and the model is continuously trained to improve the quality of the generated data. Diffusion models have been used in a variety of applications, including natural language generation, image generation, and audio synthesis.",
+                        "perplexity": 3.65138840675354
+                    },
+                    "128": {
+                        "latency": 8.9553017578125,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate data by learning the underlying distribution of the data. The idea is to represent the data as a series of samples that are gradually transformed into the target data. The model learns to reverse this process by applying a series of transformations to a noise vector to generate samples that resemble the target data. This process is typically done by minimizing the difference between the samples and the target data, which allows the model to learn the properties of the data distribution. Diffusion models have been used in a variety of applications, including natural language processing, computer vision, and audio generation.",
+                        "perplexity": 3.2110774517059326
+                    }
+                }
+            }
+        },
+        {
+            "question": "What is Retrieval-Augmented Generation?",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 6.74448193359375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation. It uses a large corpus of text to generate responses to user queries. RAG models first retrieve relevant information from the corpus, and then use that information to generate a response. This allows the model to provide more accurate and contextually relevant answers to user queries. RAG models are often used in applications such as chatbots, virtual assistants, and information retrieval systems.",
+                        "perplexity": 2.4695043563842773
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 4.02989013671875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the retrieval and generation of. It uses a large pre of text to generate relevant and to-the- point answers to questions. RAG models are by far the most accurate and answering questions questions..",
+                        "perplexity": 13.885062217712402
+                    },
+                    "128": {
+                        "latency": 7.33058837890625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation techniques. It uses a large corpus of text to retrieve relevant information and then uses that information to generate a response to a given query. RAG models are particularly useful for tasks that require a lot of context, such as question answering, chatbots, and language translation. They can also be used to generate text that is more coherent and contextually relevant than traditional generation models. RAG models are often used in combination with other NLP techniques to improve the performance of natural language processing systems.",
+                        "perplexity": 2.86157488822937
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 2.049611083984375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of model that combines natural language processing (NLP) and retrieval retrieval to generate human.. R",
+                        "perplexity": 12.269925117492676
+                    },
+                    "64": {
+                        "latency": 4.073849365234375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of generative model that combines a generative model with a retrieval model. The retrieval model is a neural model that that searches a large of pre of text to find relevant text to a prompt. The generative model is then used to generate the next text in the sequence based on the retrieved text. RAG models are be used to generate text that is more to the point than a traditional generative model.",
+                        "perplexity": 6.2844672203063965
+                    },
+                    "128": {
+                        "latency": 8.27719140625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of generative model that combines two different techniques: retrieval and generation. It is used to generate text by retrieving relevant information from a large corpus of text and then using that information to generate new text. RAG models are particularly useful for tasks that require knowledge or context, such as question answering, summarization, and dialogue systems. They work by first retrieving relevant information from a large corpus of text and then using that information to generate new text. This allows the model to generate text that is more accurate and informative than if it were only relying on its own knowledge.",
+                        "perplexity": 2.7561466693878174
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 0.9434097900390624,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing ( that combines model that combines the retrieval of retrieval and and to to generate the...... .",
+                        "perplexity": 44.46259689331055
+                    },
+                    "32": {
+                        "latency": 2.392506591796875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing ( that combines a retrieval of information from a database with a generation model to produce a response. R",
+                        "perplexity": 14.031550407409668
+                    },
+                    "64": {
+                        "latency": 4.37687109375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation to. It allows models to generate text from a large corpus of documents, using the information retrieved from the corpus to enhance the generation process. RAG models are particularly used in tasks such as question answering, summarization, and text generation, where the ability to retrieve relevant information from a large corpus of documents is essential. By",
+                        "perplexity": 5.46856164932251
+                    },
+                    "128": {
+                        "latency": 8.071154296875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of generative model that combines two different techniques: retrieval and generation. Retrieval involves using a large corpus of text to find relevant information to answer a question or perform a task. Generation, on the other hand, involves using a language model to generate new text based on the retrieved information. RAG models are designed to leverage the strengths of both retrieval and generation to improve the quality and relevance of the generated text. They are often used in applications such as question answering, chatbots, and text generation.",
+                        "perplexity": 2.530517101287842
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.4817647705078125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that combines a language of a a to to to to...... . .",
+                        "perplexity": 25.913118362426758
+                    },
+                    "16": {
+                        "latency": 1.039445068359375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a natural of natural language processing (NLP) that that combines two retrieval of retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval retrieval",
+                        "perplexity": 2.2190349102020264
+                    },
+                    "32": {
+                        "latency": 2.397272705078125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a natural of that combines a search of a large dataset with a generative model model to produce a. R",
+                        "perplexity": 28.618940353393555
+                    },
+                    "64": {
+                        "latency": 4.58195361328125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of generative model that combines the strengths of two separate and complementary approaches: retrieval and generation. In retrieval involves using a database of documents to find relevant information, a process is called to retrieve the information. In R generation, the retrieved information is used to generate a response text. RAG models are often used in natural language processing tasks such as question answering, summarization, and text generation.",
+                        "perplexity": 5.861342430114746
+                    },
+                    "128": {
+                        "latency": 8.1969423828125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of generative model that combines the strengths of both generation and retrieval models. It uses a large corpus of pre-existing text to generate new text by retrieving relevant information from the corpus and then using it to generate new text. RAG models are particularly useful for tasks that require generating text that is accurate and informative, such as question answering, summarization, and machine translation. By using a large corpus of text, RAG models can generate text that is more coherent and informative than traditional generative models, which rely solely on a small dataset of text to generate new text.",
+                        "perplexity": 2.4849014282226562
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.3152049255371094,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that a a a a a a a a a a a a a a a a a a a a a a a a a a",
+                        "perplexity": 4.83098840713501
+                    },
+                    "8": {
+                        "latency": 0.5865759887695312,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of that that combines the language of a language a a a a a a a a a a a a a a a",
+                        "perplexity": 6.513620376586914
+                    },
+                    "16": {
+                        "latency": 1.3436549072265624,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a natural of model that combines the strengths of a and a a a large model model a a a a a a a a a a a",
+                        "perplexity": 13.285282135009766
+                    },
+                    "32": {
+                        "latency": 2.417474365234375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a natural of model that combines the strengths of retrieval and and generation.. It uses a to to retrieve relevant from a large corpus.",
+                        "perplexity": 14.632613182067871
+                    },
+                    "64": {
+                        "latency": 4.5168740234375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a machine learning model that combines two types of neural networks: retrieval and generation. It retrieval network uses a large database to find relevant information for a given query, while the generation network uses the retrieved information to generate a response..",
+                        "perplexity": 4.437514781951904
+                    },
+                    "128": {
+                        "latency": 8.1402060546875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines the strengths of two different approaches: retrieval and generation. It uses a large corpus of text to generate responses to queries. The model first searches for relevant information in the corpus and then uses that information to generate a response. This approach allows the model to provide more accurate and informative responses.",
+                        "perplexity": 3.1179444789886475
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.14994053649902345,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that a a a a a a a a a a a a a a a a the a the the the the the the the the the the the the the the the the the",
+                        "perplexity": 5.051131248474121
+                    },
+                    "4": {
+                        "latency": 0.3212780151367188,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that that that that a model of a large that that that that that the the the the the the the the the",
+                        "perplexity": 10.698572158813477
+                    },
+                    "8": {
+                        "latency": 0.6008576049804687,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of that that combines the strengths of retrieval retrieval and and",
+                        "perplexity": 13.177850723266602
+                    },
+                    "16": {
+                        "latency": 1.440681884765625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI that combines the retrieval of natural and and structured information from the generation generation of human..",
+                        "perplexity": 30.139068603515625
+                    },
+                    "32": {
+                        "latency": 2.59597998046875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a machine learning model that combines the strengths of retrieval models and and generative models.. It allows models to first retrieve relevant information from a large corpus base then and then use that information to generate a response. This approach is particularly useful in tasks that require answering, summar questions or generating questions..",
+                        "perplexity": 11.122147560119629
+                    },
+                    "64": {
+                        "latency": 4.45112158203125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a machine learning approach that combines the strengths of two different techniques: retrieval and generation. It involves using a pre-trained language model to generate text, but before doing so, the model first retrieves relevant information from a large or external dataset..",
+                        "perplexity": 3.6615302562713623
+                    },
+                    "128": {
+                        "latency": 8.892162109375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a machine learning model that combines two different tasks: retrieval and generation. The model first retrieves relevant information from a large corpus of text, and then uses this retrieved information to generate a response to a given prompt. This approach allows the model to generate more accurate and informative responses.",
+                        "perplexity": 2.954378843307495
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.10441366577148438,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that a a a a a a a a a a a a a a a a the a the the the the the the the the the the the the the the the the the",
+                        "perplexity": 5.051131248474121
+                    },
+                    "2": {
+                        "latency": 0.21339570617675782,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language that that combines a that of a a a a a a a a a a a a to. to",
+                        "perplexity": 12.90014934539795
+                    },
+                    "4": {
+                        "latency": 0.31143768310546877,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of model that combines the strengths of retrieval retrieval and and retrieval to to",
+                        "perplexity": 17.054922103881836
+                    },
+                    "8": {
+                        "latency": 0.6470335693359375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of models that combines the strengths of retrieval retrieval and and and..",
+                        "perplexity": 8.966255187988281
+                    },
+                    "16": {
+                        "latency": 1.136821044921875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of large language model that combines retrieval and generation..",
+                        "perplexity": 3.5039288997650146
+                    },
+                    "32": {
+                        "latency": 2.6841982421875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a natural of approach that combines",
+                        "perplexity": 14.2590970993042
+                    },
+                    "64": {
+                        "latency": 5.144814453125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines",
+                        "perplexity": 3.1508052349090576
+                    },
+                    "128": {
+                        "latency": 9.0039814453125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a machine learning technique that",
+                        "perplexity": 4.264102935791016
+                    }
+                }
+            }
+        },
+        {
+            "question": "When will human realize Artificial General Intelligence?",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 6.84217041015625,
+                        "answer": "As of now, Artificial General Intelligence (AGI) is still a theoretical concept. It refers to a machine that possesses human-level intelligence across a wide range of tasks. While we have made significant progress in AI, the development of AGI remains a challenging and uncertain goal. Some experts predict that AGI might be achieved in the next few decades, while others are more pessimistic, suggesting that it may not be possible until the mid-21st century or even later. The exact timeline is difficult to predict, and many factors, including technological advancements, research efforts, and the availability of resources, will influence its realization.",
+                        "perplexity": 2.9763686656951904
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 4.030678466796875,
+                        "answer": "As is now 2021, Artificial General Intelligence (AGI) is not yet achieved. and it is difficult to predict when it will be achieved. Some experts believe that AGI may be be achieved within the next  decades, while others think it may take centuries or even millennia. The development of AGI is a complex and challenging problem that and requires significant advances in various such as machine learning, neuroscience, cognitive cognitive science, and philosophy. among others.",
+                        "perplexity": 7.3796563148498535
+                    },
+                    "128": {
+                        "latency": 7.47261669921875,
+                        "answer": "As of now, there is no consensus on when humans will realize Artificial General Intelligence (AGI). Some experts predict that AGI could be achieved within the next few decades, while others believe it may be impossible or even impossible. The development of AGI is a complex and challenging task that requires significant advances in various fields, including machine learning, neuroscience, and cognitive science. Additionally, the development of AGI raises ethical and safety concerns that need to be addressed. Therefore, it is difficult to predict the exact timeline for the realization of AGI, and it is likely that it will take many years or even decades to achieve.",
+                        "perplexity": 2.5164988040924072
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 2.10022705078125,
+                        "answer": "As is of Artificial General Intelligence,AGI is still is a topic.. ThereI is is no to of AGI... ",
+                        "perplexity": 89.3543930053711
+                    },
+                    "64": {
+                        "latency": 3.8470068359375,
+                        "answer": "As of, Artificial General Intelligence (AGI) is not yet. It, however, is a topic of research research and development. The development of AGI is a complex and challenging task, and it is difficult to predict an exact timeline. its development is still to be seen, and it experts are that it is likely to take a long time, achieve AGI, and it is not to be expected in the near future.",
+                        "perplexity": 10.515595436096191
+                    },
+                    "128": {
+                        "latency": 8.3258134765625,
+                        "answer": "The development of Artificial General Intelligence (AGI) is a complex and ongoing process. While there is no definitive timeline, many experts believe that AGI is still a long way off. Some estimates suggest that AGI could be realized in the next few decades, while others think it may take centuries or even millennia. The development of AGI is influenced by various factors, including advancements in computer science, cognitive science, and machine learning. As of now, there is no consensus on when AGI will be achieved, and it remains a topic of active research and debate in the field of artificial intelligence.",
+                        "perplexity": 2.5939340591430664
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 1.2299918212890626,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence (AGI), is is no,, and,,,.... .",
+                        "perplexity": 104.7149887084961
+                    },
+                    "32": {
+                        "latency": 2.0295770263671873,
+                        "answer": "Aspects of Artificial General Intelligence (AGI) are already being demonstrated, but it is still a distant concept. The development of AGII is a topic of ongoing debate and research among and, as of,, there is no to date when when AGI will be achieved. Some,",
+                        "perplexity": 14.74874210357666
+                    },
+                    "64": {
+                        "latency": 4.59387890625,
+                        "answer": "The development of Artificial General Intelligence (AGI) is a topic and debate of interest interest in the field community. Some experts believe that AGI is possible within the next few decades, while others think it may be be a distant task. The, goal of achieving AGI is to create an AI that can think and learn like a human, and apply a wide range of knowledge and skills to various tasks. While, there is no progress made on AGI, there are ongoing efforts and research to develop this goal. The, timeline of achieving AGI is uncertain uncertain and and depends on various factors such technological advancements and breakthroughs.",
+                        "perplexity": 9.4072847366333
+                    },
+                    "128": {
+                        "latency": 8.17488427734375,
+                        "answer": "The development of Artificial General Intelligence (AGI) is a topic of ongoing research and debate in the scientific community. While some experts predict that AGI could be achieved in the coming decades, others believe it may not be possible until the future. The exact timeline for AGI is difficult to predict, and it depends on various factors such as advancements in technology, computational power, and the pace of research. As of now, AGI remains a theoretical concept, and there is no consensus on when it will be realized. However, many researchers and scientists are actively working on developing AGI and exploring its potential impact on human society.",
+                        "perplexity": 3.039858102798462
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.5294671630859376,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic of Artificial Artificial Intelligence Intelligence,, Intelligence,,,, AI,,, AI,,,,,,,,,,,,,,, AI,,,,,,,,,,,,,,",
+                        "perplexity": 74.64899444580078
+                    },
+                    "16": {
+                        "latency": 1.3337901611328125,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Artificial General Intelligence (AGI) is a topic topic of debate,,, and,,,,,, and,,,,,,, and,,,,,,, and,,,,,,, and,,,,,,, and,,, and, and, and",
+                        "perplexity": 18.883760452270508
+                    },
+                    "32": {
+                        "latency": 2.62257666015625,
+                        "answer": "Aspects of Artificial General Intelligence (AGI) are already being developed, but it is still a distant concept. Some experts predict that AGI may be be developed in the late 2040s, but there is that it may be much later.",
+                        "perplexity": 7.700188636779785
+                    },
+                    "64": {
+                        "latency": 5.0501904296875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic topic of ongoing debate and speculation among experts and researchers. Some is believe that AGI is possible within the next few decades, while others think it it may take be centuries of research. The, current of now, there is no definitive answer to this question.",
+                        "perplexity": 9.066666603088379
+                    },
+                    "128": {
+                        "latency": 7.6752451171875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic of ongoing debate and speculation. While some experts predict that AGI could occur within the next century, others are more pessimistic and suggest that it may not be possible for many decades or even centuries. The development of AGI is influenced by various factors, including advancements in computer science, AI research, and the availability of sufficient computational power. Additionally, ethical considerations and the impact of AGI on society are significant factors that need to be carefully considered. Therefore, it is challenging to predict an exact timeline for the realization of AGI without further research and technological advancements.",
+                        "perplexity": 3.429894208908081
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.21225651550292968,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 119.9398193359375
+                    },
+                    "8": {
+                        "latency": 0.6242862548828125,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence AI) is is Intelligence Intelligence (AI is is Intelligence,,,,,,,, Intelligence, intelligence,,, intelligence,,,,,,,,,,,,,,,,",
+                        "perplexity": 122.61152648925781
+                    },
+                    "16": {
+                        "latency": 1.1355245361328126,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Artificial Intelligence Artificial General Intelligence IntelligenceAGI) is a theoretical of of intelligence that can understand and apply knowledge any any human any human..",
+                        "perplexity": 51.07908248901367
+                    },
+                    "32": {
+                        "latency": 2.082984619140625,
+                        "answer": "Aspects of Artificial General Intelligence (AGI) are already being,, but it is still a topic of debate and research. Some experts predict that AGI may be within the the next few decades while others believe it may take be centuries..",
+                        "perplexity": 9.001245498657227
+                    },
+                    "64": {
+                        "latency": 4.59282763671875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic topic of ongoing debate and research among experts and scientists. There is no consensus on when AGI will be achieved, and it is difficult to predict an exact timeline. Some experts believe that AGI may be possible within the next few decades, while others think it may take centuries or even millennia. The development of AGI is influenced by many factors, including advances in technology, research, and societal changes. Ultimately, the realization of AGI will depend on a variety of factors, including the pace of scientific progress, ethical considerations, and the availability of computational resources.",
+                        "perplexity": 3.092485189437866
+                    },
+                    "128": {
+                        "latency": 8.6504990234375,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic of ongoing research and debate. While some experts believe that AGI is possible, others are skeptical about its feasibility. Currently, there is no definitive timeline for when AGI will be achieved. However, some experts predict that AGI may be developed in the next few decades, while others suggest that it may take centuries or even millennia. The development of AGI is likely to be influenced by a variety of factors, including advances in computing power, data availability, and scientific understanding. Ultimately, the realization of AGI is still a topic of ongoing research and speculation.",
+                        "perplexity": 2.55655574798584
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.1680308837890625,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 127.17066955566406
+                    },
+                    "4": {
+                        "latency": 0.3134193420410156,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence, As is Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 28.3689022064209
+                    },
+                    "8": {
+                        "latency": 0.65044189453125,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence,,,",
+                        "perplexity": 4.684317111968994
+                    },
+                    "16": {
+                        "latency": 1.327919189453125,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence,",
+                        "perplexity": 180.3025665283203
+                    },
+                    "32": {
+                        "latency": 2.750459716796875,
+                        "answer": "Aspects of Artificial General Intelligence (AGI) are already being,, but it is still a theoretical..",
+                        "perplexity": 15.216224670410156
+                    },
+                    "64": {
+                        "latency": 4.234658203125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic topic of ongoing debate and research among scientists and researchers. Some experts predict that AGI may be achieved within the next few decades, while others believe it may be be a lifetime away. However, there is no consensus on the exact timeline of AGI.",
+                        "perplexity": 5.857548713684082
+                    },
+                    "128": {
+                        "latency": 9.438712890625,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic of ongoing debate and research. While some experts predict that AGI could be achieved in the coming decades, others argue that it may not be possible until the mid to late next century. The development of AGI is a complex and challenging task that requires significant advancements in computer science and neuroscience.",
+                        "perplexity": 3.3428404331207275
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.0673092803955078,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 127.17066955566406
+                    },
+                    "2": {
+                        "latency": 0.15452418518066408,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence,AG is is is is,,,,,,",
+                        "perplexity": 199.5305938720703
+                    },
+                    "4": {
+                        "latency": 0.340183349609375,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a a topic in debate and and and....... Some........ the. future, but others is",
+                        "perplexity": 130.93775939941406
+                    },
+                    "8": {
+                        "latency": 0.6268989868164062,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic topic of debate among experts and techn scientists. Some believe that AG AGI is be possible, while while while while it",
+                        "perplexity": 39.30067825317383
+                    },
+                    "16": {
+                        "latency": 1.3725159912109375,
+                        "answer": "The development of Artificial General Intelligence (AGI) is a topic topic of debate and speculation.",
+                        "perplexity": 9.485029220581055
+                    },
+                    "32": {
+                        "latency": 2.7123671875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is still topic topic of debate among experts.",
+                        "perplexity": 10.728933334350586
+                    },
+                    "64": {
+                        "latency": 4.566576171875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a a topic of ongoing research and debate among experts. Some believe that AGI is within",
+                        "perplexity": 7.8396830558776855
+                    },
+                    "128": {
+                        "latency": 8.719251953125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a speculative topic, and there is no definitive answer.",
+                        "perplexity": 4.190568447113037
+                    }
+                }
+            }
+        }
+    ],
+    "None": [
+        {
+            "question": "Explain diffusion models briefly.",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 7.1532392578125,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively adding noise to a clean data sample and then reverse the process to generate new data samples. The process involves two main steps:\n\n1. **Noise Addition**: The model adds noise to a clean data sample, gradually corrupting it.\n2. **Noise Removal**: The model then learns to reverse the process by iteratively removing noise to generate new data samples.\n\nThis approach allows diffusion models to generate high-quality, realistic data samples, making them useful for applications such as image generation, text generation, and data augmentation.",
+                        "perplexity": 3.1662511825561523
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 3.7464326171875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by a process of reverse. They of the learn to of a noise vector into a data point by applyingatively applying a series of transformations transformations to the noise vector. The process is called to reverse \"diffusion\" because it noise vector is gradually transformed into a data point by a series of transformations. The process is repeated until the desired data point is generated. Diffusion models are particularly used in generating high-quality images, text, and other forms of data. They are also used in various applications such as image synthesis, text-to-image, and language modeling.",
+                        "perplexity": 7.244332790374756
+                    },
+                    "128": {
+                        "latency": 6.6952177734375,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively adding noise to a clean data sample and then reversing the process to generate new data samples. The process involves two main steps:\n\n1. **Noise Addition**: The model adds noise to the clean data sample, making it less and less clean over time.\n2. **Noise Removal**: The model then learns to reverse this process by removing noise from the noisy data, effectively generating new data samples.\n\nThis approach allows diffusion models to generate high-quality, realistic data samples, such as images, text, or other types of data.",
+                        "perplexity": 3.278238534927368
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.7770338134765624,
+                        "answer": "Diffusion models are a type of machine learning model that to generate the data of a... They",
+                        "perplexity": 19.970935821533203
+                    },
+                    "64": {
+                        "latency": 3.45287841796875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by a process of reverse. They of the learn to think of the data as a result of a series of random processes, and then reverse the reverse process to generate new data. The process is to transform noise into a sequence of samples that, when combined, resemble the original data. This process is called until the original data is generated. Diff process is then used to generate new data by reversing the the reverse process. Diff",
+                        "perplexity": 11.687237739562988
+                    },
+                    "128": {
+                        "latency": 6.90752685546875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively transforming noise into the desired data. The process involves a series of steps, where the model learns to reverse the process of noising the data. This is done by applying a series of transformations to the noise, which gradually reduce the noise and produce the desired data. The model is trained by minimizing the difference between the generated data and the original data. Diffusion models are particularly useful for generating high-quality data, such as images or audio, and have been used in a variety of applications, including image synthesis, audio generation, and text generation.",
+                        "perplexity": 2.5930237770080566
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 1.0228125,
+                        "answer": "Diffusion models are a class of generative models that that that data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data data",
+                        "perplexity": 1.7947059869766235
+                    },
+                    "32": {
+                        "latency": 2.167862060546875,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a distribution of the data data. They work by gradually applying a process of noise to a given data point, then reversing the the noise to to a new data point. This process is repeated to generate new data of the same.. Diff",
+                        "perplexity": 15.365446090698242
+                    },
+                    "64": {
+                        "latency": 3.66522607421875,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by a process of reverse diffusion. They work by first a diffusion process where noise is gradually transformed into the data, and then a reverse diffusion process where the data is gradually transformed back into noise. This process is repeated until the desired data is produced. Diffusion models are particularly used in generating high-quality images, videos, and other types of data.",
+                        "perplexity": 4.506401538848877
+                    },
+                    "128": {
+                        "latency": 6.60456787109375,
+                        "answer": "Diffusion models are a type of generative model that learn to generate data by iteratively transforming noise into the desired data. The process involves a series of steps, where the model learns to reverse the process of noising the data. This is done by applying a series of transformations to the noise, which gradually reduce the noise and produce the desired data. The model is trained by comparing the generated data to the original data and adjusting the parameters to minimize the difference. Diffusion models are particularly useful for generating high-quality images, videos, and other types of data, and have applications in fields such as computer vision and natural language processing.",
+                        "perplexity": 2.560582160949707
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.4697470397949219,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a probabilistic of.. noise noise noise noise noise noise.. noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise noise",
+                        "perplexity": 2.859861373901367
+                    },
+                    "16": {
+                        "latency": 1.0081058349609375,
+                        "answer": "Diffusion models are a class of generative models that that that data data data data data data data data data data data data",
+                        "perplexity": 9.423001289367676
+                    },
+                    "32": {
+                        "latency": 2.247798095703125,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic distribution of the data.. They are by first a process of diffusion the noise noise into a a signal, and then reverse the process to generate new data..",
+                        "perplexity": 10.14341926574707
+                    },
+                    "64": {
+                        "latency": 3.672260986328125,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic of the data. They are by applying a series of transformations to the data, gradually adding noise, and step by step removing the noise. The model learns to reverse this process to generate new data..",
+                        "perplexity": 6.787792682647705
+                    },
+                    "128": {
+                        "latency": 7.71913134765625,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate data. They work by applying a series of transformations to a data distribution, gradually reducing the variability of the data until it approaches a target distribution. This process is repeated until the data is close enough to the target distribution. Diffusion models are often used in applications such as image generation, text generation, and data augmentation. They are particularly useful for generating realistic images and videos, as they can capture the nuances of the data.",
+                        "perplexity": 3.081313371658325
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.29236431884765623,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,...................",
+                        "perplexity": 79.68077850341797
+                    },
+                    "8": {
+                        "latency": 0.4066612243652344,
+                        "answer": "Diffusion models are a class of generative learning that that generate data by progressively a noise a a distribution... They",
+                        "perplexity": 68.00897979736328
+                    },
+                    "16": {
+                        "latency": 0.9134949951171875,
+                        "answer": "Diffusion models are a class of generative models that that that data data is a process of noise.. They ideais to start with from noise noise and graduallyatively the data to the desired",
+                        "perplexity": 62.22906494140625
+                    },
+                    "32": {
+                        "latency": 2.15313525390625,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic distribution of the data.. They are by first a process of diffusion the noise noise into a a distribution that that approx resembles the original data, and then using a reverse process process to generate the new data. The process models the distribution of the data.",
+                        "perplexity": 12.589923858642578
+                    },
+                    "64": {
+                        "latency": 3.832736572265625,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic of the data. They are by applying a series of transformations to the data, gradually adding noise, and step by step removing the noise. The model learns to reverse this process to generate new data..",
+                        "perplexity": 6.787792682647705
+                    },
+                    "128": {
+                        "latency": 7.06567138671875,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by simulating the process of diffusion. In these models, the input data is transformed into a series of noisy samples, which are then used to reconstruct the original data. This process is repeated iteratively, with each step refining the data until it reaches the desired output. Diffusion models are often used in applications such as image generation, text generation, and data augmentation. They are particularly useful for generating realistic and diverse data samples.",
+                        "perplexity": 2.7905852794647217
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.21473887634277344,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 91.00130462646484
+                    },
+                    "4": {
+                        "latency": 0.2542618865966797,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data by......",
+                        "perplexity": 34.71916198730469
+                    },
+                    "8": {
+                        "latency": 0.48638299560546877,
+                        "answer": "Diffusion models are a class of generative learning that that learn data data data data data data",
+                        "perplexity": 53.902191162109375
+                    },
+                    "16": {
+                        "latency": 0.952040771484375,
+                        "answer": "Diffusion models are a class of generative models that that that data data is generated by of Gaussian noise. They are used used to generate realistic data.",
+                        "perplexity": 19.436613082885742
+                    },
+                    "32": {
+                        "latency": 2.329545654296875,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic distribution of the data.. They are by definition a type of generative model.",
+                        "perplexity": 5.710627555847168
+                    },
+                    "64": {
+                        "latency": 3.883307861328125,
+                        "answer": "Diffusion models are a type of machine learning model that can generate new data by learning a probabilistic of the data. They are by learning a distribution of the input data.",
+                        "perplexity": 7.4438676834106445
+                    },
+                    "128": {
+                        "latency": 7.066611328125,
+                        "answer": "Diffusion models are a type of machine learning model that are used to generate new data samples by simulating the process of diffusion. In these models, the input data is transformed into a series of noisy samples, which are then used to reconstruct the original data. This process is repeated iteratively, with each step refining the data until it reaches the desired output. Diffusion models are often used in applications such as image generation, text generation, and data augmentation. They are particularly useful for generating high-quality and realistic data samples, as they can capture the underlying structure of the data and generate new samples that are similar to the original data.",
+                        "perplexity": 2.6286609172821045
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.061222206115722655,
+                        "answer": "Diffusion models are a class of generative learning that that generate data data a a,,,,............ a,,,,,,,,,,,,,,,,,,,.",
+                        "perplexity": 78.32210540771484
+                    },
+                    "2": {
+                        "latency": 0.1316108856201172,
+                        "answer": "Diffusion models are a class of generative learning models that learn data data data data data............. a a a,, the the, the the the the the.",
+                        "perplexity": 37.380531311035156
+                    },
+                    "4": {
+                        "latency": 0.2776942138671875,
+                        "answer": "Diffusion models are a type of generative learning model that to data data data data data.",
+                        "perplexity": 14.241750717163086
+                    },
+                    "8": {
+                        "latency": 0.5224822998046875,
+                        "answer": "Diffusion models are a type of machine learning model that can the to of a data...",
+                        "perplexity": 22.03716468811035
+                    },
+                    "16": {
+                        "latency": 0.9600422973632813,
+                        "answer": "Diffusion models are a type of machine learning model that simulate the process of diffusion to generate data..",
+                        "perplexity": 4.029221057891846
+                    },
+                    "32": {
+                        "latency": 2.07382666015625,
+                        "answer": "Diffusion models are a type of machine learning model that can data to generate new generate of data..",
+                        "perplexity": 16.205968856811523
+                    },
+                    "64": {
+                        "latency": 3.377155517578125,
+                        "answer": "Diffusion models are a type of machine learning model that",
+                        "perplexity": 4.35977029800415
+                    },
+                    "128": {
+                        "latency": 6.94908154296875,
+                        "answer": "Diffusion models are a type of machine learning model that",
+                        "perplexity": 4.35977029800415
+                    }
+                }
+            }
+        },
+        {
+            "question": "What is Retrieval-Augmented Generation?",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 6.9491337890625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation. It uses a large corpus of text to generate responses to user queries. RAG models first retrieve relevant information from the corpus, and then use that information to generate a response. This allows the model to provide more accurate and contextually relevant answers to user queries. RAG models are often used in applications such as chatbots, virtual assistants, and information retrieval systems.",
+                        "perplexity": 2.4695043563842773
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 3.932947998046875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the retrieval and generation of. It uses a large pre of text to generate relevant and to-the- point answers to questions. RAG models are by far the most accurate and answering questions questions..",
+                        "perplexity": 13.885062217712402
+                    },
+                    "128": {
+                        "latency": 6.70970458984375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation techniques. It allows the model to generate text by first retrieving relevant information from a large corpus of text, and then using that information to generate a response. This approach enables the model to produce more accurate and contextually relevant responses, as it can draw on a vast amount of knowledge and information to inform its output. RAG models are often used in applications such as chatbots, virtual assistants, and question answering systems, where the ability to provide accurate and informative responses is critical.",
+                        "perplexity": 2.4439046382904053
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 2.1970322265625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of model that combines natural language processing (NLP) and retrieval retrieval to generate human.. R",
+                        "perplexity": 12.269925117492676
+                    },
+                    "64": {
+                        "latency": 3.7979404296875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation.. It allows models to retrieve information from a large dataset and then use that information to generate a response. This enables models to provide more accurate and informative answers to questions. RAG models are often used in applications such as question answeringswering, chatbots, and virtual assistants.",
+                        "perplexity": 4.943194389343262
+                    },
+                    "128": {
+                        "latency": 6.74825,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation techniques. It allows the model to retrieve relevant information from a large corpus of text and then generate a response based on the retrieved information. This approach enables the model to provide more accurate and contextually relevant answers to questions or prompts. RAG models are often used in applications such as question answering, chatbots, and dialogue systems.",
+                        "perplexity": 2.9010508060455322
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 0.9539481201171875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing ( that combines model that combines the retrieval of retrieval and and to to generate the...... .",
+                        "perplexity": 44.46259689331055
+                    },
+                    "32": {
+                        "latency": 1.8265489501953125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing ( that combines a a of text and a a with a to generate a response.",
+                        "perplexity": 11.510575294494629
+                    },
+                    "64": {
+                        "latency": 3.931178955078125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation.. It allows models to retrieve information from a large dataset and then use that information to generate a response. This enables models to provide more accurate and informative answers to questions. RAG models are often used in applications such as chat answering, question answering, and summarbots.",
+                        "perplexity": 5.795997142791748
+                    },
+                    "128": {
+                        "latency": 6.847654296875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the concepts of retrieval and generation. It involves using a large corpus of text to retrieve relevant information for a given query, and then using that information to generate a response. RAG models are particularly useful for tasks such as answering complex questions, generating conversational responses, and summarizing long documents. They can be particularly effective in tasks where the query is complex and requires multiple steps of reasoning. RAG models are often used in combination with other NLP techniques, such as deep learning and attention mechanisms, to improve their performance.",
+                        "perplexity": 2.991258382797241
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.5536690673828125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that combines a language of a a to to to to...... . .",
+                        "perplexity": 25.913118362426758
+                    },
+                    "16": {
+                        "latency": 1.0082020263671876,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing ( that combines model that combines the retrieval of retrieval and and to to generate the text..",
+                        "perplexity": 35.36909484863281
+                    },
+                    "32": {
+                        "latency": 2.011511962890625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing ( that combines a search of a large base with a generation of to produce human language.",
+                        "perplexity": 23.214494705200195
+                    },
+                    "64": {
+                        "latency": 3.36357666015625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation.. It allows models to retrieve information from a large dataset and then use that information to generate a response. This enables models to provide more accurate and informative answers to questions.",
+                        "perplexity": 3.603550434112549
+                    },
+                    "128": {
+                        "latency": 6.90634814453125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the concepts of retrieval and generation. It involves using a large corpus of text to retrieve relevant information for a given query, and then using that information to generate a response. RAG models are particularly useful for tasks such as answering complex questions, generating conversational responses, and summarizing long documents. They can be particularly effective for tasks that require a large amount of context and information. RAG models are often used in combination with other NLP techniques, such as attention mechanisms and neural networks, to further improve their performance.",
+                        "perplexity": 2.7734861373901367
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.23849641418457032,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that a a a a a a a a a a a a a a a a a a a a a a a a a a",
+                        "perplexity": 4.83098840713501
+                    },
+                    "8": {
+                        "latency": 0.480105224609375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of that that combines the language of a a a a a a a a to a a a a a a a a a a",
+                        "perplexity": 6.675288200378418
+                    },
+                    "16": {
+                        "latency": 0.8076495971679688,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI that combines two parts of a a a language: retrieval and model. Italizes",
+                        "perplexity": 30.717355728149414
+                    },
+                    "32": {
+                        "latency": 2.14418212890625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI that combines two types of machine learning: retrieval and generation. Ital involves to search a from a large of of documents, while generation involves creating new new text. on it..",
+                        "perplexity": 23.100955963134766
+                    },
+                    "64": {
+                        "latency": 4.3659140625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation.. It allows models to retrieve information from a large dataset and then use that information to generate a response. This enables models to provide more accurate and informative answers to questions.",
+                        "perplexity": 3.603550434112549
+                    },
+                    "128": {
+                        "latency": 7.3152177734375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines two different approaches: retrieval and generation. In retrieval, the model searches a large database of text to find relevant information that answers the user's query. In generation, the model uses the retrieved information to generate a response to the user's query. RAG models are particularly useful for tasks that require accurate and informative responses, such as question answering, dialogue systems, and chatbots. By combining retrieval and generation, RAG models can leverage the strengths of both approaches and provide more accurate and informative responses than either approach could achieve alone.",
+                        "perplexity": 2.376178741455078
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.20514591979980468,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that a a a a a a a a a a a a a a a a the a the the the the the the the the the the the the the the the the the",
+                        "perplexity": 5.051131248474121
+                    },
+                    "4": {
+                        "latency": 0.23246902465820313,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that that that that a that that a language that a that that that that that that that that that that that the the the the the the the the the the the the the the the",
+                        "perplexity": 5.626427173614502
+                    },
+                    "8": {
+                        "latency": 0.46963201904296875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of that that combines the strengths of retrieval and and and..",
+                        "perplexity": 8.702729225158691
+                    },
+                    "16": {
+                        "latency": 0.99148486328125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI that combines two components of a language model model",
+                        "perplexity": 9.480425834655762
+                    },
+                    "32": {
+                        "latency": 2.2306005859375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of AI that combines two types of machine learning: retrieval and generation. Ital involves to search a from a large of of documents, while generation involves creating new new text. on it..",
+                        "perplexity": 23.100955963134766
+                    },
+                    "64": {
+                        "latency": 3.400718994140625,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language processing (NLP) model that combines the strengths of retrieval and generation.. It allows models to retrieve information from a large dataset and then use that information to generate a response. This enables models to provide more accurate and informative answers to questions.",
+                        "perplexity": 3.603550434112549
+                    },
+                    "128": {
+                        "latency": 6.591685546875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines two different approaches: retrieval and generation. In retrieval, the model searches a large database of text to find relevant information that answers the user's query. In generation, the model uses the retrieved information to generate a response to the user's query.",
+                        "perplexity": 2.0983059406280518
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.05456079864501953,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a language of that that that that that that a a a a a a a a a a a a a a a a the a the the the the the the the the the the the the the the the the the",
+                        "perplexity": 5.051131248474121
+                    },
+                    "2": {
+                        "latency": 0.10438800048828124,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of natural language that that combines a that a a a a a a a a a a a a...",
+                        "perplexity": 8.14511489868164
+                    },
+                    "4": {
+                        "latency": 0.2601165771484375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of generative language that that combines the retrieval of with retrieval and to to to",
+                        "perplexity": 31.488386154174805
+                    },
+                    "8": {
+                        "latency": 0.5196797485351563,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of generative language that that uses a from to to to to to",
+                        "perplexity": 13.69228458404541
+                    },
+                    "16": {
+                        "latency": 1.0130885620117187,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of large language model that combines information retrieval with text generation.",
+                        "perplexity": 3.5231850147247314
+                    },
+                    "32": {
+                        "latency": 2.35847802734375,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines retrieval models and",
+                        "perplexity": 4.9544830322265625
+                    },
+                    "64": {
+                        "latency": 4.217501953125,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that combines",
+                        "perplexity": 3.1508052349090576
+                    },
+                    "128": {
+                        "latency": 7.72582373046875,
+                        "answer": "Retrieval-Augmented Generation (RAG) is a type of machine learning model that",
+                        "perplexity": 3.5025153160095215
+                    }
+                }
+            }
+        },
+        {
+            "question": "When will human realize Artificial General Intelligence?",
+            "result": {
+                "1": {
+                    "128": {
+                        "latency": 6.871638671875,
+                        "answer": "As of now, Artificial General Intelligence (AGI) is still a theoretical concept. It refers to a machine that possesses human-level intelligence across a wide range of tasks. While we have made significant progress in AI, the development of AGI remains a challenging and uncertain goal. Some experts predict that AGI might be achieved in the next few decades, while others are more pessimistic, suggesting that it may not be possible until the mid-21st century or even later. The exact timeline is difficult to predict, and many factors, including technological advancements, research efforts, and the availability of resources, will influence its realization.",
+                        "perplexity": 2.9763686656951904
+                    }
+                },
+                "2": {
+                    "64": {
+                        "latency": 3.92097607421875,
+                        "answer": "As is now 2021, Artificial General Intelligence (AGI) is not yet achieved. and it is difficult to predict when it will be achieved. Some experts believe that AGI may be be achieved within the next  decades, while others think it may take centuries or even millennia. The development of AGI is a complex and challenging problem that and requires significant advances in various such as machine learning, neuroscience, cognitive cognitive science, and philosophy. among others.",
+                        "perplexity": 7.3796563148498535
+                    },
+                    "128": {
+                        "latency": 6.9058154296875,
+                        "answer": "As of now, there is no consensus on when humans will realize Artificial General Intelligence (AGI). Some experts predict that AGI could be achieved within the next few decades, while others believe it may be centuries away. The development of AGI is influenced by various factors, including advancements in technology, breakthroughs in research, and the availability of computational power. Additionally, ethical considerations and the potential risks associated with AGI are significant areas of debate. While there is ongoing research and development in AGI, the exact timeline remains uncertain, and the field is rapidly evolving.",
+                        "perplexity": 3.3424899578094482
+                    }
+                },
+                "4": {
+                    "32": {
+                        "latency": 1.9983548583984374,
+                        "answer": "As is of Artificial General Intelligence,AGI is still is a topic.. ThereI is is no to of AGI... ",
+                        "perplexity": 89.3543930053711
+                    },
+                    "64": {
+                        "latency": 4.5604404296875,
+                        "answer": "As of, Artificial General Intelligence (AGI) is not yet. ThereI is no consensus answer to when it will be achieved. Some experts believe it will happen in the next  decades, while others think it may take centuries. The development of AGI is a complex and challenging task that requires significant scientific understanding of the intelligence process, as well as the development of new algorithms and computational architectures.",
+                        "perplexity": 8.133368492126465
+                    },
+                    "128": {
+                        "latency": 7.8456787109375,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic of ongoing debate and speculation. While some experts predict that AGI could be within the next few decades, others are more pessimistic and believe it may not be possible until the mid- to late 21st century. The exact timeline is difficult to predict, and it depends on various factors, including advancements in technology, research efforts, and the development of new algorithms and architectures. As of now, AGI remains a theoretical concept, and there is no consensus on when it will be achieved.",
+                        "perplexity": 3.3084490299224854
+                    }
+                },
+                "8": {
+                    "16": {
+                        "latency": 1.09914697265625,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence (AGI), is is no,, and,,,.... .",
+                        "perplexity": 104.7149887084961
+                    },
+                    "32": {
+                        "latency": 2.0164217529296873,
+                        "answer": "Aspects of Artificial General Intelligence (AGI) are already present in,, and ,,,, and,, but,, and, and,, and,, and",
+                        "perplexity": 16.78961753845215
+                    },
+                    "64": {
+                        "latency": 4.18850244140625,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a a topic of ongoing debate and research among experts and scientists. While some believe that AGI is be within within the next few decades, others argue that it may take centuries or even millennia of research and development. The, process of achieving AGI is complex and involves, among other things, research, development, and testing of AI algorithms, as well as the creation of a and understanding how that can be achieved.",
+                        "perplexity": 7.201711654663086
+                    },
+                    "128": {
+                        "latency": 7.3120673828125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a debated topic in the scientific community. Some experts predict that AGI could be achieved within the next few decades, while others believe it may take centuries or even millennia. The development of AGI is influenced by various factors, including advancements in computational power, breakthroughs in machine learning, and the integration of different AI technologies. Additionally, the creation of AGI involves complex ethical and safety considerations, which are still being discussed and addressed. Therefore, while there is no single timeline, the realization of AGI is likely to be a gradual and ongoing process with ongoing research and development.",
+                        "perplexity": 3.3733062744140625
+                    }
+                },
+                "16": {
+                    "8": {
+                        "latency": 0.45381076049804686,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic of Artificial Artificial Intelligence Intelligence,, Intelligence,,,, AI,,, AI,,,,,,,,,,,,,,, AI,,,,,,,,,,,,,,",
+                        "perplexity": 74.64899444580078
+                    },
+                    "16": {
+                        "latency": 1.059819580078125,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Artificial General Intelligence is ArtificialI Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence",
+                        "perplexity": 2.366665840148926
+                    },
+                    "32": {
+                        "latency": 2.234771240234375,
+                        "answer": "Aspects of Artificial General Intelligence (AGI) are already present in,, and ,,,, and,, but,, and, and,, and",
+                        "perplexity": 17.870529174804688
+                    },
+                    "64": {
+                        "latency": 4.33592138671875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a a topic of ongoing debate and research among experts and scientists. While some believe that AGI is be within within the next few decades, others argue that it may take centuries or even millennia of research and development. The, process of achieving AGI is complex and involves, among other things, understanding, consciousness, and, cognitive processes, and developing systems that can learn, reason, and apply knowledge in a wide range of situations. As, such, it is difficult to predict an exact timeline for the realization of AGI, and it remains an active research, area.",
+                        "perplexity": 5.7447333335876465
+                    },
+                    "128": {
+                        "latency": 7.18626025390625,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a debated topic in the scientific community. Some experts predict that AGI could be achieved within the next few decades, while others believe it may take centuries or even millennia. The development of AGI is influenced by various factors, including advancements in computational power, breakthroughs in machine learning, and the integration of different AI technologies. Additionally, the creation of AGI involves complex ethical and safety considerations, which are still being discussed and addressed. Therefore, while there is no definitive timeline, the realization of AGI is likely to be a gradual and ongoing process with ongoing research and development.",
+                        "perplexity": 3.1695940494537354
+                    }
+                },
+                "32": {
+                    "4": {
+                        "latency": 0.27435989379882814,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 119.9398193359375
+                    },
+                    "8": {
+                        "latency": 0.414860595703125,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence AI) is is Intelligence Intelligence Artificial) is is Intelligence,,,,,,,, Intelligence, Intelligence,,, Intelligence,,,,,,, Intelligence, Intelligence, Intelligence,",
+                        "perplexity": 48.61724853515625
+                    },
+                    "16": {
+                        "latency": 0.9778447875976563,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Artificial General Intelligence is ArtificialI Intelligence is Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence",
+                        "perplexity": 2.5124847888946533
+                    },
+                    "32": {
+                        "latency": 2.223833984375,
+                        "answer": "Aspects of Artificial General Intelligence (AGI) are already present in, say, the internet,. However, it is still to to be a.I",
+                        "perplexity": 25.25153923034668
+                    },
+                    "64": {
+                        "latency": 3.8581953125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a a topic of ongoing debate and research among experts and scientists. While some believe that AGI is be within within the next few decades, others argue that it may take centuries or even millennia. The, development of of AGI is a byproduct of the research and Artificial Intelligence (AI) research, and the realization of AGI is dependant on the progress of AI research and development. As, of now, there is no definitive answer to when AGI will be realized, and it is likely to continue a topic of debate and research for many years to come.",
+                        "perplexity": 5.696162700653076
+                    },
+                    "128": {
+                        "latency": 6.877603515625,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a debated topic in the scientific community. Some experts predict that AGI could be achieved within the next few decades, while others believe it may take centuries or even millennia. The development of AGI is influenced by various factors, including advancements in computational power, breakthroughs in machine learning, and the integration of different AI technologies. Additionally, the realization of AGI also depends on ethical considerations and the ability of humans to manage and control such intelligent systems. Therefore, it is difficult to predict an exact timeline for the realization of AGI, and it remains an ongoing area of research.",
+                        "perplexity": 3.074963331222534
+                    }
+                },
+                "64": {
+                    "2": {
+                        "latency": 0.10545037078857422,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 127.17066955566406
+                    },
+                    "4": {
+                        "latency": 0.24660633850097657,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence As is Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 25.081588745117188
+                    },
+                    "8": {
+                        "latency": 0.517988037109375,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence Intelligence,,,",
+                        "perplexity": 4.684317111968994
+                    },
+                    "16": {
+                        "latency": 0.9055972290039063,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence",
+                        "perplexity": 174.78807067871094
+                    },
+                    "32": {
+                        "latency": 2.34206787109375,
+                        "answer": "Aspects of Artificial General Intelligence (AGI) are already present in, say, the internet,. However, AGI is not a fully realized.",
+                        "perplexity": 10.6183443069458
+                    },
+                    "64": {
+                        "latency": 3.33114111328125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a a topic of ongoing debate and research among experts and scientists. While some believe that AGI is possible within the next few decades, others argue that it may not be possible until the mid to late twentieth century or even later. The development of AGI is on the cusp of research and uncertainty.",
+                        "perplexity": 5.747412204742432
+                    },
+                    "128": {
+                        "latency": 6.5420283203125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a debated topic in the scientific community. Some experts predict that AGI could be achieved in the coming decades, while others believe it may be centuries away. The development of AGI is influenced by various factors, including advancements in computational power, algorithmic breakthroughs, and the availability of large datasets.",
+                        "perplexity": 3.095369577407837
+                    }
+                },
+                "128": {
+                    "1": {
+                        "latency": 0.07139116668701172,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence () is is Intelligence Intelligence Intelligence, topic,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+                        "perplexity": 127.17066955566406
+                    },
+                    "2": {
+                        "latency": 0.1568863067626953,
+                        "answer": "As is of Artificial Intelligence Intelligence Intelligence,, is,, is,,,,",
+                        "perplexity": 292.5769348144531
+                    },
+                    "4": {
+                        "latency": 0.23297503662109376,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic topic debate debate and and and...\n,,,,,,,,,,,,, and,, and, and,,,,,, and, and, and, and",
+                        "perplexity": 22.674076080322266
+                    },
+                    "8": {
+                        "latency": 0.5117485046386718,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic topic of ongoing debate among experts and researchers. Some predict that AGI will be within within the near decades, while others believe it is never..",
+                        "perplexity": 11.537165641784668
+                    },
+                    "16": {
+                        "latency": 0.92823291015625,
+                        "answer": "There is no Artificial General Intelligence..",
+                        "perplexity": 52.306549072265625
+                    },
+                    "32": {
+                        "latency": 2.502251953125,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a topic topic of ongoing.",
+                        "perplexity": 11.000894546508789
+                    },
+                    "64": {
+                        "latency": 4.39376416015625,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a speculative topic.",
+                        "perplexity": 8.303061485290527
+                    },
+                    "128": {
+                        "latency": 7.22934716796875,
+                        "answer": "The realization of Artificial General Intelligence (AGI) is a speculative topic.",
+                        "perplexity": 8.303061485290527
+                    }
+                }
+            }
+        }
+    ]
+}
