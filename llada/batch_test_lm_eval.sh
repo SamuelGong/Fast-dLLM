@@ -21,7 +21,7 @@ script="eval_llada.py"
 output_root="evals_results"
 num_processes=1
 main_process_port=29500
-limit=None
+limit=''
 
 # Optional flags: --length, --task
 while [[ $# -gt 0 ]]; do
@@ -41,6 +41,12 @@ while [[ $# -gt 0 ]]; do
       exit 1 ;;
   esac
 done
+
+# if the user omits --limit, $limit stays empty, no --limit flag is sent
+limit_arg=()
+if [[ -n "$limit" ]]; then
+  limit_arg=(--limit "$limit")
+fi
 
 # Environment (as in your snippet)
 export HF_ALLOW_CODE_EVAL=1
@@ -66,7 +72,8 @@ while (( bl <= length )); do
     accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
       --confirm_run_unsafe_code --model "${model}" \
       --model_args "model_path=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
-      --output_path "${out_dir}" --log_samples --limit=${limit}
+      --output_path "${out_dir}" --log_samples \
+      "${limit_arg[@]}"
 
     st=$(( st * 2 ))
   done
