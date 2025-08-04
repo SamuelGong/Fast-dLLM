@@ -71,7 +71,6 @@ class LLaDAEvalHarness(LM):
         # dual_cache=False,
         **kwargs,
     ):
-        print('Zhifeng', steps, gen_length, block_length)
         '''
         Args:
             model_path: LLaDA-8B-Base model path.
