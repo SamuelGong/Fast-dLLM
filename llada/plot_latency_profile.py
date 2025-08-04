@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from tqdm.auto import tqdm
 
 
-input_file = "profile.json"
+input_file = "latency-profile.json"
 
 def plot_methods_heatmap(
     method_data: dict,
