@@ -10,6 +10,7 @@ method_list = ["C2F", "Dual", "None"]
 input_dir = "evals_results"
 output_file = f"utility_profile_{task}.json"
 model_name = "GSAI-ML/LLaDA-8B-Instruct"
+model_name = model_name.replace("/", "__")
 
 result_dict = {}
 for method in method_list:
