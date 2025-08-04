@@ -21,7 +21,7 @@ script="eval_llada.py"
 output_root="evals_results"
 num_processes=1
 main_process_port=29500
-limit=1.0
+#limit=1.0
 
 # Optional flags: --length, --task
 while [[ $# -gt 0 ]]; do
@@ -63,10 +63,14 @@ while (( bl <= length )); do
     out_dir="${output_root}/${task}/${method}/${length}/${bl}/${st}"
     mkdir -p "${out_dir}"
 
+#    accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
+#      --confirm_run_unsafe_code --model "${model}" \
+#      --model_args "model_path=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
+#      --output_path "${out_dir}" --log_samples --limit ${limit}
     accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
       --confirm_run_unsafe_code --model "${model}" \
       --model_args "model_path=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
-      --output_path "${out_dir}" --log_samples --limit ${limit}
+      --output_path "${out_dir}" --log_samples
 
     st=$(( st * 2 ))
   done
