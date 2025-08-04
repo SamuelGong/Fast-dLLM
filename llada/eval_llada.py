@@ -90,7 +90,7 @@ class LLaDAEvalHarness(LM):
         '''
         super().__init__()
 
-        assert True == False
+        assert steps == 1024, f"Steps should be 1024, got {steps}"
 
         accelerator = accelerate.Accelerator()
         if accelerator.num_processes > 1:
