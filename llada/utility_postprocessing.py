@@ -41,6 +41,7 @@ for method in method_list:
             with open(input_path, "r", encoding="utf-8") as f:
                 input_json = json.load(f)
             extracted_result = input_json["results"][task]
+            del extracted_result["alias"]
             result_dict[method][block_len][steps] = extracted_result
 
 with open(output_file, 'w', encoding="utf-8") as f:
