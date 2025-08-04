@@ -90,6 +90,8 @@ class LLaDAEvalHarness(LM):
         '''
         super().__init__()
 
+        assert True == False
+
         accelerator = accelerate.Accelerator()
         if accelerator.num_processes > 1:
             self.accelerator = accelerator
@@ -277,96 +279,96 @@ class LLaDAEvalHarness(LM):
         raise NotImplementedError
     
     
-    # def generate_until(self, requests):
-    #     output = []
-    #     num_tokens = 0
-    #     num_nfe = 0
-    #     processed_count = 0
-    #     if self.save_dir is not None:
-    #         os.makedirs(self.save_dir, exist_ok=True)
-    #         rank = self.rank
-    #         save_path = os.path.join(self.save_dir, f'rank_{rank}.jsonl')
-    #         print(f"save_path: {save_path}")
-    #         if os.path.exists(save_path):
-    #             print(f"load from {save_path}")
-    #             with open(save_path, 'r', encoding='utf-8') as f:
-    #                 output = [json.loads(line) for line in f]
-    #                 processed_count = len(output)
-    #             print(f"processed_count: {processed_count}")
-    #     start_time = time.time()
-    #     for i, req in enumerate(tqdm(requests, desc="Generating...")):
-    #         if i < processed_count:
-    #             continue
-    #
-    #         question = req.args[0]
-    #         if self.is_instruct:
-    #             m = [{"role": "user", "content": question}]
-    #             user_input = self.tokenizer.apply_chat_template(m, add_generation_prompt=True, tokenize=False)
-    #             input_ids = self.tokenizer(user_input)['input_ids']
-    #         else:
-    #             user_input = question
-    #             input_ids = self.tokenizer(user_input)['input_ids']
-    #
-    #         stop_tokens = req.args[1]['until']
-    #         input_ids = torch.tensor(input_ids).to(self.device).unsqueeze(0)
-    #
-    #         if self.use_kv_cache == "None":
-    #             generated_answer, nfe = generate(
-    #                 self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
-    #                 block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
-    #                 threshold=self.threshold, tokenizer=self.tokenizer
-    #             )
-    #         elif self.use_kv_cache == "Dual":
-    #             generated_answer, nfe = generate_with_dual_cache(
-    #                 self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
-    #                 block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
-    #                 threshold=self.threshold, tokenizer=self.tokenizer
-    #             )
-    #         elif self.use_kv_cache == "C2F":
-    #             generated_answer, nfe = generate_coarse_to_fine(
-    #                 self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
-    #                 block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
-    #                 threshold=self.threshold, tokenizer=self.tokenizer
-    #             )
-    #         else:
-    #             raise NotImplementedError
-    #
-    #         if self.is_instruct and 'task_id' in req.doc and str(req.doc['task_id']).lower().startswith('humaneval'):
-    #             if self.show_speed:
-    #                 num_tokens += (generated_answer != 126081).sum()
-    #                 num_nfe += nfe
-    #             generated_answer = self.tokenizer.decode(generated_answer[0][input_ids.shape[1]:], skip_special_tokens=True)
-    #         else:
-    #             generated_answer = self.tokenizer.decode(generated_answer[0][input_ids.shape[1]:], skip_special_tokens=False)
-    #             for stop_seq in stop_tokens:
-    #                 if stop_seq in generated_answer:
-    #                     generated_answer = generated_answer.split(stop_seq)[0]
-    #
-    #             # remove special tokens
-    #             generated_answer_ids = torch.tensor(self.tokenizer(generated_answer)["input_ids"])
-    #             if self.show_speed:
-    #                 num_tokens += (generated_answer_ids != 126081).sum()
-    #                 num_nfe += nfe
-    #             generated_answer = self.tokenizer.decode(generated_answer_ids, skip_special_tokens=True)
-    #         output.append(generated_answer)
-    #
-    #         if self.save_dir is not None:
-    #             # 增量保存新生成的答案
-    #             with open(save_path, 'a', encoding='utf-8') as f:
-    #                 f.write(json.dumps(generated_answer, ensure_ascii=False) + '\n')
-    #
-    #         print('=' * 20)
-    #         print('question: ', question)
-    #         print('answer: ', generated_answer)
-    #         print('=' * 20, end='\n\n')
-    #         # self.accelerator.wait_for_everyone()
-    #     end_time = time.time()
-    #     if self.show_speed:
-    #         print(f"Total number of tokens generated: {num_tokens}")
-    #         print(f"Total time taken: {end_time - start_time} seconds")
-    #         print(f"Tokens per second: {num_tokens / (end_time - start_time)}")
-    #         print(f"Total NFE is {num_nfe}")
-    #     return output
+    def generate_until(self, requests):
+        output = []
+        num_tokens = 0
+        num_nfe = 0
+        processed_count = 0
+        if self.save_dir is not None:
+            os.makedirs(self.save_dir, exist_ok=True)
+            rank = self.rank
+            save_path = os.path.join(self.save_dir, f'rank_{rank}.jsonl')
+            print(f"save_path: {save_path}")
+            if os.path.exists(save_path):
+                print(f"load from {save_path}")
+                with open(save_path, 'r', encoding='utf-8') as f:
+                    output = [json.loads(line) for line in f]
+                    processed_count = len(output)
+                print(f"processed_count: {processed_count}")
+        start_time = time.time()
+        for i, req in enumerate(tqdm(requests, desc="Generating...")):
+            if i < processed_count:
+                continue
+
+            question = req.args[0]
+            if self.is_instruct:
+                m = [{"role": "user", "content": question}]
+                user_input = self.tokenizer.apply_chat_template(m, add_generation_prompt=True, tokenize=False)
+                input_ids = self.tokenizer(user_input)['input_ids']
+            else:
+                user_input = question
+                input_ids = self.tokenizer(user_input)['input_ids']
+
+            stop_tokens = req.args[1]['until']
+            input_ids = torch.tensor(input_ids).to(self.device).unsqueeze(0)
+
+            if self.use_kv_cache == "None":
+                generated_answer, nfe = generate(
+                    self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
+                    block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
+                    threshold=self.threshold, tokenizer=self.tokenizer
+                )
+            elif self.use_kv_cache == "Dual":
+                generated_answer, nfe = generate_with_dual_cache(
+                    self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
+                    block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
+                    threshold=self.threshold, tokenizer=self.tokenizer
+                )
+            elif self.use_kv_cache == "C2F":
+                generated_answer, nfe = generate_coarse_to_fine(
+                    self.model, input_ids, steps=self.steps, gen_length=self.gen_length,
+                    block_length=self.block_length, temperature=0, remasking=self.remasking, mask_id=self.mask_id,
+                    threshold=self.threshold, tokenizer=self.tokenizer
+                )
+            else:
+                raise NotImplementedError
+
+            if self.is_instruct and 'task_id' in req.doc and str(req.doc['task_id']).lower().startswith('humaneval'):
+                if self.show_speed:
+                    num_tokens += (generated_answer != 126081).sum()
+                    num_nfe += nfe
+                generated_answer = self.tokenizer.decode(generated_answer[0][input_ids.shape[1]:], skip_special_tokens=True)
+            else:
+                generated_answer = self.tokenizer.decode(generated_answer[0][input_ids.shape[1]:], skip_special_tokens=False)
+                for stop_seq in stop_tokens:
+                    if stop_seq in generated_answer:
+                        generated_answer = generated_answer.split(stop_seq)[0]
+
+                # remove special tokens
+                generated_answer_ids = torch.tensor(self.tokenizer(generated_answer)["input_ids"])
+                if self.show_speed:
+                    num_tokens += (generated_answer_ids != 126081).sum()
+                    num_nfe += nfe
+                generated_answer = self.tokenizer.decode(generated_answer_ids, skip_special_tokens=True)
+            output.append(generated_answer)
+
+            if self.save_dir is not None:
+                # 增量保存新生成的答案
+                with open(save_path, 'a', encoding='utf-8') as f:
+                    f.write(json.dumps(generated_answer, ensure_ascii=False) + '\n')
+
+            print('=' * 20)
+            print('question: ', question)
+            print('answer: ', generated_answer)
+            print('=' * 20, end='\n\n')
+            # self.accelerator.wait_for_everyone()
+        end_time = time.time()
+        if self.show_speed:
+            print(f"Total number of tokens generated: {num_tokens}")
+            print(f"Total time taken: {end_time - start_time} seconds")
+            print(f"Tokens per second: {num_tokens / (end_time - start_time)}")
+            print(f"Total NFE is {num_nfe}")
+        return output
 
 
 if __name__ == "__main__":
