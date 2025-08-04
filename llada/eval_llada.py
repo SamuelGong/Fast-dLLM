@@ -64,13 +64,14 @@ class LLaDAEvalHarness(LM):
         remasking='low_confidence',
         device="cuda",
         # use_cache=False,
-        use_kv_cache=None,
+        use_kv_cache="None",
         threshold=None,
         save_dir=None,
         show_speed=False,
         # dual_cache=False,
         **kwargs,
     ):
+        print('Zhifeng', steps, gen_length, block_length)
         '''
         Args:
             model_path: LLaDA-8B-Base model path.
