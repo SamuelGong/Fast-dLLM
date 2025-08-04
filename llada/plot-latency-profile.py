@@ -181,14 +181,14 @@ def main():
         title="All Methods Latency (s)",
         xlabel="Block Length",
         ylabel="Steps",
-        output_path="profile_latency.png"
+        output_path="latency-profile.png"
     )
     plot_methods_heatmap(
         mean_perplexity_per_method,
         title="All Methods Perplexity",
         xlabel="Block Length",
         ylabel="Steps",
-        output_path="profile_perplexity.png"
+        output_path="latency-profile-2.png"
     )
 
 
