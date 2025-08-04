@@ -33,6 +33,8 @@ for method in method_list:
             if not matches:
                 print(f"No results_*.json found under {result_prefix}")
                 continue
+            else:
+                print(f"Processing {result_prefix}")
 
             # If multiple, choose the most recent; or use matches[0] if you want the first.
             input_path = max(matches, key=os.path.getmtime)
