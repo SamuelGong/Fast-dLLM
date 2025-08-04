@@ -5,7 +5,7 @@ from tqdm.auto import tqdm
 from kvcache_baseline import benchmark, evaluate_qa
 from transformers import AutoTokenizer
 
-gen = 128  # how many tokens to generate
+gen = 512  # how many tokens to generate
 method_list = ["C2F", "Dual", "None"]
 question_list = [
     "Explain diffusion models briefly.",
