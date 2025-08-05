@@ -37,7 +37,7 @@ def main():
         title="Accuracy",
         xlabel="Block Length",
         ylabel="Steps",
-        output_path=f"utility-profile-{task}.png"
+        output_path=f"utility_profile_{task}.png"
     )
 
 

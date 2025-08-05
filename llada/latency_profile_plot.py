@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from tqdm.auto import tqdm
 
 
-input_file = "latency-profile.json"
+input_file = "latency_profile.json"
 
 def plot_methods_heatmap(
     method_data: dict,
@@ -181,14 +181,14 @@ def main():
         title="All Methods Latency (s)",
         xlabel="Block Length",
         ylabel="Steps",
-        output_path="latency-profile.png"
+        output_path="latency_profile.png"
     )
     plot_methods_heatmap(
         mean_perplexity_per_method,
         title="All Methods Perplexity",
         xlabel="Block Length",
         ylabel="Steps",
-        output_path="latency-profile-2.png"
+        output_path="latency_profile_perplexity.png"
     )
 
 
