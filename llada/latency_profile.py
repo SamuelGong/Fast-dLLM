@@ -68,6 +68,7 @@ def main():
             for block_len in block_len_list:
                 num_blocks = gen // block_len
 
+                # JSON only accepts string keys
                 if str(block_len) not in result_dict[method][qid]["result"]:
                     result_dict[method][qid]["result"][str(block_len)] = {}
                 for steps in steps_list:
