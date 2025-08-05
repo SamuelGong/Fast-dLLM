@@ -68,12 +68,12 @@ def main():
             for block_len in block_len_list:
                 num_blocks = gen // block_len
 
-                if block_len not in result_dict[method][qid]["result"]:
-                    result_dict[method][qid]["result"][block_len] = {}
+                if str(block_len) not in result_dict[method][qid]["result"]:
+                    result_dict[method][qid]["result"][str(block_len)] = {}
                 for steps in steps_list:
                     if steps < num_blocks:
                         continue
-                    if steps in result_dict[method][qid]["result"][block_len]:
+                    if str(steps) in result_dict[method][qid]["result"][str(block_len)]:
                         print(f"Skipping steps {steps} for block_len {block_len}, qid {qid}, method {method}")
                         continue
 
@@ -90,7 +90,7 @@ def main():
                         question=question,
                         answer=answer,
                     )
-                    result_dict[method][qid]["result"][block_len][steps] = {
+                    result_dict[method][qid]["result"][str(block_len)][str(steps)] = {
                         "latency": lat,
                         "answer": answer,
                         "perplexity": evaluation["perplexity"]
