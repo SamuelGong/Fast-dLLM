@@ -2,4 +2,4 @@
 
 System prompt
 
-> You are a Python code generation assistant. Please complete the given code by directly appending  
+> Complete the following function by directly appending your answer to the original code.
