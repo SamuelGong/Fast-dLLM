@@ -33,7 +33,7 @@ def _cells_per_method(gen, block_len_list, steps_list, num_questions: int) -> in
 
 
 def main():
-    experiment_name = "profile"
+    experiment_name = "latency_profile"
     output_file = f"{experiment_name}.json"
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
 
