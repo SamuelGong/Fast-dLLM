@@ -4,9 +4,11 @@ import json
 
 task = "humaneval"
 # gen = 128
+# block_len_list = [2 ** n for n in range(0, 8)]  # how many tokens per block
+# steps_list = [2 ** n for n in range(0, 8)]  # how many generation steps in total
 gen = 512
-block_len_list = [2 ** n for n in range(0, 8)]  # how many tokens per block
-steps_list = [2 ** n for n in range(0, 8)]  # how many generation steps in total
+block_len_list = [2 ** n for n in range(0, 10)]  # how many tokens per block
+steps_list = [2 ** n for n in range(0, 10)]  # how many generation steps in total
 method_list = ["C2F", "Dual", "None"]
 input_dir = "evals_results"
 output_file = f"utility_profile_{task}.json"
