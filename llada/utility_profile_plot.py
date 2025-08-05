@@ -1,7 +1,7 @@
 import json
 from tqdm.auto import tqdm
 from collections import defaultdict
-from plot_latency_profile import plot_methods_heatmap
+from latency_profile_plot import plot_methods_heatmap
 
 
 task = "humaneval"
