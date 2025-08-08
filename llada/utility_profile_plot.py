@@ -34,7 +34,7 @@ def main():
 
     plot_methods_heatmap(
         mean_metric_per_method,
-        title="Accuracy",
+        title=f"Accuracy on {task}",
         xlabel="Block Length",
         ylabel="Steps",
         output_path=f"utility_profile_{task}.png"
