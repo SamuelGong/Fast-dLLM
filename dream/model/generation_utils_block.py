@@ -548,7 +548,6 @@ class DreamGenerationMixin:
                     if number_transfer_tokens > 0:
                         if alg_temp is None or alg_temp == 0:
                             _, transfer_index = torch.topk(full_confidence, number_transfer_tokens)
-                            print(num_block, i, number_transfer_tokens, transfer_index)
                         else:
                             full_confidence = full_confidence / alg_temp
                             full_confidence = F.softmax(full_confidence, dim=-1)
@@ -563,6 +562,7 @@ class DreamGenerationMixin:
                             x[:, current_block_start:current_block_end][row_indices,transfer_index] = x_[row_indices,transfer_index]
                         else:
                             x[:, current_block_start:][row_indices,transfer_index] = x_[row_indices,transfer_index]
+                            print(num_block, i, current_block_start, row_indices, transfer_index)
                     i += 1
 
                 if (x[:, current_block_start:current_block_end] == mask_token_id).sum() == 0:
