@@ -51,8 +51,8 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
     # warm‑up
     with torch.inference_mode():
         _ = model(
-            inputs.input_ids[, :1],
-            attention_mask=inputs.attention_mask[, :1]
+            inputs.input_ids[:, :1],
+            attention_mask=inputs.attention_mask[:, :1]
         ); torch.cuda.synchronize()
 
     # seq_len = prompt.shape[1] + gen_len
