@@ -550,7 +550,6 @@ class DreamGenerationMixin:
 
                     num_mask_token = mask_index.sum() / mask_index.shape[0]
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
-                    print(num_block, i, logits.shape, x0.shape, number_transfer_tokens)
 
                     if use_cache:
                         if dual_cache:
@@ -561,6 +560,7 @@ class DreamGenerationMixin:
                         full_confidence[:, block_length:] = -torch.inf
                     else:
                         full_confidence = torch.full_like(x, -torch.inf, device=self.device, dtype=logits.dtype)
+                        print(full_confidence.shape, x.shape)
                         full_confidence[mask_index] = confidence
                     
                     if number_transfer_tokens > 0:
