@@ -492,7 +492,6 @@ class DreamGenerationMixin:
                 else:
                     current_attention_mask = attention_mask
 
-                print('before', x)
                 if use_cache:
                     if dual_cache:
                         model_output = self(x[:, current_block_start:current_block_end], current_attention_mask,
@@ -504,7 +503,6 @@ class DreamGenerationMixin:
                                         past_key_values=past_key_values, use_cache=use_cache)
                 else:
                     model_output = self(x, current_attention_mask, tok_idx if tok_idx is not None else None)
-                print('after', x)
 
                 logits = model_output.logits
                 logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
@@ -547,11 +545,10 @@ class DreamGenerationMixin:
                         mask_index[:, block_length:] = False
                     mask_logits = logits[mask_index]
                     confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
-                    print(num_block, i, current_block_start, mask_index, x0)
 
                     num_mask_token = mask_index.sum() / mask_index.shape[0]
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
-                    # print(num_block, i, number_transfer_tokens, )  # DEBUG
+                    print(num_block, i, logits.shape, mask_logits.shape, mask_logits, number_transfer_tokens)
 
                     if use_cache:
                         if dual_cache:
@@ -589,9 +586,7 @@ class DreamGenerationMixin:
                                     row_indices, transfer_index]
                                 # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
                         else:
-                            print(f'here {num_block}, {i}, {current_block_start}, {x}\n')
                             x[transfer_index] = x0[transfer_index]
-                            print(f'there {num_block}, {i}, {current_block_start}, {x}\n')
 
                     i += 1
 
