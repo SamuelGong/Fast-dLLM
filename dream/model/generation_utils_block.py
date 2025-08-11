@@ -543,10 +543,9 @@ class DreamGenerationMixin:
                     s = timesteps[i + 1]
                     if use_cache:
                         mask_index[:, block_length:] = False
-                        mask_logits = logits[mask_index]
-                        confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
-                    else:
-                        confidence, x0 = sample_tokens(logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
+                    mask_logits = logits[mask_index]
+                    confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
+                    print(confidence.shape, x0.shape)
 
                     num_mask_token = mask_index.sum() / mask_index.shape[0]
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
@@ -556,12 +555,10 @@ class DreamGenerationMixin:
                             full_confidence = torch.full_like(x[:, current_block_start:current_block_end], -torch.inf, device=self.device, dtype=logits.dtype)
                         else:
                             full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device, dtype=logits.dtype)
-                        print(num_block, i, full_confidence.shape, mask_index.shape, confidence.shape)
                         full_confidence[mask_index] = confidence
                         full_confidence[:, block_length:] = -torch.inf
                     else:
                         full_confidence = torch.full_like(x, -torch.inf, device=self.device, dtype=logits.dtype)
-                        print(num_block, i, full_confidence.shape, mask_index.shape, confidence.shape)
                         full_confidence[mask_index] = confidence
                     
                     if number_transfer_tokens > 0:
@@ -589,7 +586,9 @@ class DreamGenerationMixin:
                                     row_indices, transfer_index]
                                 # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
                         else:
-                            x[transfer_index] = x0[transfer_index]
+                            print('before', num_block, i, x)
+                            x[transfer_index] = x0
+                            print('after', num_block, i, x)
 
                     i += 1
 
