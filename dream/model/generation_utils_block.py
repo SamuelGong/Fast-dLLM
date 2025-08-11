@@ -543,12 +543,14 @@ class DreamGenerationMixin:
                     s = timesteps[i + 1]
                     if use_cache:
                         mask_index[:, block_length:] = False
-                    mask_logits = logits[mask_index]
-                    confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
+                        mask_logits = logits[mask_index]
+                        confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
+                    else:
+                        confidence, x0 = sample_tokens(logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
 
                     num_mask_token = mask_index.sum() / mask_index.shape[0]
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
-                    print(num_block, i, logits.shape, mask_logits.shape, mask_logits, number_transfer_tokens)
+                    print(num_block, i, logits.shape, mask_logits.shape, x0.shape, number_transfer_tokens)
 
                     if use_cache:
                         if dual_cache:
