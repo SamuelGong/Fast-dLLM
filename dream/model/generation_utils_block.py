@@ -373,6 +373,7 @@ class DreamGenerationMixin:
         threshold = kwargs.get("threshold", 0.9)
         block_length = kwargs.get("block_length", 32)
         dual_cache = kwargs.get("dual_cache", False)
+        use_cache = kwargs.get("use_cache", False)
 
         result = self._sample(
             input_ids,
@@ -380,6 +381,7 @@ class DreamGenerationMixin:
             generation_config=generation_config,
             threshold=threshold,
             block_length=block_length,
+            use_cache=use_cache,
             dual_cache=dual_cache
         )
         return result
@@ -391,6 +393,7 @@ class DreamGenerationMixin:
         generation_config: DreamGenerationConfig,
         threshold: Optional[float] = 0.9,
         block_length: Optional[int] = 32,
+        use_cache: bool = False,
         dual_cache: bool = False,
     ) -> Union[DreamModelOutput, torch.LongTensor]:
         # init values
@@ -448,7 +451,7 @@ class DreamGenerationMixin:
             current_block_end = current_block_start + block_length
 
             # update cache
-            model_output = self(x, attention_mask, tok_idx, use_cache=True)
+            model_output = self(x, attention_mask, tok_idx, use_cache=use_cache)
             past_key_values = model_output.past_key_values
             logits = model_output.logits
             logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
@@ -485,11 +488,11 @@ class DreamGenerationMixin:
                 if dual_cache:
                     model_output = self(x[:, current_block_start:current_block_end], current_attention_mask, 
                                     tok_idx[:, current_block_start:current_block_end] if tok_idx is not None else None, 
-                                    past_key_values=past_key_values, use_cache=True, dual_cache=dual_cache, replace_position=replace_position)
+                                    past_key_values=past_key_values, use_cache=use_cache, dual_cache=dual_cache, replace_position=replace_position)
                 else:
                     model_output = self(x[:, current_block_start:], current_attention_mask, 
                                     tok_idx[:, current_block_start:] if tok_idx is not None else None, 
-                                    past_key_values=past_key_values, use_cache=True)
+                                    past_key_values=past_key_values, use_cache=use_cache)
                 logits = model_output.logits
                 logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
                 if alg == 'confidence_threshold':

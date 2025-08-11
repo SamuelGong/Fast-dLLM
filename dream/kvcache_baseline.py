@@ -80,6 +80,8 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
     print(f"\nLoading model for {tag} …")
     # model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
     model = DreamModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
+    model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, model)
+    model._sample = types.MethodType(DreamGenerationMixin._sample, model)
 
     # warm‑up
     with torch.inference_mode():
@@ -102,12 +104,11 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                     steps=steps,
                     temperature=0.,
                     block_length=block_len,
-                    alg='origin'
+                    alg='origin',
+                    use_cache=False
                     # generation_tokens_hook_func=generation_tokens_hook_func
                 )
             elif use_kv_cache == "Prefix":
-                model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, model)
-                model._sample = types.MethodType(DreamGenerationMixin._sample, model)
                 output = model.diffusion_generate(
                     inputs.input_ids,
                     attention_mask=inputs.attention_mask,
@@ -117,11 +118,10 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                     steps=steps,
                     temperature=0.,
                     block_length=block_len,
-                    alg='origin'
+                    alg='origin',
+                    use_cache=True
                 )
             elif use_kv_cache == "Dual":
-                model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, model)
-                model._sample = types.MethodType(DreamGenerationMixin._sample, model)
                 output = model.diffusion_generate(
                     inputs.input_ids,
                     attention_mask=inputs.attention_mask,
@@ -131,8 +131,9 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                     steps=steps,
                     temperature=0.,
                     block_length=block_len,
-                    dual_cache=True,
-                    alg='origin'
+                    alg='origin',
+                    use_cache=True,
+                    dual_cache=True
                 )
             elif use_kv_cache == "C2F":
                 pass
@@ -176,9 +177,9 @@ def main():
     inputs.input_ids = inputs.input_ids.to(DEVICE)
     inputs.attention_mask = inputs.attention_mask.to(device=DEVICE, dtype=DTYPE)
 
-    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
+    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
     # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
-    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
+    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
     # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block,
     #                         use_kv_cache="C2F", debug=args.debug)
     evaluation = evaluate_qa(args.question, answer)
