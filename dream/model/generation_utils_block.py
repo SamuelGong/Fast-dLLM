@@ -556,11 +556,12 @@ class DreamGenerationMixin:
                             full_confidence = torch.full_like(x[:, current_block_start:current_block_end], -torch.inf, device=self.device, dtype=logits.dtype)
                         else:
                             full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device, dtype=logits.dtype)
+                        print(num_block, i, full_confidence.shape, mask_index.shape, confidence.shape)
                         full_confidence[mask_index] = confidence
                         full_confidence[:, block_length:] = -torch.inf
                     else:
                         full_confidence = torch.full_like(x, -torch.inf, device=self.device, dtype=logits.dtype)
-                        print(confidence.shape, x.shape)
+                        print(num_block, i, full_confidence.shape, mask_index.shape, confidence.shape)
                         full_confidence[mask_index] = confidence
                     
                     if number_transfer_tokens > 0:
