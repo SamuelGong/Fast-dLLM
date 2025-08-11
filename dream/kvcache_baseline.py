@@ -102,6 +102,7 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                     steps=steps,
                     temperature=0.,
                     block_length=block_len,
+                    alg='origin'
                     # generation_tokens_hook_func=generation_tokens_hook_func
                 )
             elif use_kv_cache == "Prefix":
@@ -115,7 +116,8 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                     return_dict_in_generate=True,
                     steps=steps,
                     temperature=0.,
-                    block_length=block_len
+                    block_length=block_len,
+                    alg='origin'
                 )
             elif use_kv_cache == "Dual":
                 model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, model)
@@ -129,7 +131,8 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                     steps=steps,
                     temperature=0.,
                     block_length=block_len,
-                    dual_cache=True
+                    dual_cache=True,
+                    alg='origin'
                 )
             elif use_kv_cache == "C2F":
                 pass
