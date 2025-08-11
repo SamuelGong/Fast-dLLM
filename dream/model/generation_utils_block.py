@@ -560,7 +560,7 @@ class DreamGenerationMixin:
                         full_confidence[:, block_length:] = -torch.inf
                     else:
                         full_confidence = torch.full_like(x, -torch.inf, device=self.device, dtype=logits.dtype)
-                        print(full_confidence.shape, x.shape)
+                        print(confidence.shape, x.shape)
                         full_confidence[mask_index] = confidence
                     
                     if number_transfer_tokens > 0:
