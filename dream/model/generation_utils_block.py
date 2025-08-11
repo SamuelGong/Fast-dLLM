@@ -459,16 +459,17 @@ class DreamGenerationMixin:
             x[:, current_block_start] = x0[:, current_block_start]
             
             # Extract only previous block cache
-            if not dual_cache:
-                new_past_key_values = []
-                for i in range(len(past_key_values)):
-                    new_past_key_values.append(())
-                    for j in range(len(past_key_values[i])):
-                        new_past_key_values[i] += (past_key_values[i][j][:, :current_block_start, :],)
-                past_key_values = new_past_key_values
-            else:
-                replace_position = torch.zeros_like(x, dtype=torch.bool)
-                replace_position[:, current_block_start:current_block_end] = 1
+            if use_cache:
+                if not dual_cache:
+                    new_past_key_values = []
+                    for i in range(len(past_key_values)):
+                        new_past_key_values.append(())
+                        for j in range(len(past_key_values[i])):
+                            new_past_key_values[i] += (past_key_values[i][j][:, :current_block_start, :],)
+                    past_key_values = new_past_key_values
+                else:
+                    replace_position = torch.zeros_like(x, dtype=torch.bool)
+                    replace_position[:, current_block_start:current_block_end] = 1
                 
             i = 1
             while True:
