@@ -592,7 +592,7 @@ class DreamGenerationMixin:
                             print(row_indices.shape, row_indices)
 
                             print('before', num_block, i, x, x0.shape)
-                            x[transfer_index] = x0
+                            x[row_indices, transfer_index] = x0
                             print('after', num_block, i, x)
 
                     i += 1
