@@ -587,12 +587,14 @@ class DreamGenerationMixin:
                                     row_indices, transfer_index]
                                 # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
                         else:
+                            x_ = torch.zeros_like(x, device=self.device, dtype=torch.long) + mask_token_id
+                            x_[mask_index] = x0.clone()
                             row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(
                                 transfer_index)
                             print(row_indices.shape, row_indices)
 
-                            print('before', num_block, i, x, x0.shape)
-                            x[row_indices, transfer_index] = x0
+                            print('before', num_block, i, x_.shape)
+                            x[row_indices, transfer_index] = x_[row_indices, transfer_index]
                             print('after', num_block, i, x)
 
                     i += 1
