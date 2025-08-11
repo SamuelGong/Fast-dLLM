@@ -545,10 +545,10 @@ class DreamGenerationMixin:
                         mask_index[:, block_length:] = False
                     mask_logits = logits[mask_index]
                     confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
-                    print(confidence.shape, x0.shape)
 
                     num_mask_token = mask_index.sum() / mask_index.shape[0]
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
+                    print(num_block, i, number_transfer_tokens, confidence.shape, x0.shape)
 
                     if use_cache:
                         if dual_cache:
@@ -564,7 +564,7 @@ class DreamGenerationMixin:
                     if number_transfer_tokens > 0:
                         if alg_temp is None or alg_temp == 0:
                             _, transfer_index = torch.topk(full_confidence, number_transfer_tokens)
-                            print(transfer_index.shape, transfer_index)
+                            print(num_block, i, transfer_index.shape, transfer_index)
                         else:
                             full_confidence = full_confidence / alg_temp
                             full_confidence = F.softmax(full_confidence, dim=-1)
