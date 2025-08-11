@@ -122,10 +122,10 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
     inputs = tokenizer.apply_chat_template([{"role": "user", "content": args.question}], add_generation_prompt=True)
 
-    # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
-    # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
-    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
-    # lat, answer = benchmark(prompt, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block,
+    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
+    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
+    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
+    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block,
     #                         use_kv_cache="C2F", debug=args.debug)
     evaluation = evaluate_qa(args.question, answer)
     print(lat, evaluation)
