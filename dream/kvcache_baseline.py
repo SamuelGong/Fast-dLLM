@@ -90,6 +90,7 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
             attention_mask=inputs.attention_mask[:, :1]
         ); torch.cuda.synchronize()
 
+    max_new_tokens = gen_len + len(inputs.input_ids[0])
     # seq_len = prompt.shape[1] + gen_len
     # attach_qcache_monkey(model, prompt.shape[1] + gen_len) if use_qcache else None
     with cuda_timer(f"{tag}") as get_elapsed:
@@ -98,7 +99,7 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                 output = model.diffusion_generate(
                     inputs.input_ids,
                     attention_mask=inputs.attention_mask,
-                    max_new_tokens=gen_len,
+                    max_new_tokens=max_new_tokens,
                     output_history=True,
                     return_dict_in_generate=True,
                     steps=steps,
