@@ -80,8 +80,6 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
     print(f"\nLoading model for {tag} …")
     # model = AutoModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
     model = DreamModel.from_pretrained(MODEL_NAME, trust_remote_code=True, torch_dtype=DTYPE).to(DEVICE).eval()
-    model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, model)
-    model._sample = types.MethodType(DreamGenerationMixin._sample, model)
 
     # warm‑up
     with torch.inference_mode():
@@ -95,9 +93,6 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
     with cuda_timer(f"{tag}") as get_elapsed:
         with profile(activities=[ProfilerActivity.CUDA]) as prof:
             if use_kv_cache == "None":
-                # out, nfe = generate(model, prompt, steps=steps, gen_length=gen_len,
-                #                block_length=block_len, temperature=0.,
-                #                remasking='low_confidence', tokenizer=tokenizer)
                 output = model.diffusion_generate(
                     inputs.input_ids,
                     attention_mask=inputs.attention_mask,
@@ -110,15 +105,32 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                     # generation_tokens_hook_func=generation_tokens_hook_func
                 )
             elif use_kv_cache == "Prefix":
-                pass
-                # out, nfe = generate_with_prefix_cache(model, prompt, steps=steps, gen_length=gen_len,
-                #                block_length=block_len, temperature=0.,
-                #                remasking='low_confidence', tokenizer=tokenizer)
+                model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, model)
+                model._sample = types.MethodType(DreamGenerationMixin._sample, model)
+                output = model.diffusion_generate(
+                    inputs.input_ids,
+                    attention_mask=inputs.attention_mask,
+                    max_new_tokens=gen_len,
+                    output_history=True,
+                    return_dict_in_generate=True,
+                    steps=steps,
+                    temperature=0.,
+                    block_length=block_len
+                )
             elif use_kv_cache == "Dual":
-                pass
-                # out, nfe = generate_with_dual_cache(model, prompt, steps=steps, gen_length=gen_len,
-                #                block_length=block_len, temperature=0.,
-                #                remasking='low_confidence', tokenizer=tokenizer)
+                model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, model)
+                model._sample = types.MethodType(DreamGenerationMixin._sample, model)
+                output = model.diffusion_generate(
+                    inputs.input_ids,
+                    attention_mask=inputs.attention_mask,
+                    max_new_tokens=gen_len,
+                    output_history=True,
+                    return_dict_in_generate=True,
+                    steps=steps,
+                    temperature=0.,
+                    block_length=block_len,
+                    dual_cache=True
+                )
             elif use_kv_cache == "C2F":
                 pass
                 # out, nfe = generate_coarse_to_fine(model, prompt, steps=steps, gen_length=gen_len,
