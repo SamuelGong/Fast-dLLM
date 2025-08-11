@@ -458,7 +458,7 @@ class DreamGenerationMixin:
             logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
             confidence, x0 = sample_tokens(logits, temperature=temperature, top_p=top_p, top_k=top_k)
             x[:, current_block_start] = x0[:, current_block_start]
-            print(num_block, x)
+            # print(num_block, x)
             
             # Extract only previous block cache
             if use_cache:
@@ -548,7 +548,7 @@ class DreamGenerationMixin:
 
                     num_mask_token = mask_index.sum() / mask_index.shape[0]
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
-                    print(num_block, i, number_transfer_tokens, confidence.shape, x0.shape)
+                    # print(num_block, i, number_transfer_tokens, confidence.shape, x0.shape)
 
                     if use_cache:
                         if dual_cache:
@@ -564,7 +564,7 @@ class DreamGenerationMixin:
                     if number_transfer_tokens > 0:
                         if alg_temp is None or alg_temp == 0:
                             _, transfer_index = torch.topk(full_confidence, number_transfer_tokens)
-                            print(num_block, i, transfer_index.shape, transfer_index)
+                            # print(num_block, i, transfer_index.shape, transfer_index)
                         else:
                             full_confidence = full_confidence / alg_temp
                             full_confidence = F.softmax(full_confidence, dim=-1)
@@ -591,11 +591,11 @@ class DreamGenerationMixin:
                             x_[mask_index] = x0.clone()
                             row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(
                                 transfer_index)
-                            print(row_indices.shape, row_indices)
+                            # print(row_indices.shape, row_indices)
 
-                            print('before', num_block, i, x_.shape)
+                            # print('before', num_block, i, x_.shape)
                             x[row_indices, transfer_index] = x_[row_indices, transfer_index]
-                            print('after', num_block, i, x)
+                            # print('after', num_block, i, x)
 
                     i += 1
 
