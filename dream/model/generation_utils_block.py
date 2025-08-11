@@ -474,10 +474,14 @@ class DreamGenerationMixin:
             i = 1
             while True:
                 # Use cache for generation
-                if dual_cache:
-                    mask_index = (x[:, current_block_start:current_block_end] == mask_token_id)
+                if use_cache:
+                    if dual_cache:
+                        mask_index = (x[:, current_block_start:current_block_end] == mask_token_id)
+                    else:
+                        mask_index = (x[:, current_block_start:] == mask_token_id)
                 else:
-                    mask_index = (x[:, current_block_start:] == mask_token_id)
+                    mask_index = (x == mask_token_id)
+                    mask_index[:, input_ids.shape[1] + (num_block + 1) * block_length:] = 0
                 
                 # Prepare attention mask for cached generation
                 print(attention_mask)
@@ -486,8 +490,6 @@ class DreamGenerationMixin:
                     current_attention_mask = attention_mask[:, :, :, current_block_start:]
                 else:
                     current_attention_mask = attention_mask
-                print(current_attention_mask)
-                exit(0)
 
                 if use_cache:
                     if dual_cache:
@@ -499,7 +501,7 @@ class DreamGenerationMixin:
                                         tok_idx[:, current_block_start:] if tok_idx is not None else None,
                                         past_key_values=past_key_values, use_cache=use_cache)
                 else:
-                    model_output = self(x, current_attention_mask, tok_idx[:, current_block_start:] if tok_idx is not None else None)
+                    model_output = self(x, current_attention_mask, tok_idx if tok_idx is not None else None)
 
                 logits = model_output.logits
                 logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
@@ -547,12 +549,16 @@ class DreamGenerationMixin:
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
                     # print(num_block, i, number_transfer_tokens, )  # DEBUG
 
-                    if dual_cache:
-                        full_confidence = torch.full_like(x[:, current_block_start:current_block_end], -torch.inf, device=self.device, dtype=logits.dtype)
+                    if use_cache:
+                        if dual_cache:
+                            full_confidence = torch.full_like(x[:, current_block_start:current_block_end], -torch.inf, device=self.device, dtype=logits.dtype)
+                        else:
+                            full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device, dtype=logits.dtype)
+                        full_confidence[mask_index] = confidence
+                        full_confidence[:, block_length:] = -torch.inf
                     else:
-                        full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device, dtype=logits.dtype)
-                    full_confidence[mask_index] = confidence
-                    full_confidence[:, block_length:] = -torch.inf
+                        full_confidence = torch.full_like(x, -torch.inf, device=self.device, dtype=logits.dtype)
+                        full_confidence[mask_index] = confidence
                     
                     if number_transfer_tokens > 0:
                         if alg_temp is None or alg_temp == 0:
@@ -561,17 +567,26 @@ class DreamGenerationMixin:
                             full_confidence = full_confidence / alg_temp
                             full_confidence = F.softmax(full_confidence, dim=-1)
                             transfer_index = torch.multinomial(full_confidence, num_samples=number_transfer_tokens)
-                        if dual_cache:
-                            x_ = torch.zeros_like(x[:, current_block_start:current_block_end], device=self.device, dtype=torch.long) + mask_token_id
+
+                        if use_cache:
+                            if dual_cache:
+                                x_ = torch.zeros_like(x[:, current_block_start:current_block_end], device=self.device, dtype=torch.long) + mask_token_id
+                            else:
+                                x_ = torch.zeros_like(x[:, current_block_start:], device=self.device, dtype=torch.long) + mask_token_id
+
+                            x_[mask_index] = x0.clone()
+                            row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(
+                                transfer_index)
+                            if dual_cache:
+                                x[:, current_block_start:current_block_end][row_indices, transfer_index] = x_[
+                                    row_indices, transfer_index]
+                            else:
+                                x[:, current_block_start:][row_indices, transfer_index] = x_[
+                                    row_indices, transfer_index]
+                                # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
                         else:
-                            x_ = torch.zeros_like(x[:, current_block_start:], device=self.device, dtype=torch.long) + mask_token_id
-                        x_[mask_index] = x0.clone()
-                        row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(transfer_index)
-                        if dual_cache:
-                            x[:, current_block_start:current_block_end][row_indices,transfer_index] = x_[row_indices,transfer_index]
-                        else:
-                            x[:, current_block_start:][row_indices,transfer_index] = x_[row_indices,transfer_index]
-                            # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
+                            x[transfer_index] = x0[transfer_index]
+
                     i += 1
 
                 if (x[:, current_block_start:current_block_end] == mask_token_id).sum() == 0:
