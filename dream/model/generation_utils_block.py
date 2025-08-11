@@ -494,6 +494,8 @@ class DreamGenerationMixin:
                     model_output = self(x[:, current_block_start:], current_attention_mask, 
                                     tok_idx[:, current_block_start:] if tok_idx is not None else None, 
                                     past_key_values=past_key_values, use_cache=use_cache)
+                    print(num_block, i, current_block_start, model_output)
+
                 logits = model_output.logits
                 logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
                 if alg == 'confidence_threshold':
@@ -562,7 +564,7 @@ class DreamGenerationMixin:
                             x[:, current_block_start:current_block_end][row_indices,transfer_index] = x_[row_indices,transfer_index]
                         else:
                             x[:, current_block_start:][row_indices,transfer_index] = x_[row_indices,transfer_index]
-                            print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
+                            # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
                     i += 1
 
                 if (x[:, current_block_start:current_block_end] == mask_token_id).sum() == 0:
