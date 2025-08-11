@@ -158,6 +158,8 @@ def main():
     prompt_txt = tokenizer.apply_chat_template([{"role": "user", "content": args.question}], add_generation_prompt=True,
                                                tokenize=False)
     inputs = tokenizer(prompt_txt, return_tensors="pt")
+    inputs.input_ids = inputs.input_ids.to(DEVICE)
+    inputs.attention_mask = inputs.attention_mask.to(DEVICE)
 
     lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
     # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
