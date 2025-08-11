@@ -480,20 +480,26 @@ class DreamGenerationMixin:
                     mask_index = (x[:, current_block_start:] == mask_token_id)
                 
                 # Prepare attention mask for cached generation
+                print(attention_mask)
                 if attention_mask != "full":
                     # Adjust attention mask for current position
                     current_attention_mask = attention_mask[:, :, :, current_block_start:]
                 else:
                     current_attention_mask = attention_mask
-                
-                if dual_cache:
-                    model_output = self(x[:, current_block_start:current_block_end], current_attention_mask, 
-                                    tok_idx[:, current_block_start:current_block_end] if tok_idx is not None else None, 
-                                    past_key_values=past_key_values, use_cache=use_cache, dual_cache=dual_cache, replace_position=replace_position)
+                print(current_attention_mask)
+                exit(0)
+
+                if use_cache:
+                    if dual_cache:
+                        model_output = self(x[:, current_block_start:current_block_end], current_attention_mask,
+                                        tok_idx[:, current_block_start:current_block_end] if tok_idx is not None else None,
+                                        past_key_values=past_key_values, use_cache=use_cache, dual_cache=dual_cache, replace_position=replace_position)
+                    else:
+                        model_output = self(x[:, current_block_start:], current_attention_mask,
+                                        tok_idx[:, current_block_start:] if tok_idx is not None else None,
+                                        past_key_values=past_key_values, use_cache=use_cache)
                 else:
-                    model_output = self(x[:, current_block_start:], current_attention_mask, 
-                                    tok_idx[:, current_block_start:] if tok_idx is not None else None, 
-                                    past_key_values=past_key_values, use_cache=use_cache)
+                    model_output = self(x, current_attention_mask, tok_idx[:, current_block_start:] if tok_idx is not None else None)
 
                 logits = model_output.logits
                 logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
