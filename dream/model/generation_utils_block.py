@@ -586,6 +586,7 @@ class DreamGenerationMixin:
                                 # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
                         else:
                             x[transfer_index] = x0[transfer_index]
+                            print(num_block, i, current_block_start, x, '\n')
 
                     i += 1
 
