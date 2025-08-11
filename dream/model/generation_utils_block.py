@@ -424,11 +424,6 @@ class DreamGenerationMixin:
         
         assert steps % num_blocks == 0, f"steps ({steps}) must be divisible by num_blocks ({num_blocks})"
         steps_per_block = steps // num_blocks
-        print("max_length", max_length)
-        print("steps_per_block", steps_per_block)
-        print("num_blocks", num_blocks)
-        print("steps", steps)
-        exit(0)
         timesteps = torch.linspace(1, generation_config.eps, steps_per_block + 1, device=x.device)
 
         if attention_mask is not None and torch.any(attention_mask == 0.0):
@@ -478,6 +473,7 @@ class DreamGenerationMixin:
                 
             i = 1
             while True:
+                print(num_block, i)
                 # Use cache for generation
                 if dual_cache:
                     mask_index = (x[:, current_block_start:current_block_end] == mask_token_id)
