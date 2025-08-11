@@ -413,6 +413,7 @@ class DreamGenerationMixin:
 
         # pad input_ids to max_length
         x = F.pad(input_ids, (0, max_length - input_ids.shape[1]), value=mask_token_id)
+        print('initial', x)
         gen_length = max_length - input_ids.shape[1]
         
         # Handle block configuration
@@ -457,6 +458,7 @@ class DreamGenerationMixin:
             logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
             confidence, x0 = sample_tokens(logits, temperature=temperature, top_p=top_p, top_k=top_k)
             x[:, current_block_start] = x0[:, current_block_start]
+            print(num_block, x)
             
             # Extract only previous block cache
             if use_cache:
@@ -484,7 +486,6 @@ class DreamGenerationMixin:
                     mask_index[:, input_ids.shape[1] + (num_block + 1) * block_length:] = 0
                 
                 # Prepare attention mask for cached generation
-                print(attention_mask)
                 if attention_mask != "full":
                     # Adjust attention mask for current position
                     current_attention_mask = attention_mask[:, :, :, current_block_start:]
