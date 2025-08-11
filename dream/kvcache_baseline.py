@@ -155,11 +155,9 @@ def main():
     args = ap.parse_args()
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
-    inputs = tokenizer.apply_chat_template(
-        [{"role": "user", "content": args.question}],
-        add_generation_prompt=True,
-        tokenize=True
-    )
+    prompt_txt = tokenizer.apply_chat_template([{"role": "user", "content": args.question}], add_generation_prompt=True,
+                                               tokenize=False)
+    inputs = torch.tensor(tokenizer(prompt_txt), device=DEVICE)
 
     lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
     # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
