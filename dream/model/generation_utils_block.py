@@ -664,17 +664,17 @@ class DreamGenerationMixin:
                                 x[:, current_block_start:][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
                             elif use_kv_cache == "C2F":
-                                print(full_confidence)
-                                print(transfer_index)
-                                print(x_)
-                                print(x_[row_indices, transfer_index])
-                                print('---')
-                                print(x)
-                                print(x[:, block_positions][row_indices, transfer_index])
                                 x[:, block_positions][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
-                                print(x)
-                                exit(0)
+
+                                if debug:
+                                    print(f"\tx[:, block_positions] {x[:, block_positions]}")
+                                    print(f"\tx {x}")
+                                tokens = [(idx, tokenizer.decode(e)) for idx, e in enumerate(x[0])]
+
+                                if debug:
+                                    print(f"\ttokens {tokens}")
+                                    print("---")
                             else:
                                 raise NotImplementedError
                                 # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
