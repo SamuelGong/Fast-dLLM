@@ -522,6 +522,7 @@ class DreamGenerationMixin:
                         mask_index = (x[:, current_block_start:] == mask_token_id)
                     elif use_kv_cache == "C2F":
                         mask_index = (x[:, block_positions] == mask_token_id)
+                        print(current_block_start)
                         print(mask_index)
                         exit(0)
                     else:
