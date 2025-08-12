@@ -675,7 +675,10 @@ class DreamGenerationMixin:
                                     print(f"\ttransfer_index {transfer_index}")
                                     print(f"\tx0 {x0}")
 
-                                x[:, block_positions][row_indices, transfer_index] = x_[
+                                # x[:, block_positions] uses fancy indexing, which returns a copy, not a view.
+                                # x[:, block_positions][row_indices, transfer_index] = x_[
+                                #     row_indices, transfer_index]
+                                x[np.ix_(row_indices, np.asarray(block_positions))][:, transfer_index] = x_[
                                     row_indices, transfer_index]
 
                                 if debug:
