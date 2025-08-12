@@ -487,8 +487,8 @@ class DreamGenerationMixin:
                 for j in range(confidence.shape[0]):
                     _, select_index = torch.topk(confidence[j], k=block_length)
                     block_sel[j, select_index] = True
-                if debug:
-                    print(f"\tblock_sel: {block_sel}")
+                # if debug:
+                #     print(f"\tblock_sel: {block_sel}")
             # print(num_block, x)
             
             # Extract only previous block cache
@@ -610,8 +610,11 @@ class DreamGenerationMixin:
                         if not use_kv_cache == "C2F":
                             mask_index[:, block_length:] = False
 
-                    mask_logits = logits[mask_index]
-                    confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
+                    if not use_kv_cache == "C2F":
+                        mask_logits = logits[mask_index]
+                        confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
+                    else:
+                        confidence, x0 = sample_tokens(logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
 
                     num_mask_token = mask_index.sum() / mask_index.shape[0]
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
