@@ -739,8 +739,6 @@ class DreamBaseModel(DreamPreTrainedModel):
                     (q_positions.max() if q_positions is not None else -1),
                     (k_positions.max() if k_positions is not None else -1),
                 ) + 1
-                print(max_needed)
-                exit(0)
                 position_ids = torch.arange(max_needed, device=inputs_embeds.device).unsqueeze(0)
             else:  # Dual
                 if past_key_values is not None:
@@ -755,6 +753,11 @@ class DreamBaseModel(DreamPreTrainedModel):
 
         # create position embeddings to be shared across the decoder layers
         position_embeddings = self.rotary_emb(hidden_states, position_ids)
+        print(position_ids)
+        cos, sin = position_embeddings
+        print(cos)
+        print(sin)
+        exit(0)
 
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
