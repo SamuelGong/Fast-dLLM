@@ -522,9 +522,6 @@ class DreamGenerationMixin:
                         mask_index = (x[:, current_block_start:] == mask_token_id)
                     elif use_kv_cache == "C2F":
                         mask_index = (x[:, block_positions] == mask_token_id)
-                        print(current_block_start)
-                        print(mask_index)
-                        exit(0)
                     else:
                         raise NotImplementedError
                 else:
@@ -547,6 +544,14 @@ class DreamGenerationMixin:
                         model_output = self(x[:, current_block_start:], current_attention_mask,
                                         tok_idx[:, current_block_start:] if tok_idx is not None else None,
                                         past_key_values=past_key_values, use_cache=True)
+                    elif use_kv_cache == "C2F":
+                        model_output = self(x[:, block_positions], current_attention_mask,
+                                            tok_idx[:, current_block_start:] if tok_idx is not None else None,
+                                            past_key_values=past_key_values, use_cache=True,
+                                            replace_position=block_sel,
+                                            q_positions=block_positions,
+                                            k_positions=torch.arange(len(x), device=x.device))
+                        print('here')
                     else:
                         raise NotImplementedError
                 else:
