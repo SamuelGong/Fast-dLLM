@@ -550,7 +550,7 @@ class DreamGenerationMixin:
                                             past_key_values=past_key_values, use_cache=True,
                                             replace_position=block_sel,
                                             q_positions=block_positions,
-                                            k_positions=torch.arange(len(x), device=x.device))
+                                            k_positions=torch.arange(len(x[0]), device=x.device))  # Important, x is 2-dim and thus should not be len(x)
                     else:
                         raise NotImplementedError
                 else:
