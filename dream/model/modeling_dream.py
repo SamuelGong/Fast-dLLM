@@ -757,7 +757,6 @@ class DreamBaseModel(DreamPreTrainedModel):
         cos, sin = position_embeddings
         print(cos)
         print(sin)
-        exit(0)
 
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
