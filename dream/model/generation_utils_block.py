@@ -471,23 +471,32 @@ class DreamGenerationMixin:
                 current_block_end = current_block_start + block_length
                 x[:, current_block_start] = x0[:, current_block_start]  # this means that quota first step == 1
             else:
-                # quota_first_step = 1  # TODO: temporarily follow the above logic
-
                 mask_index = (x == mask_token_id)
                 confidence = torch.where(mask_index, confidence, -np.inf)
-                transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
+
+                # transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 # for j in range(confidence.shape[0]):
                     # _, select_index = torch.topk(confidence[j], k=quota_first_step)
                     # transfer_index[j, select_index] = True
                 # x[transfer_index] = x0[transfer_index]
+
+                # TODO: It seems that I have to follow the above logic though I do not know why
                 first_idx = mask_index.nonzero(as_tuple=False)[0, 1].item()
                 x[:, first_idx] = x0[:, first_idx]
 
                 if block_length == 1:
                     continue
+
                 block_sel = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
                     _, select_index = torch.topk(confidence[j], k=block_length)
+
+                    # TODO: It seems that I have to use this logic though I do not know why
+                    # Check if first_idx is already in select_index
+                    if first_idx not in select_index:
+                        # Replace the lowest-confidence index with first_idx
+                        select_index[-1] = first_idx  # Because torch.topk returns sorted in descending order
+
                     block_sel[j, select_index] = True
                 # if debug:
                 #     print(f"\tblock_sel: {block_sel}")
