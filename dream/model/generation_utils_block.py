@@ -473,8 +473,8 @@ class DreamGenerationMixin:
             else:
                 # quota_first_step = 1  # TODO: temporarily follow the above logic
 
-                # mask_index = (x == mask_token_id)
-                # confidence = torch.where(mask_index, confidence, -np.inf)
+                mask_index = (x == mask_token_id)
+                confidence = torch.where(mask_index, confidence, -np.inf)
                 transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
                     # _, select_index = torch.topk(confidence[j], k=quota_first_step)
