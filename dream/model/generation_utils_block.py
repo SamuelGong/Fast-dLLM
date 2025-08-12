@@ -667,6 +667,8 @@ class DreamGenerationMixin:
                                 print(full_confidence)
                                 print(transfer_index)
                                 print(x_)
+                                print(x_[row_indices, transfer_index])
+                                print('---')
                                 print(x)
                                 x[:, block_positions][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
