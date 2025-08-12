@@ -663,17 +663,21 @@ class DreamGenerationMixin:
                                 x_[mask_index] = x0[mask_index].clone()
                             row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(
                                 transfer_index)
+                            if debug:
+                                print(f"\tfull_confidence {full_confidence}")
+                                print(f"\ttransfer_index {transfer_index}")
+                                print(f"\tx0 {x0}")
+
                             if use_kv_cache == "Dual":
                                 x[:, current_block_start:current_block_end][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
+                                if debug:
+                                    print(f"\tx[:, current_block_start:current_block_end] {x[:, current_block_start:current_block_end]}")
+                                    # print(f"\tx {x}")
                             elif use_kv_cache == "Prefix":
                                 x[:, current_block_start:][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
                             elif use_kv_cache == "C2F":
-                                if debug:
-                                    print(f"\tfull_confidence {full_confidence}")
-                                    print(f"\ttransfer_index {transfer_index}")
-                                    print(f"\tx0 {x0}")
 
                                 # x[:, block_positions] uses fancy indexing, which returns a copy, not a view.
                                 # x[:, block_positions][row_indices, transfer_index] = x_[
@@ -684,7 +688,7 @@ class DreamGenerationMixin:
 
                                 if debug:
                                     print(f"\tx[:, block_positions] {x[:, block_positions]}")
-                                    print(f"\tx {x}")
+                                    # print(f"\tx {x}")
                                 tokens = [(idx, tokenizer.decode(e)) for idx, e in enumerate(x[0])]
 
                                 if debug:
