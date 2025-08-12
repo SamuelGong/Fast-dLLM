@@ -481,10 +481,7 @@ class DreamGenerationMixin:
                     # transfer_index[j, select_index] = True
                 # x[transfer_index] = x0[transfer_index]
                 first_idx = mask_index.nonzero(as_tuple=False)[0, 1].item()
-                print(x)
                 x[:, first_idx] = x0[:, first_idx]
-                print(x)
-                exit(0)
 
                 if block_length == 1:
                     continue
