@@ -137,7 +137,7 @@ class DreamRotaryEmbedding(nn.Module):
         inv_freq, self.attention_scaling = self.rope_init_fn(self.config, self.inv_freq.device, **self.rope_kwargs)
         self.register_buffer("inv_freq", inv_freq, persistent=False)
         self.original_inv_freq = self.inv_freq
-    
+
 
     def _dynamic_frequency_update(self, position_ids, device):
         """
@@ -190,7 +190,8 @@ def rotate_half(x):
 
 
 # Copied from transformers.models.llama.modeling_llama.apply_rotary_pos_emb
-def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1, block_end_index: Optional[torch.Tensor] = None):
+def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1, block_end_index: Optional[torch.Tensor] = None,
+                         q_positions: Optional[torch.Tensor] = None, k_positions: Optional[torch.Tensor] = None):
     """Applies Rotary Position Embedding to the query and key tensors.
 
     Args:
@@ -214,10 +215,14 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1, blo
     sin = sin.unsqueeze(unsqueeze_dim)
     query_len, key_len = q.shape[-2], k.shape[-2]
 
-    if block_end_index is None:
-        q_embed = (q * cos[:, :, key_len - query_len : key_len, :]) + (rotate_half(q) * sin[:, :, key_len - query_len : key_len, :])
+    if q_positions is not None:
+        q_embed = ((q * cos) + (rotate_half(q) * sin))
+    elif block_end_index is None:
+        q_embed = ((q * cos[:, :, key_len - query_len : key_len, :])
+                   + (rotate_half(q) * sin[:, :, key_len - query_len : key_len, :]))
     else:
-        q_embed = (q * cos[:, :, block_end_index.item() - query_len : block_end_index.item(), :]) + (rotate_half(q) * sin[:, :, block_end_index.item() - query_len : block_end_index.item(), :])
+        q_embed = ((q * cos[:, :, block_end_index.item() - query_len : block_end_index.item(), :])
+                   + (rotate_half(q) * sin[:, :, block_end_index.item() - query_len : block_end_index.item(), :]))
     k_embed = (k * cos) + (rotate_half(k) * sin)
     return q_embed, k_embed
 
@@ -318,8 +323,6 @@ class DreamAttention(nn.Module):
                 "removed and `position_embeddings` will be mandatory."
             )
             cos, sin = self.rotary_emb(value_states, position_ids)
-            print(cos.shape, sin.shape)
-            print("rot in DreamAttention.forward", value_states.shape, position_ids.shape, position_ids)
         else:
             cos, sin = position_embeddings
         query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
@@ -357,7 +360,7 @@ class DreamAttention(nn.Module):
             attn_weights = None
 
         return attn_output, attn_weights, past_key_value
-    
+
 
 class DreamSdpaAttention(DreamAttention):
     """
@@ -378,7 +381,8 @@ class DreamSdpaAttention(DreamAttention):
         cache_position: Optional[torch.LongTensor] = None,
         position_embeddings: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,  # will become mandatory in v4.46
         replace_position: Optional[torch.Tensor] = None,
-        dual_cache: Optional[bool] = False,
+        q_positions: Optional[torch.Tensor] = None,  # NEW  <───┐
+        k_positions: Optional[torch.Tensor] = None
     ) -> Tuple[torch.Tensor, Optional[torch.Tensor], Optional[Tuple[torch.Tensor]]]:
         if output_attentions:
             # TODO: Improve this warning with e.g. `model.config.attn_implementation = "manual"` once this is implemented.
@@ -402,9 +406,10 @@ class DreamSdpaAttention(DreamAttention):
         value_states = self.v_proj(hidden_states)
 
         if past_key_value is not None:
-            if dual_cache:
+            # if dual_cache:
+            if replace_position is not None:
                 past_key, past_value = past_key_value
-                replace_indices = replace_position.nonzero(as_tuple=True)[1] 
+                replace_indices = replace_position.nonzero(as_tuple=True)[1]
                 past_key[:, replace_indices] = key_states
                 key_states = past_key
                 past_value[:, replace_indices] = value_states
@@ -413,7 +418,7 @@ class DreamSdpaAttention(DreamAttention):
                 past_key, past_value = past_key_value
                 key_states = torch.cat([past_key, key_states], dim=-2)
                 value_states = torch.cat([past_value, value_states], dim=-2)
-            
+
         past_key_value = (key_states, value_states) if use_cache else None
 
         query_states = query_states.view(bsz, q_len, self.num_heads, self.head_dim).transpose(1, 2)
@@ -428,15 +433,22 @@ class DreamSdpaAttention(DreamAttention):
                 "removed and `position_embeddings` will be mandatory."
             )
             cos, sin = self.rotary_emb(value_states, position_ids)
-            print("rot in DreamSdpaAttention.forward", value_states.shape, position_ids.shape, position_ids)
-            print(cos.shape, sin.shape)
         else:
             cos, sin = position_embeddings
-        
-        if dual_cache:
-            query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, block_end_index=replace_indices.max()+1)
-        else:
+
+        if replace_position is None:
             query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
+        else:
+            if q_positions is not None and k_positions is not None:  # C2F
+                query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin,
+                                                                q_positions=q_positions, k_positions=k_positions)
+            else:
+                query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin,
+                                                                block_end_index=replace_indices.max() + 1)
+        # if dual_cache:
+        #     query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, block_end_index=replace_indices.max()+1)
+        # else:
+        #     query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
 
         key_states = repeat_kv(key_states, self.num_key_value_groups)
         value_states = repeat_kv(value_states, self.num_key_value_groups)
@@ -484,7 +496,7 @@ class DreamDecoderLayer(nn.Module):
                 f"Sliding Window Attention is enabled but not implemented for `{config._attn_implementation}`; "
                 "unexpected results may be encountered."
             )
-        
+
         # self.self_attn = Dream_ATTENTION_CLASSES[config._attn_implementation](config, layer_idx)
         self.self_attn = DreamSdpaAttention(config, layer_idx)
 
@@ -502,8 +514,9 @@ class DreamDecoderLayer(nn.Module):
         use_cache: Optional[bool] = False,
         cache_position: Optional[torch.LongTensor] = None,
         position_embeddings: Optional[Tuple[torch.Tensor, torch.Tensor]] = None,  # will become mandatory in v4.46
-        dual_cache: Optional[bool] = False,
         replace_position: Optional[torch.Tensor] = None,
+        q_positions: Optional[torch.Tensor] = None,  # NEW  <───┐
+        k_positions: Optional[torch.Tensor] = None,
         **kwargs,
     ) -> Tuple[torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]]:
         """
@@ -542,8 +555,9 @@ class DreamDecoderLayer(nn.Module):
             use_cache=use_cache,
             cache_position=cache_position,
             position_embeddings=position_embeddings,
-            dual_cache=dual_cache,
             replace_position=replace_position,
+            q_positions=q_positions,
+            k_positions=k_positions
         )
         hidden_states = residual + hidden_states
 
@@ -617,7 +631,7 @@ class DreamPreTrainedModel(PreTrainedModel):
             **kwargs,
         )
         # NOTE(Lin): we need to override the generation config
-        # because the generation config loaded in `from_pretrained` 
+        # because the generation config loaded in `from_pretrained`
         # does not include all the attributes of DreamGenerationConfig
         resume_download = kwargs.get("resume_download", None)
         proxies = kwargs.get("proxies", None)
@@ -682,8 +696,9 @@ class DreamBaseModel(DreamPreTrainedModel):
         output_hidden_states: Optional[bool] = None,
         return_dict: Optional[bool] = None,
         cache_position: Optional[torch.LongTensor] = None,
-        dual_cache: Optional[bool] = False,
         replace_position: Optional[torch.Tensor] = None,
+        q_positions: Optional[torch.Tensor] = None,  # NEW  <───┐
+        k_positions: Optional[torch.Tensor] = None,
     ) -> Union[Tuple, BaseModelOutput]:
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = (
@@ -705,7 +720,7 @@ class DreamBaseModel(DreamPreTrainedModel):
 
         if inputs_embeds is None:
             inputs_embeds = self.embed_tokens(input_ids)
-        
+
         # if use_cache and past_key_values is None:
         #     past_key_values = None
 
@@ -715,10 +730,12 @@ class DreamBaseModel(DreamPreTrainedModel):
         #         past_seen_tokens, past_seen_tokens + inputs_embeds.shape[1], device=inputs_embeds.device
         #     )
         past_seen_tokens = past_key_values[0][0].shape[1] if past_key_values is not None else 0
-        if not dual_cache:
+        # if not dual_cache:
+        if replace_position is None:  # Prefix, None
             position_ids = torch.arange(past_seen_tokens + inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
-        else:
+        else:  # TODO: Dual, C2F (to confirm)
             if past_key_values is not None:
+                print(past_seen_tokens)
                 position_ids = torch.arange(past_seen_tokens, device=inputs_embeds.device).unsqueeze(0)
             else:
                 position_ids = torch.arange(inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
@@ -730,9 +747,6 @@ class DreamBaseModel(DreamPreTrainedModel):
 
         # create position embeddings to be shared across the decoder layers
         position_embeddings = self.rotary_emb(hidden_states, position_ids)
-        print("rot in DreamBaseModel.forward", hidden_states.shape, position_ids.shape, position_ids)
-        cos, sin = position_embeddings
-        print(cos.shape, sin.shape)
 
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
@@ -755,8 +769,9 @@ class DreamBaseModel(DreamPreTrainedModel):
                     use_cache,
                     cache_position,
                     position_embeddings,
-                    dual_cache,
                     replace_position,
+                    q_positions=q_positions,
+                    k_positions=k_positions
                 )
             else:
                 layer_outputs = decoder_layer(
@@ -768,8 +783,9 @@ class DreamBaseModel(DreamPreTrainedModel):
                     use_cache=use_cache,
                     cache_position=cache_position,
                     position_embeddings=position_embeddings,
-                    dual_cache=dual_cache,
                     replace_position=replace_position,
+                    q_positions=q_positions,
+                    k_positions=k_positions
                 )
 
             hidden_states = layer_outputs[0]
@@ -844,8 +860,9 @@ class DreamModel(DreamGenerationMixin, DreamPreTrainedModel):
         return_dict: Optional[bool] = None,
         cache_position: Optional[torch.LongTensor] = None,
         num_logits_to_keep: int = 0,
-        dual_cache: Optional[bool] = False,
         replace_position: Optional[torch.Tensor] = None,
+        q_positions: Optional[torch.Tensor] = None,  # NEW  <───┐
+        k_positions: Optional[torch.Tensor] = None,
         **loss_kwargs,
     ) -> Union[Tuple, MaskedLMOutput]:
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
@@ -866,8 +883,9 @@ class DreamModel(DreamGenerationMixin, DreamPreTrainedModel):
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
             cache_position=cache_position,
-            dual_cache=dual_cache,
             replace_position=replace_position,
+            q_positions=q_positions,
+            k_positions=k_positions
         )
         hidden_states = outputs[0]
         # Only compute necessary logits, and do not upcast them to float if we are not computing the loss

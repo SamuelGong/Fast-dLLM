@@ -539,7 +539,7 @@ class DreamGenerationMixin:
                     if use_kv_cache == "Dual":
                         model_output = self(x[:, current_block_start:current_block_end], current_attention_mask,
                                         tok_idx[:, current_block_start:current_block_end] if tok_idx is not None else None,
-                                        past_key_values=past_key_values, use_cache=True, dual_cache=True, replace_position=replace_position)
+                                        past_key_values=past_key_values, use_cache=True, replace_position=replace_position)
                     elif use_kv_cache == "Prefix":
                         model_output = self(x[:, current_block_start:], current_attention_mask,
                                         tok_idx[:, current_block_start:] if tok_idx is not None else None,
