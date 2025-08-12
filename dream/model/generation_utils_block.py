@@ -372,8 +372,9 @@ class DreamGenerationMixin:
         )
         threshold = kwargs.get("threshold", 0.9)
         block_length = kwargs.get("block_length", 32)
-        dual_cache = kwargs.get("dual_cache", False)
-        use_cache = kwargs.get("use_cache", False)
+        use_kv_cache = kwargs.get("use_kv_cache", "None")
+
+        debug = kwargs.get("debug", False)
 
         result = self._sample(
             input_ids,
@@ -381,8 +382,8 @@ class DreamGenerationMixin:
             generation_config=generation_config,
             threshold=threshold,
             block_length=block_length,
-            use_cache=use_cache,
-            dual_cache=dual_cache
+            use_kv_cache=use_kv_cache,
+            debug=debug
         )
         return result
 
@@ -391,10 +392,10 @@ class DreamGenerationMixin:
         input_ids: torch.LongTensor,
         attention_mask: Optional[torch.LongTensor],
         generation_config: DreamGenerationConfig,
+        use_kv_cache: str,
         threshold: Optional[float] = 0.9,
         block_length: Optional[int] = 32,
-        use_cache: bool = False,
-        dual_cache: bool = False,
+        debug: bool = False
     ) -> Union[DreamModelOutput, torch.LongTensor]:
         # init values
         
@@ -451,7 +452,10 @@ class DreamGenerationMixin:
             current_block_end = current_block_start + block_length
 
             # update cache
-            model_output = self(x, attention_mask, tok_idx, use_cache=use_cache)
+            if not use_kv_cache == "None":
+                model_output = self(x, attention_mask, tok_idx, use_cache=True)
+            else:
+                model_output = self(x, attention_mask, tok_idx)
             past_key_values = model_output.past_key_values
             logits = model_output.logits
             logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
@@ -460,26 +464,30 @@ class DreamGenerationMixin:
             # print(num_block, x)
             
             # Extract only previous block cache
-            if use_cache:
-                if not dual_cache:
+            if not use_kv_cache == "None":
+                if use_kv_cache == "Prefix":
                     new_past_key_values = []
                     for i in range(len(past_key_values)):
                         new_past_key_values.append(())
                         for j in range(len(past_key_values[i])):
                             new_past_key_values[i] += (past_key_values[i][j][:, :current_block_start, :],)
                     past_key_values = new_past_key_values
-                else:
+                elif use_kv_cache == "Dual":
                     replace_position = torch.zeros_like(x, dtype=torch.bool)
                     replace_position[:, current_block_start:current_block_end] = 1
+                else:
+                    raise NotImplementedError
                 
             i = 1
             while True:
                 # Use cache for generation
-                if use_cache:
-                    if dual_cache:
+                if not use_kv_cache == "None":
+                    if use_kv_cache == "Dual":
                         mask_index = (x[:, current_block_start:current_block_end] == mask_token_id)
-                    else:
+                    elif use_kv_cache == "Prefix":
                         mask_index = (x[:, current_block_start:] == mask_token_id)
+                    else:
+                        raise NotImplementedError
                 else:
                     mask_index = (x == mask_token_id)
                     mask_index[:, input_ids.shape[1] + (num_block + 1) * block_length:] = 0
@@ -491,15 +499,17 @@ class DreamGenerationMixin:
                 else:
                     current_attention_mask = attention_mask
 
-                if use_cache:
-                    if dual_cache:
+                if not use_kv_cache == "None":
+                    if use_kv_cache == "Dual":
                         model_output = self(x[:, current_block_start:current_block_end], current_attention_mask,
                                         tok_idx[:, current_block_start:current_block_end] if tok_idx is not None else None,
-                                        past_key_values=past_key_values, use_cache=use_cache, dual_cache=dual_cache, replace_position=replace_position)
-                    else:
+                                        past_key_values=past_key_values, use_cache=True, dual_cache=True, replace_position=replace_position)
+                    elif use_kv_cache == "Prefix":
                         model_output = self(x[:, current_block_start:], current_attention_mask,
                                         tok_idx[:, current_block_start:] if tok_idx is not None else None,
-                                        past_key_values=past_key_values, use_cache=use_cache)
+                                        past_key_values=past_key_values, use_cache=True)
+                    else:
+                        raise NotImplementedError
                 else:
                     model_output = self(x, current_attention_mask, tok_idx if tok_idx is not None else None)
 
@@ -540,7 +550,7 @@ class DreamGenerationMixin:
                         break
                     t = timesteps[i]
                     s = timesteps[i + 1]
-                    if use_cache:
+                    if not use_kv_cache == "None":
                         mask_index[:, block_length:] = False
                     mask_logits = logits[mask_index]
                     confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
@@ -549,11 +559,13 @@ class DreamGenerationMixin:
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
                     # print(num_block, i, number_transfer_tokens, confidence.shape, x0.shape)
 
-                    if use_cache:
-                        if dual_cache:
+                    if not use_kv_cache == "None":
+                        if use_kv_cache == "Dual":
                             full_confidence = torch.full_like(x[:, current_block_start:current_block_end], -torch.inf, device=self.device, dtype=logits.dtype)
-                        else:
+                        elif use_kv_cache == "Prefix":
                             full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device, dtype=logits.dtype)
+                        else:
+                            raise NotImplementedError
                         full_confidence[mask_index] = confidence
                         full_confidence[:, block_length:] = -torch.inf
                     else:
@@ -569,21 +581,25 @@ class DreamGenerationMixin:
                             full_confidence = F.softmax(full_confidence, dim=-1)
                             transfer_index = torch.multinomial(full_confidence, num_samples=number_transfer_tokens)
 
-                        if use_cache:
-                            if dual_cache:
+                        if not use_kv_cache == "None":
+                            if use_kv_cache == "Dual":
                                 x_ = torch.zeros_like(x[:, current_block_start:current_block_end], device=self.device, dtype=torch.long) + mask_token_id
-                            else:
+                            elif use_kv_cache == "Prefix":
                                 x_ = torch.zeros_like(x[:, current_block_start:], device=self.device, dtype=torch.long) + mask_token_id
+                            else:
+                                raise NotImplementedError
 
                             x_[mask_index] = x0.clone()
                             row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(
                                 transfer_index)
-                            if dual_cache:
+                            if use_kv_cache == "Dual":
                                 x[:, current_block_start:current_block_end][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
-                            else:
+                            elif use_kv_cache == "Prefix":
                                 x[:, current_block_start:][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
+                            else:
+                                raise NotImplementedError
                                 # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
                         else:
                             x_ = torch.zeros_like(x, device=self.device, dtype=torch.long) + mask_token_id

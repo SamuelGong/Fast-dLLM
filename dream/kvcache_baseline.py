@@ -95,52 +95,19 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
     # attach_qcache_monkey(model, prompt.shape[1] + gen_len) if use_qcache else None
     with cuda_timer(f"{tag}") as get_elapsed:
         with profile(activities=[ProfilerActivity.CUDA]) as prof:
-            if use_kv_cache == "None":
-                output = model.diffusion_generate(
-                    inputs.input_ids,
-                    attention_mask=inputs.attention_mask,
-                    max_length=max_length,
-                    output_history=True,
-                    return_dict_in_generate=True,
-                    steps=steps,
-                    temperature=0.,
-                    block_length=block_len,
-                    alg='origin',
-                    use_cache=False
-                    # generation_tokens_hook_func=generation_tokens_hook_func
-                )
-            elif use_kv_cache == "Prefix":
-                output = model.diffusion_generate(
-                    inputs.input_ids,
-                    attention_mask=inputs.attention_mask,
-                    max_length=max_length,
-                    output_history=True,
-                    return_dict_in_generate=True,
-                    steps=steps,
-                    temperature=0.,
-                    block_length=block_len,
-                    alg='origin',
-                    use_cache=True
-                )
-            elif use_kv_cache == "Dual":
-                output = model.diffusion_generate(
-                    inputs.input_ids,
-                    attention_mask=inputs.attention_mask,
-                    max_length=max_length,
-                    output_history=True,
-                    return_dict_in_generate=True,
-                    steps=steps,
-                    temperature=0.,
-                    block_length=block_len,
-                    alg='origin',
-                    use_cache=True,
-                    dual_cache=True
-                )
-            elif use_kv_cache == "C2F":
-                pass
-                # out, nfe = generate_coarse_to_fine(model, prompt, steps=steps, gen_length=gen_len,
-                #                                    block_length=block_len, temperature=0.,
-                #                                    remasking='low_confidence', tokenizer=tokenizer, debug=debug)
+            output = model.diffusion_generate(
+                inputs.input_ids,
+                attention_mask=inputs.attention_mask,
+                max_length=max_length,
+                output_history=True,
+                return_dict_in_generate=True,
+                steps=steps,
+                temperature=0.,
+                block_length=block_len,
+                alg='origin',
+                use_kv_cache=use_kv_cache
+                # generation_tokens_hook_func=generation_tokens_hook_func
+            )
 
     # decode and show (outside timing)
     elapsed_seconds = get_elapsed()
@@ -178,11 +145,11 @@ def main():
     inputs.input_ids = inputs.input_ids.to(DEVICE)
     inputs.attention_mask = inputs.attention_mask.to(device=DEVICE, dtype=DTYPE)
 
-    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
+    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None")
     # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix")
     # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual")
-    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block,
-    #                         use_kv_cache="C2F", debug=args.debug)
+    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block,
+                            use_kv_cache="C2F", debug=args.debug)
     evaluation = evaluate_qa(args.question, answer)
     print(lat, evaluation)
 
