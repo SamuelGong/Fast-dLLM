@@ -450,10 +450,6 @@ class DreamGenerationMixin:
             if debug:
                 print(f"num_block: {num_block}")
 
-            if not use_kv_cache == "C2F":
-                current_block_start = input_ids.shape[1] + num_block * block_length
-                current_block_end = current_block_start + block_length
-
             # update cache
             if not use_kv_cache == "None":
                 model_output = self(x, attention_mask, tok_idx, use_cache=True)
@@ -461,9 +457,25 @@ class DreamGenerationMixin:
                 model_output = self(x, attention_mask, tok_idx)
             past_key_values = model_output.past_key_values
             logits = model_output.logits
-            # logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
+            logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
             confidence, x0 = sample_tokens(logits, temperature=temperature, top_p=top_p, top_k=top_k)
-            x[:, current_block_start] = x0[:, current_block_start]
+
+            if not use_kv_cache == "C2F":
+                current_block_start = input_ids.shape[1] + num_block * block_length
+                current_block_end = current_block_start + block_length
+                x[:, current_block_start] = x0[:, current_block_start]  # this means that quota first step == 1
+            else:
+                quota_first_step = 1  # TODO: temporarily follow the above logic
+                print(confidence.shape, x0.shape)
+
+                for j in range(confidence.shape[0]):
+                    transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
+                    _, select_index = torch.topk(confidence[j], k=quota_first_step)
+                    transfer_index[j, select_index] = True
+                    x[transfer_index] = x0[transfer_index]
+                print(transfer_index.shape, transfer_index)
+                exit(0)
+
             # print(num_block, x)
             
             # Extract only previous block cache
