@@ -463,7 +463,7 @@ class DreamGenerationMixin:
                 model_output = self(x, attention_mask, tok_idx)
             past_key_values = model_output.past_key_values
             logits = model_output.logits
-            # logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
+            logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
             confidence, x0 = sample_tokens(logits, temperature=temperature, top_p=top_p, top_k=top_k)
 
             if not use_kv_cache == "C2F":
