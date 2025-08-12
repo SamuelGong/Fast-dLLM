@@ -748,7 +748,7 @@ class DreamBaseModel(DreamPreTrainedModel):
                 max_needed = max(
                     (q_positions.max() if q_positions is not None else -1),
                     (k_positions.max() if k_positions is not None else -1),
-                ) + 0
+                ) + 1
                 position_ids = torch.arange(max_needed, device=inputs_embeds.device).unsqueeze(0)
             else:  # Dual
                 if past_key_values is not None:
