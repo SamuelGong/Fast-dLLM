@@ -664,6 +664,11 @@ class DreamGenerationMixin:
                                 x[:, current_block_start:][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
                             elif use_kv_cache == "C2F":
+                                if debug:
+                                    print(f"\tfull_confidence {full_confidence}")
+                                    print(f"\ttransfer_index {transfer_index}")
+                                    print(f"\tx0 {x0}")
+
                                 x[:, block_positions][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
 
