@@ -318,6 +318,8 @@ class DreamAttention(nn.Module):
                 "removed and `position_embeddings` will be mandatory."
             )
             cos, sin = self.rotary_emb(value_states, position_ids)
+            print(cos.shape, sin.shape)
+            print("rot in DreamAttention.forward", value_states.shape, position_ids.shape, position_ids)
         else:
             cos, sin = position_embeddings
         query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
@@ -426,6 +428,8 @@ class DreamSdpaAttention(DreamAttention):
                 "removed and `position_embeddings` will be mandatory."
             )
             cos, sin = self.rotary_emb(value_states, position_ids)
+            print("rot in DreamSdpaAttention.forward", value_states.shape, position_ids.shape, position_ids)
+            print(cos.shape, sin.shape)
         else:
             cos, sin = position_embeddings
         
@@ -726,6 +730,8 @@ class DreamBaseModel(DreamPreTrainedModel):
 
         # create position embeddings to be shared across the decoder layers
         position_embeddings = self.rotary_emb(hidden_states, position_ids)
+        print("rot in DreamBaseModel.forward", hidden_states.shape, position_ids.shape, position_ids)
+        print(position_embeddings.shape)
 
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
