@@ -804,6 +804,7 @@ class LLaDABlock(nn.Module):
                 # print(q.shape)  # torch.Size([1, 32, 32, 128])
                 # print(k.shape)  # torch.Size([1, 32, 146, 128])
                 if q_positions is not None and k_positions is not None:
+                    print(q.shape, k.shape, q_positions.shape, k_positions.shape)
                     q, k = self.rotary_emb(q, k,
                                            q_positions=q_positions,
                                            k_positions=k_positions,

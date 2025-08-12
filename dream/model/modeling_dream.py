@@ -755,8 +755,7 @@ class DreamBaseModel(DreamPreTrainedModel):
         position_embeddings = self.rotary_emb(hidden_states, position_ids)
         print(position_ids)
         cos, sin = position_embeddings
-        print(cos)
-        print(sin)
+        print(cos.shape, sin.shape)
 
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
