@@ -657,7 +657,10 @@ class DreamGenerationMixin:
                             else:
                                 raise NotImplementedError
 
-                            x_[mask_index] = x0.clone()
+                            if not use_kv_cache == "C2F":
+                                x_[mask_index] = x0.clone()
+                            else:
+                                x_[mask_index] = x0[mask_index].clone()
                             row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(
                                 transfer_index)
                             if use_kv_cache == "Dual":
