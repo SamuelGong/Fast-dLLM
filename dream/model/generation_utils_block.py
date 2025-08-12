@@ -447,9 +447,12 @@ class DreamGenerationMixin:
 
         # Process each block
         for num_block in range(num_blocks):
-            
-            current_block_start = input_ids.shape[1] + num_block * block_length
-            current_block_end = current_block_start + block_length
+            if debug:
+                print(f"num_block: {num_block}")
+
+            if not use_kv_cache == "C2F":
+                current_block_start = input_ids.shape[1] + num_block * block_length
+                current_block_end = current_block_start + block_length
 
             # update cache
             if not use_kv_cache == "None":
@@ -458,7 +461,7 @@ class DreamGenerationMixin:
                 model_output = self(x, attention_mask, tok_idx)
             past_key_values = model_output.past_key_values
             logits = model_output.logits
-            logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
+            # logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
             confidence, x0 = sample_tokens(logits, temperature=temperature, top_p=top_p, top_k=top_k)
             x[:, current_block_start] = x0[:, current_block_start]
             # print(num_block, x)
