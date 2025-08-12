@@ -628,10 +628,7 @@ class DreamGenerationMixin:
                             full_confidence[:, block_length:] = -torch.inf
                         elif use_kv_cache == "C2F":
                             full_confidence = torch.full_like(x[:, block_positions], -torch.inf, device=self.device, dtype=logits.dtype)
-                            print(full_confidence)
                             full_confidence[mask_index] = confidence
-                            print(full_confidence)
-                            exit(0)
                         else:
                             raise NotImplementedError
                     else:
@@ -652,6 +649,8 @@ class DreamGenerationMixin:
                                 x_ = torch.zeros_like(x[:, current_block_start:current_block_end], device=self.device, dtype=torch.long) + mask_token_id
                             elif use_kv_cache == "Prefix":
                                 x_ = torch.zeros_like(x[:, current_block_start:], device=self.device, dtype=torch.long) + mask_token_id
+                            elif use_kv_cache == "C2F":
+                                x_ = torch.zeros_like(x[:, block_positions], device=self.device, dtype=torch.long) + mask_token_id
                             else:
                                 raise NotImplementedError
 
@@ -664,6 +663,12 @@ class DreamGenerationMixin:
                             elif use_kv_cache == "Prefix":
                                 x[:, current_block_start:][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
+                            elif use_kv_cache == "C2F":
+                                print(x)
+                                x[:, block_positions][row_indices, transfer_index] = x_[
+                                    row_indices, transfer_index]
+                                print(x)
+                                exit(0)
                             else:
                                 raise NotImplementedError
                                 # print(num_block, i, current_block_start, row_indices, transfer_index, x_[row_indices,transfer_index])
