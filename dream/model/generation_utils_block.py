@@ -552,6 +552,7 @@ class DreamGenerationMixin:
                                             q_positions=block_positions,
                                             k_positions=torch.arange(len(x), device=x.device))
                         print('here')
+                        exit(0)
                     else:
                         raise NotImplementedError
                 else:
