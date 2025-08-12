@@ -685,9 +685,12 @@ class DreamGenerationMixin:
 
                     i += 1
 
-                if (x[:, current_block_start:current_block_end] == mask_token_id).sum() == 0:
-                    break
-
+                if not use_kv_cache == "C2F":
+                    if (x[:, current_block_start:current_block_end] == mask_token_id).sum() == 0:
+                        break
+                else:
+                    if (x[:, block_positions] == mask_token_id).sum() == 0:
+                        break
         
         if return_dict_in_generate:
             return DreamModelOutput(
