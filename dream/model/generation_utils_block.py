@@ -479,8 +479,11 @@ class DreamGenerationMixin:
                 for j in range(confidence.shape[0]):
                     # _, select_index = torch.topk(confidence[j], k=quota_first_step)
                     # transfer_index[j, select_index] = True
+                    print(transfer_index[j])
                     transfer_index[j, torch.Tensor([0]).to(dtype=torch.int)] = True
-                x[transfer_index] = x0[transfer_index]
+                    print(transfer_index[j])
+                    exit(0)
+                # x[transfer_index] = x0[transfer_index]
 
                 if block_length == 1:
                     continue
