@@ -402,11 +402,6 @@ class DreamGenerationMixin:
         debug: bool = False
     ) -> Union[DreamModelOutput, torch.LongTensor]:
         # init values
-
-        mask_id = tokenizer.convert_tokens_to_ids('<|mask|>')
-        if debug:
-            print(f"Mask id: {mask_id}")
-
         output_history = generation_config.output_history
         return_dict_in_generate = generation_config.return_dict_in_generate
         max_length = generation_config.max_length
@@ -417,6 +412,9 @@ class DreamGenerationMixin:
         top_k = generation_config.top_k
         alg = generation_config.alg
         alg_temp = generation_config.alg_temp
+
+        if debug:
+            print(f"Mask id: {mask_token_id}")
 
         histories = [] if (return_dict_in_generate and output_history) else None
 
@@ -475,7 +473,7 @@ class DreamGenerationMixin:
             else:
                 quota_first_step = 1  # TODO: temporarily follow the above logic
 
-                mask_index = (x == mask_id)
+                mask_index = (x == mask_token_id)
                 confidence = torch.where(mask_index, confidence, -np.inf)
                 transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
@@ -491,7 +489,6 @@ class DreamGenerationMixin:
                     block_sel[j, select_index] = True
                 if debug:
                     print(f"\tblock_sel: {block_sel}")
-                exit(0)
             # print(num_block, x)
             
             # Extract only previous block cache
@@ -506,6 +503,13 @@ class DreamGenerationMixin:
                 elif use_kv_cache == "Dual":
                     replace_position = torch.zeros_like(x, dtype=torch.bool)
                     replace_position[:, current_block_start:current_block_end] = 1
+                elif use_kv_cache == "C2F":
+                    # block_sel is already the desired replace_position
+                    # now we need block_position
+                    block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
+                    if debug:
+                        print(block_positions)
+                    exit(0)
                 else:
                     raise NotImplementedError
                 
