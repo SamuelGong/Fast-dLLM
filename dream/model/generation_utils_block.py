@@ -678,11 +678,11 @@ class DreamGenerationMixin:
                                 # x[:, block_positions] uses fancy indexing, which returns a copy, not a view.
                                 # x[:, block_positions][row_indices, transfer_index] = x_[
                                 #     row_indices, transfer_index]
-                                cols_in_block = (
-                                    np.nonzero(block_positions)[0] if block_positions.dtype == bool else np.asarray(
-                                        block_positions))
-                                cols = cols_in_block[transfer_index]  # chooses a column from the block per row
-                                x[row_indices, cols] = x_[row_indices, transfer_index]
+                                cols_in_block = torch.nonzero(block_positions, as_tuple=False).squeeze(1).to(x.device)
+                                rows = row_indices.to(x.device, dtype=torch.long)
+                                ti = transfer_index.to(x.device, dtype=torch.long)
+                                cols = cols_in_block[ti]
+                                x[rows, cols] = x_[rows, ti]
 
                                 if debug:
                                     print(f"\tx[:, block_positions] {x[:, block_positions]}")
