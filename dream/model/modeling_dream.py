@@ -734,11 +734,14 @@ class DreamBaseModel(DreamPreTrainedModel):
         if replace_position is None:  # Prefix, None
             position_ids = torch.arange(past_seen_tokens + inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
         else:  # TODO: Dual, C2F (to confirm)
-            if past_key_values is not None:
-                print(past_seen_tokens)
-                position_ids = torch.arange(past_seen_tokens, device=inputs_embeds.device).unsqueeze(0)
-            else:
-                position_ids = torch.arange(inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
+            if q_positions is not None:
+                print('here')
+                exit(0)
+            else:  # Dual
+                if past_key_values is not None:
+                    position_ids = torch.arange(past_seen_tokens, device=inputs_embeds.device).unsqueeze(0)
+                else:
+                    position_ids = torch.arange(inputs_embeds.shape[1], device=inputs_embeds.device).unsqueeze(0)
         # if position_ids is None:
         #     position_ids = cache_position.unsqueeze(0)
 
