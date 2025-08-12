@@ -476,14 +476,13 @@ class DreamGenerationMixin:
                 mask_index = (x == mask_token_id)
                 confidence = torch.where(mask_index, confidence, -np.inf)
                 transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
-                for j in range(confidence.shape[0]):
+                # for j in range(confidence.shape[0]):
                     # _, select_index = torch.topk(confidence[j], k=quota_first_step)
                     # transfer_index[j, select_index] = True
-                    print(transfer_index[j])
-                    transfer_index[j, torch.Tensor([0]).to(dtype=torch.int)] = True
-                    print(transfer_index[j])
-                    exit(0)
                 # x[transfer_index] = x0[transfer_index]
+
+                first_idx = mask_index.nonzero(as_tuple=False)[0, 1].item()
+                x[:, first_idx] = x0[:, first_idx]
 
                 if block_length == 1:
                     continue
