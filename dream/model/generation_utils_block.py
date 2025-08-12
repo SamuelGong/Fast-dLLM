@@ -634,8 +634,8 @@ class DreamGenerationMixin:
                             print(mask_index)
                             print(full_confidence.shape)
                             print(confidence.shape)
-                            exit(0)
                             full_confidence[mask_index] = confidence
+                            exit(0)
                         else:
                             raise NotImplementedError
                     else:
