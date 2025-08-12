@@ -65,14 +65,27 @@ while (( bl <= length )); do
       continue
     fi
 
-    echo "Run: method=${method} task=${task} length=${length} bl=${bl} steps=${st} (blocks=${blocks})"
+    # If output directory already exists, skip this run
     out_dir="${output_root}/${task}/${method}/${length}/${bl}/${st}"
+    if [[ -d "${out_dir}" ]]; then
+      echo "Skip (exists): method=${method} task=${task} length=${length} bl=${bl} steps=${st} (blocks=${blocks})"
+      st=$(( st * 2 ))
+      continue
+    fi
+
+    echo "Run: method=${method} task=${task} length=${length} bl=${bl} steps=${st} (blocks=${blocks})"
     mkdir -p "${out_dir}"
+
+#    accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
+#      --confirm_run_unsafe_code --model "${model}" \
+#      --model_args "model_path=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
+#      --output_path "${out_dir}" --log_samples --system_instruction "Complete the following function by directly appending your answer to the original code. Do not leave any comment before or after the code." \
+#      "${limit_arg[@]}"
 
     accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
       --confirm_run_unsafe_code --model "${model}" \
       --model_args "model_path=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
-      --output_path "${out_dir}" --log_samples --system_instruction "Complete the following function by directly appending your answer to the original code. Do not leave any comment before or after the code." \
+      --output_path "${out_dir}" --log_samples \
       "${limit_arg[@]}"
 
     st=$(( st * 2 ))

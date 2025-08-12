@@ -413,7 +413,6 @@ class DreamGenerationMixin:
 
         # pad input_ids to max_length
         x = F.pad(input_ids, (0, max_length - input_ids.shape[1]), value=mask_token_id)
-        print('initial', x)
         gen_length = max_length - input_ids.shape[1]
         
         # Handle block configuration
