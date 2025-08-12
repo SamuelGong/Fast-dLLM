@@ -674,6 +674,9 @@ class DreamGenerationMixin:
                                 if debug:
                                     print(f"\tx[:, current_block_start:current_block_end] {x[:, current_block_start:current_block_end]}")
                                     # print(f"\tx {x}")
+                                    tokens = [(idx, tokenizer.decode(e)) for idx, e in enumerate(x[0])]
+                                    print(f"\ttokens {tokens}")
+                                    print("---")
                             elif use_kv_cache == "Prefix":
                                 x[:, current_block_start:][row_indices, transfer_index] = x_[
                                     row_indices, transfer_index]
@@ -689,9 +692,8 @@ class DreamGenerationMixin:
                                 if debug:
                                     print(f"\tx[:, block_positions] {x[:, block_positions]}")
                                     # print(f"\tx {x}")
-                                tokens = [(idx, tokenizer.decode(e)) for idx, e in enumerate(x[0])]
 
-                                if debug:
+                                    tokens = [(idx, tokenizer.decode(e)) for idx, e in enumerate(x[0])]
                                     print(f"\ttokens {tokens}")
                                     print("---")
                             else:
