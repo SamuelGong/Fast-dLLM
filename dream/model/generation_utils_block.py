@@ -457,7 +457,6 @@ class DreamGenerationMixin:
                 print(f"num_block: {num_block}")
 
             # update cache
-            print(tok_idx)
             if not use_kv_cache == "None":
                 model_output = self(x, attention_mask, tok_idx, use_cache=True)
             else:
@@ -546,7 +545,6 @@ class DreamGenerationMixin:
                                         tok_idx[:, current_block_start:] if tok_idx is not None else None,
                                         past_key_values=past_key_values, use_cache=True)
                     elif use_kv_cache == "C2F":
-                        print(tok_idx)
                         model_output = self(x[:, block_positions], current_attention_mask,
                                             tok_idx[:, block_positions] if tok_idx is not None else None,
                                             past_key_values=past_key_values, use_cache=True,
