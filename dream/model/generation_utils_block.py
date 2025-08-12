@@ -509,7 +509,6 @@ class DreamGenerationMixin:
                     block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
                     if debug:
                         print(block_positions)
-                    exit(0)
                 else:
                     raise NotImplementedError
                 
@@ -521,6 +520,10 @@ class DreamGenerationMixin:
                         mask_index = (x[:, current_block_start:current_block_end] == mask_token_id)
                     elif use_kv_cache == "Prefix":
                         mask_index = (x[:, current_block_start:] == mask_token_id)
+                    elif use_kv_cache == "C2F":
+                        mask_index = (x[:, block_positions] == mask_token_id)
+                        print(mask_index)
+                        exit(0)
                     else:
                         raise NotImplementedError
                 else:
