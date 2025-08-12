@@ -214,10 +214,13 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1, blo
     cos = cos.unsqueeze(unsqueeze_dim)
     sin = sin.unsqueeze(unsqueeze_dim)
     query_len, key_len = q.shape[-2], k.shape[-2]
-    print(q_positions, k_positions)
+    # print(q_positions, k_positions)
 
     if q_positions is not None:
+        print(f'sin: {sin.shape}')
+        print(q_positions.squeeze(0))
         sin_q = sin.index_select(-2, q_positions.squeeze(0))
+        print(sin_q.shape)
         cos_q = cos.index_select(-2, q_positions.squeeze(0))
         q_embed = ((q * cos_q) + (rotate_half(q) * sin_q))
     elif block_end_index is None:
