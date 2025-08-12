@@ -479,12 +479,13 @@ class DreamSdpaAttention(DreamAttention):
         # The q_len > 1 is necessary to match with AttentionMaskConverter.to_causal_4d that does not create a causal mask in case q_len == 1.
         # is_causal = True if causal_mask is None and q_len > 1 else False
 
-        print(f'attn: {attention_mask}')
+        # print(f'attn: {attention_mask}')
         attn_output = torch.nn.functional.scaled_dot_product_attention(
             query_states,
             key_states,
             value_states,
-            attn_mask=attention_mask if isinstance(attention_mask, torch.Tensor) else None,
+            # attn_mask=attention_mask if isinstance(attention_mask, torch.Tensor) else None,
+            attn_mask=None,
             dropout_p=self.attention_dropout if self.training else 0.0,
             is_causal=False, # hard coded
         )
