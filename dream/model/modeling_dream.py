@@ -216,14 +216,23 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1, blo
     query_len, key_len = q.shape[-2], k.shape[-2]
 
     if q_positions is not None:
-        q_embed = ((q * cos) + (rotate_half(q) * sin))
+        sin_q = sin.index_select(-2, q_positions.squeeze(0))
+        cos_q = cos.index_select(-2, q_positions.squeeze(0))
+        q_embed = ((q * cos_q) + (rotate_half(q) * sin_q))
     elif block_end_index is None:
         q_embed = ((q * cos[:, :, key_len - query_len : key_len, :])
                    + (rotate_half(q) * sin[:, :, key_len - query_len : key_len, :]))
     else:
         q_embed = ((q * cos[:, :, block_end_index.item() - query_len : block_end_index.item(), :])
                    + (rotate_half(q) * sin[:, :, block_end_index.item() - query_len : block_end_index.item(), :]))
-    k_embed = (k * cos) + (rotate_half(k) * sin)
+
+    if k_positions is not None:
+        # print(f'[C2F] k_positions: {k_positions}')
+        sin_k = sin.index_select(-2, k_positions.squeeze(0))
+        cos_k = cos.index_select(-2, k_positions.squeeze(0))
+        k_embed = (k * cos_k) + (rotate_half(k) * sin_k)
+    else:
+        k_embed = (k * cos) + (rotate_half(k) * sin)
     return q_embed, k_embed
 
 
@@ -753,9 +762,6 @@ class DreamBaseModel(DreamPreTrainedModel):
 
         # create position embeddings to be shared across the decoder layers
         position_embeddings = self.rotary_emb(hidden_states, position_ids)
-        print(position_ids)
-        cos, sin = position_embeddings
-        print(cos.shape, sin.shape)
 
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
