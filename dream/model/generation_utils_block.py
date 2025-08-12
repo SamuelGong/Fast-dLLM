@@ -33,6 +33,8 @@ from transformers.utils import (
     logging,
 )
 
+import numpy as np
+
 logger = logging.get_logger(__name__)
 
 def get_num_transfer_tokens(mask_index, steps):
@@ -373,7 +375,7 @@ class DreamGenerationMixin:
         threshold = kwargs.get("threshold", 0.9)
         block_length = kwargs.get("block_length", 32)
         use_kv_cache = kwargs.get("use_kv_cache", "None")
-
+        tokenizer = kwargs.get("tokenizer", None)
         debug = kwargs.get("debug", False)
 
         result = self._sample(
@@ -382,6 +384,7 @@ class DreamGenerationMixin:
             generation_config=generation_config,
             threshold=threshold,
             block_length=block_length,
+            tokenizer=tokenizer,
             use_kv_cache=use_kv_cache,
             debug=debug
         )
@@ -393,12 +396,17 @@ class DreamGenerationMixin:
         attention_mask: Optional[torch.LongTensor],
         generation_config: DreamGenerationConfig,
         use_kv_cache: str,
+        tokenizer: Any,
         threshold: Optional[float] = 0.9,
         block_length: Optional[int] = 32,
         debug: bool = False
     ) -> Union[DreamModelOutput, torch.LongTensor]:
         # init values
-        
+
+        mask_id = tokenizer.convert_tokens_to_ids('<|mask|>')
+        if debug:
+            print(f"Mask id: {mask_id}")
+
         output_history = generation_config.output_history
         return_dict_in_generate = generation_config.return_dict_in_generate
         max_length = generation_config.max_length
@@ -467,6 +475,11 @@ class DreamGenerationMixin:
             else:
                 quota_first_step = 1  # TODO: temporarily follow the above logic
                 print(confidence.shape, x0.shape)
+
+                print(confidence)
+                mask_index = (x == mask_id)
+                confidence = torch.where(mask_index, confidence, -np.inf)
+                print(confidence)
 
                 for j in range(confidence.shape[0]):
                     transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)

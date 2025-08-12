@@ -105,7 +105,8 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                 temperature=0.,
                 block_length=block_len,
                 alg='origin',
-                use_kv_cache=use_kv_cache
+                use_kv_cache=use_kv_cache,
+                tokenizer=tokenizer,
                 # generation_tokens_hook_func=generation_tokens_hook_func
             )
 
