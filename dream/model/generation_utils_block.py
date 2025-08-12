@@ -551,8 +551,6 @@ class DreamGenerationMixin:
                                             replace_position=block_sel,
                                             q_positions=block_positions,
                                             k_positions=torch.arange(len(x), device=x.device))
-                        print('here')
-                        exit(0)
                     else:
                         raise NotImplementedError
                 else:
@@ -560,18 +558,26 @@ class DreamGenerationMixin:
 
                 logits = model_output.logits
                 logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
-                if alg == 'confidence_threshold':
+                if alg == 'confidence_threshold':  # Not support C2F yet
                     mask_logits = logits[mask_index]
                 
                     confidence, x0 = sample_tokens(mask_logits, temperature=temperature, top_p=top_p, top_k=top_k)
-                    
-                    if dual_cache:
-                        x_ = torch.zeros_like(x[:, current_block_start:current_block_end], device=self.device, dtype=torch.long) + mask_token_id
-                        full_confidence = torch.full_like(x[:, current_block_start:current_block_end], -torch.inf, device=self.device, dtype=logits.dtype)
+
+                    if not use_kv_cache == "None":
+                        if use_kv_cache == "Dual":
+                            x_ = torch.zeros_like(x[:, current_block_start:current_block_end], device=self.device, dtype=torch.long) + mask_token_id
+                            full_confidence = torch.full_like(x[:, current_block_start:current_block_end], -torch.inf, device=self.device, dtype=logits.dtype)
+                        elif use_kv_cache == "Prefix":
+                            x_ = torch.zeros_like(x[:, current_block_start:], device=self.device, dtype=torch.long) + mask_token_id
+                            full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device, dtype=logits.dtype)
+                        else:
+                            raise NotImplementedError
                     else:
-                        x_ = torch.zeros_like(x[:, current_block_start:], device=self.device, dtype=torch.long) + mask_token_id
-                        full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device, dtype=logits.dtype)
-                    
+                        x_ = torch.zeros_like(x[:, current_block_start:], device=self.device,
+                                              dtype=torch.long) + mask_token_id
+                        full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device,
+                                                          dtype=logits.dtype)
+
                     x_[mask_index] = x0.clone()
                     full_confidence[mask_index] = confidence
                     full_confidence[:, block_length:] = -torch.inf
@@ -586,8 +592,13 @@ class DreamGenerationMixin:
                     for k in range(1, current_transfer_tokens):
                         if selected_confidence[0, k] < threshold:
                             transfer_index[0, select_index[0, k]] = False
-                    if dual_cache:
-                        x[:, current_block_start:current_block_end][transfer_index] = x_[transfer_index]
+                    if not use_kv_cache == "None":
+                        if use_kv_cache == "Dual":
+                            x[:, current_block_start:current_block_end][transfer_index] = x_[transfer_index]
+                        elif use_kv_cache == "Prefix":
+                            x[:, current_block_start:][transfer_index] = x_[transfer_index]
+                        else:
+                            raise NotImplementedError
                     else:
                         x[:, current_block_start:][transfer_index] = x_[transfer_index]
                 else:
@@ -596,7 +607,9 @@ class DreamGenerationMixin:
                     t = timesteps[i]
                     s = timesteps[i + 1]
                     if not use_kv_cache == "None":
-                        mask_index[:, block_length:] = False
+                        if not use_kv_cache == "C2F":
+                            mask_index[:, block_length:] = False
+
                     mask_logits = logits[mask_index]
                     confidence, x0 = sample_tokens(mask_logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
 
@@ -607,12 +620,20 @@ class DreamGenerationMixin:
                     if not use_kv_cache == "None":
                         if use_kv_cache == "Dual":
                             full_confidence = torch.full_like(x[:, current_block_start:current_block_end], -torch.inf, device=self.device, dtype=logits.dtype)
+                            full_confidence[mask_index] = confidence
+                            full_confidence[:, block_length:] = -torch.inf
                         elif use_kv_cache == "Prefix":
                             full_confidence = torch.full_like(x[:, current_block_start:], -torch.inf, device=self.device, dtype=logits.dtype)
+                            full_confidence[mask_index] = confidence
+                            full_confidence[:, block_length:] = -torch.inf
+                        elif use_kv_cache == "C2F":
+                            full_confidence = torch.full_like(x[:, block_positions], -torch.inf, device=self.device, dtype=logits.dtype)
+                            print(full_confidence)
+                            full_confidence[mask_index] = confidence
+                            print(full_confidence)
+                            exit(0)
                         else:
                             raise NotImplementedError
-                        full_confidence[mask_index] = confidence
-                        full_confidence[:, block_length:] = -torch.inf
                     else:
                         full_confidence = torch.full_like(x, -torch.inf, device=self.device, dtype=logits.dtype)
                         full_confidence[mask_index] = confidence
