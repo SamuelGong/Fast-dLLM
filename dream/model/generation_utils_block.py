@@ -471,15 +471,16 @@ class DreamGenerationMixin:
                 current_block_end = current_block_start + block_length
                 x[:, current_block_start] = x0[:, current_block_start]  # this means that quota first step == 1
             else:
-                quota_first_step = 1  # TODO: temporarily follow the above logic
+                # quota_first_step = 1  # TODO: temporarily follow the above logic
 
-                mask_index = (x == mask_token_id)
-                confidence = torch.where(mask_index, confidence, -np.inf)
+                # mask_index = (x == mask_token_id)
+                # confidence = torch.where(mask_index, confidence, -np.inf)
                 transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
-                    _, select_index = torch.topk(confidence[j], k=quota_first_step)
-                    transfer_index[j, select_index] = True
-                    x[transfer_index] = x0[transfer_index]
+                    # _, select_index = torch.topk(confidence[j], k=quota_first_step)
+                    # transfer_index[j, select_index] = True
+                    transfer_index[j, 0] = True
+                x[transfer_index] = x0[transfer_index]
 
                 if block_length == 1:
                     continue
