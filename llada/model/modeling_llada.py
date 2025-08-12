@@ -452,7 +452,7 @@ class RotaryEmbedding(nn.Module):
                 key_len - 1  # left-to-right case
             ) + 1
             pos_sin, pos_cos = self.get_rotary_embedding(max_needed, q_.device)
-            print(max_needed, q_positions, k_positions)
+            # print(max_needed, q_positions, k_positions)
             pos_sin = pos_sin.type_as(q_)
             pos_cos = pos_cos.type_as(q_)
 
