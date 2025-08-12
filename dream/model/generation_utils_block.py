@@ -631,11 +631,7 @@ class DreamGenerationMixin:
                             full_confidence[:, block_length:] = -torch.inf
                         elif use_kv_cache == "C2F":
                             full_confidence = torch.full_like(x[:, block_positions], -torch.inf, device=self.device, dtype=logits.dtype)
-                            print(mask_index)
-                            print(full_confidence.shape)
-                            print(confidence.shape)
-                            full_confidence[mask_index] = confidence
-                            exit(0)
+                            full_confidence[mask_index] = confidence[mask_index]
                         else:
                             raise NotImplementedError
                     else:
