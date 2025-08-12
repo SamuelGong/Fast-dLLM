@@ -731,7 +731,7 @@ class DreamBaseModel(DreamPreTrainedModel):
         # create position embeddings to be shared across the decoder layers
         position_embeddings = self.rotary_emb(hidden_states, position_ids)
         print("rot in DreamBaseModel.forward", hidden_states.shape, position_ids.shape, position_ids)
-        print(position_embeddings.shape)
+        print(len(position_embeddings))
 
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
