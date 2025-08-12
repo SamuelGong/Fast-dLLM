@@ -354,11 +354,11 @@ class LLaDAEvalHarness(LM):
                 # 增量保存新生成的答案
                 with open(save_path, 'a', encoding='utf-8') as f:
                     f.write(json.dumps(generated_answer, ensure_ascii=False) + '\n')
-
-            print('=' * 20)
-            print('question: ', question)
-            print('answer: ', generated_answer)
-            print('=' * 20, end='\n\n')
+            #
+            # print('=' * 20)
+            # print('question: ', question)
+            # print('answer: ', generated_answer)
+            # print('=' * 20, end='\n\n')
             # self.accelerator.wait_for_everyone()
         end_time = time.time()
         if self.show_speed:
