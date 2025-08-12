@@ -149,9 +149,8 @@ def main():
 
     # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="None", debug=args.debug)
     # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Prefix", debug=args.debug)
-    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual", debug=args.debug)
-    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block,
-    #                         use_kv_cache="C2F", debug=args.debug)
+    # lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="Dual", debug=args.debug)
+    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache="C2F", debug=args.debug)
     evaluation = evaluate_qa(args.question, answer)
     print(lat, evaluation)
 
