@@ -217,10 +217,7 @@ def apply_rotary_pos_emb(q, k, cos, sin, position_ids=None, unsqueeze_dim=1, blo
     # print(q_positions, k_positions)
 
     if q_positions is not None:
-        print(f'sin: {sin.shape}')
-        print(q_positions.squeeze(0))
         sin_q = sin.index_select(-2, q_positions.squeeze(0))
-        print(sin_q.shape)
         cos_q = cos.index_select(-2, q_positions.squeeze(0))
         q_embed = ((q * cos_q) + (rotate_half(q) * sin_q))
     elif block_end_index is None:
@@ -751,7 +748,7 @@ class DreamBaseModel(DreamPreTrainedModel):
                 max_needed = max(
                     (q_positions.max() if q_positions is not None else -1),
                     (k_positions.max() if k_positions is not None else -1),
-                ) + 1
+                ) + 0
                 position_ids = torch.arange(max_needed, device=inputs_embeds.device).unsqueeze(0)
             else:  # Dual
                 if past_key_values is not None:
