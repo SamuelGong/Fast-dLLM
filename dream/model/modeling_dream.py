@@ -736,6 +736,7 @@ class DreamBaseModel(DreamPreTrainedModel):
         else:  # TODO: Dual, C2F (to confirm)
             if q_positions is not None:
                 print('here')
+                print(q_positions.shape)
                 exit(0)
             else:  # Dual
                 if past_key_values is not None:
