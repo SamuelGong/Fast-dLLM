@@ -481,6 +481,7 @@ class DreamGenerationMixin:
                 x[:, current_block_start] = x0[:, current_block_start]  # this means that quota first step == 1
             else:
                 mask_index = (x == mask_token_id)
+                confidence = torch.where(mask_index, confidence, -np.inf)
 
                 quota = mask_index.sum(dim=1).clamp(max=block_length)
                 block_sel = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
@@ -491,7 +492,6 @@ class DreamGenerationMixin:
                 if debug:
                     print(block_positions + 1)
 
-                confidence = torch.where(mask_index, confidence, -np.inf)
                 # skip end of text id
                 non_eot = mask_index & (x0 != endoftext_id)
                 counts = non_eot.sum(dim=1)
