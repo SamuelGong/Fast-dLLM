@@ -160,6 +160,7 @@ class DreamRotaryEmbedding(nn.Module):
     @torch.no_grad()
     def forward(self, x, position_ids):
         if "dynamic" in self.rope_type:
+            print('here')
             self._dynamic_frequency_update(position_ids, device=x.device)
 
         # Core RoPE block
@@ -479,7 +480,7 @@ class DreamSdpaAttention(DreamAttention):
         # The q_len > 1 is necessary to match with AttentionMaskConverter.to_causal_4d that does not create a causal mask in case q_len == 1.
         # is_causal = True if causal_mask is None and q_len > 1 else False
 
-        print(f'attn: {attention_mask}') # [[1.]]
+        # print(f'attn: {attention_mask}') # 'full'
         attn_output = torch.nn.functional.scaled_dot_product_attention(
             query_states,
             key_states,
