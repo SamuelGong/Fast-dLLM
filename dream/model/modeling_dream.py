@@ -159,8 +159,7 @@ class DreamRotaryEmbedding(nn.Module):
 
     @torch.no_grad()
     def forward(self, x, position_ids):
-        if "dynamic" in self.rope_type:
-            print('here')
+        if "dynamic" in self.rope_type:  # typically will not enter here
             self._dynamic_frequency_update(position_ids, device=x.device)
 
         # Core RoPE block
@@ -336,6 +335,7 @@ class DreamAttention(nn.Module):
             cos, sin = self.rotary_emb(value_states, position_ids)
         else:
             cos, sin = position_embeddings
+        print('here')
         query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin)
 
         if past_key_value is not None:
