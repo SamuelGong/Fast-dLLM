@@ -500,9 +500,9 @@ class DreamGenerationMixin:
                 if debug:
                     print(block_positions + 1)
 
-                # quota_first_step = int(block_length * (1 - timesteps[1] / timesteps[0])) \
-                #     if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
-                quota_first_step = block_length // steps_per_block
+                quota_first_step = int(block_length * (1 - timesteps[2] / timesteps[1])) \
+                    if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
+                # quota_first_step = block_length // steps_per_block
                 transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
                     _, select_index = torch.topk(confidence[j], k=quota_first_step)
@@ -533,8 +533,13 @@ class DreamGenerationMixin:
                     pass
                 else:
                     raise NotImplementedError
-                
-            i = 1
+
+
+            if not use_kv_cache == "C2F":
+                i = 1
+            else:
+                i = 2
+
             while True:
                 # Prepare attention mask for cached generation
                 if attention_mask != "full":

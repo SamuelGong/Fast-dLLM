@@ -104,7 +104,7 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
                 steps=steps,
                 temperature=0.,
                 block_length=block_len,
-                alg='origin',
+                alg='entropy',
                 use_kv_cache=use_kv_cache,
                 tokenizer=tokenizer,
                 debug=debug,
