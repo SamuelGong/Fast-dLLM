@@ -498,7 +498,13 @@ class DreamGenerationMixin:
                 enough = counts >= block_length
                 mask_use = mask_index.clone()
                 mask_use[enough] = non_eot[enough]
+
+                print(non_eot)
+                print(counts)
+                print(enough)
+                print(confidence)
                 confidence = confidence.masked_fill(~mask_use, -np.inf)
+                print(confidence)
 
                 quota_first_step = int(block_length * (1 - timesteps[1] / timesteps[0])) \
                     if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
