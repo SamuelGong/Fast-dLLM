@@ -708,12 +708,12 @@ class DreamGenerationMixin:
                                 # x[:, block_positions] uses fancy indexing, which returns a copy, not a view.
                                 # x[:, block_positions][row_indices, transfer_index] = x_[
                                 #     row_indices, transfer_index]
-                                abs_transfer_cols = block_positions[transfer_index.squeeze(0)]  # (K̃,)
+                                abs_transfer_cols = block_positions[transfer_index.squeeze(0)] + 1  # (K̃,)
                                 # 2) in-place write
                                 x[0, abs_transfer_cols] = x0[0, transfer_index]  # batch-size is 1
 
                                 if debug:
-                                    print(f"\tx[:, block_positions] {x[:, block_positions]}")
+                                    print(f"\tx[:, block_positions] {x[:, block_positions + 1]}")
                                     # print(f"\tx {x}")
 
                                     tokens = [(idx, tokenizer.decode(e)) for idx, e in enumerate(x[0])]
@@ -739,7 +739,7 @@ class DreamGenerationMixin:
                     if (x[:, current_block_start:current_block_end] == mask_token_id).sum() == 0:
                         break
                 else:
-                    if (x[:, block_positions] == mask_token_id).sum() == 0:
+                    if (x[:, block_positions + 1] == mask_token_id).sum() == 0:
                         break
         
         if return_dict_in_generate:
