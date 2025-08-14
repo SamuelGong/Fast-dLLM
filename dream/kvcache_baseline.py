@@ -131,7 +131,7 @@ def benchmark(inputs, tokenizer, *, steps, gen_len, block_len, use_kv_cache, deb
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--method", type=str)
+    ap.add_argument("--method", type=str, default="C2F")
     ap.add_argument("--question", default="Explain diffusion models briefly.")
     ap.add_argument("--steps", type=int, default=128)
     ap.add_argument("--gen", type=int, default=128)
@@ -148,7 +148,7 @@ def main():
     inputs.input_ids = inputs.input_ids.to(DEVICE)
     inputs.attention_mask = inputs.attention_mask.to(device=DEVICE, dtype=DTYPE)
 
-    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache=args.cache, debug=args.debug)
+    lat, answer = benchmark(inputs, tokenizer, steps=args.steps, gen_len=args.gen, block_len=args.block, use_kv_cache=args.method, debug=args.debug)
     evaluation = evaluate_qa(args.question, answer)
     print(lat, evaluation)
 
