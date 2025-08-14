@@ -463,7 +463,12 @@ class DreamGenerationMixin:
                 model_output = self(x, attention_mask, tok_idx)
             past_key_values = model_output.past_key_values
             logits = model_output.logits
+
+            # For DREAM, each pos actually predicts the next token
+            # This is for reusing abilities from the pretrained AR models
+            # Ref: https://github.com/DreamLM/Dream/issues/31
             logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
+
             confidence, x0 = sample_tokens(logits, temperature=temperature, top_p=top_p, top_k=top_k)
             if debug:
                 print(f"confidence: {confidence}")
@@ -477,15 +482,17 @@ class DreamGenerationMixin:
                 mask_index = (x == mask_token_id)
                 confidence = torch.where(mask_index, confidence, -np.inf)
 
-                # transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
-                # for j in range(confidence.shape[0]):
-                    # _, select_index = torch.topk(confidence[j], k=quota_first_step)
-                    # transfer_index[j, select_index] = True
-                # x[transfer_index] = x0[transfer_index]
+                quota_first_step = int(block_length * (1 - timesteps[0] / timesteps[1])) \
+                    if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
+                transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
+                for j in range(confidence.shape[0]):
+                    _, select_index = torch.topk(confidence[j], k=quota_first_step)
+                    transfer_index[j, select_index] = True
+                x[transfer_index] = x0[transfer_index]
 
-                # TODO: It seems that I have to follow the above logic though I do not know why
-                first_idx = mask_index.nonzero(as_tuple=False)[0, 1].item()
-                x[:, first_idx] = x0[:, first_idx]
+                # # TODO: It seems that I have to follow the above logic though I do not know why
+                # first_idx = mask_index.nonzero(as_tuple=False)[0, 1].item()
+                # x[:, first_idx] = x0[:, first_idx]
 
                 if block_length == 1:
                     continue
@@ -493,15 +500,14 @@ class DreamGenerationMixin:
                 block_sel = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
                     _, select_index = torch.topk(confidence[j], k=block_length)
-                    select_index = torch.clamp(select_index + 4, max=152)
 
-                    # TODO: It seems that I have to use this logic though I do not know why
-                    # Check if first_idx is already in select_index
-                    if first_idx not in select_index:
-                        # Replace the lowest-confidence index with first_idx
-                        select_index[-1] = first_idx  # Because torch.topk returns sorted in descending order
+                    # # TODO: It seems that I have to use this logic though I do not know why
+                    # # Check if first_idx is already in select_index
+                    # if first_idx not in select_index:
+                    #     # Replace the lowest-confidence index with first_idx
+                    #     select_index[-1] = first_idx  # Because torch.topk returns sorted in descending order
 
-                    block_sel[j, select_index] = True
+                    block_sel[j, select_index - 1] = True
                 # if debug:
                 #     print(f"\tblock_sel: {block_sel}")
             # print(num_block, x)
@@ -523,26 +529,12 @@ class DreamGenerationMixin:
                     # now we need block_position
                     block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
                     if debug:
-                        print(block_positions)
+                        print(block_positions + 1)
                 else:
                     raise NotImplementedError
                 
             i = 1
             while True:
-                # Use cache for generation
-                if not use_kv_cache == "None":
-                    if use_kv_cache == "Dual":
-                        mask_index = (x[:, current_block_start:current_block_end] == mask_token_id)
-                    elif use_kv_cache == "Prefix":
-                        mask_index = (x[:, current_block_start:] == mask_token_id)
-                    elif use_kv_cache == "C2F":
-                        mask_index = (x[:, block_positions] == mask_token_id)
-                    else:
-                        raise NotImplementedError
-                else:
-                    mask_index = (x == mask_token_id)
-                    mask_index[:, input_ids.shape[1] + (num_block + 1) * block_length:] = 0
-                
                 # Prepare attention mask for cached generation
                 if attention_mask != "full":
                     # Adjust attention mask for current position
@@ -570,9 +562,25 @@ class DreamGenerationMixin:
                         raise NotImplementedError
                 else:
                     model_output = self(x, current_attention_mask, tok_idx if tok_idx is not None else None)
-
                 logits = model_output.logits
-                logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
+
+                if not use_kv_cache == "C2F":
+                    logits = torch.cat([logits[:, :1], logits[:, :-1]], dim=1)
+
+                # Use cache for generation
+                if not use_kv_cache == "None":
+                    if use_kv_cache == "Dual":
+                        mask_index = (x[:, current_block_start:current_block_end] == mask_token_id)
+                    elif use_kv_cache == "Prefix":
+                        mask_index = (x[:, current_block_start:] == mask_token_id)
+                    elif use_kv_cache == "C2F":
+                        mask_index = (x[:, block_positions + 1] == mask_token_id)
+                    else:
+                        raise NotImplementedError
+                else:
+                    mask_index = (x == mask_token_id)
+                    mask_index[:, input_ids.shape[1] + (num_block + 1) * block_length:] = 0
+
                 if alg == 'confidence_threshold':  # Not support C2F yet
                     mask_logits = logits[mask_index]
                 
