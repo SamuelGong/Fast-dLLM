@@ -484,6 +484,8 @@ class DreamGenerationMixin:
 
                 quota_first_step = int(block_length * (1 - timesteps[0] / timesteps[1])) \
                     if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
+                print(quota_first_step)
+                exit(0)
                 transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
                     _, select_index = torch.topk(confidence[j], k=quota_first_step)
