@@ -645,13 +645,16 @@ class DreamGenerationMixin:
                     else:
                         confidence, x0 = sample_tokens(logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
 
-                    if not use_kv_cache == "C2F":
-                        num_mask_token = mask_index.sum() / mask_index.shape[0]
-                        number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(
-                            num_mask_token)
-                        # print(num_block, i, number_transfer_tokens, confidence.shape, x0.shape)
-                    else:
-                        number_transfer_tokens = block_length // steps_per_block
+                    # if not use_kv_cache == "C2F":
+                    #     num_mask_token = mask_index.sum() / mask_index.shape[0]
+                    #     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(
+                    #         num_mask_token)
+                    #     # print(num_block, i, number_transfer_tokens, confidence.shape, x0.shape)
+                    # else:
+                    #     number_transfer_tokens = block_length // steps_per_block
+                    num_mask_token = mask_index.sum() / mask_index.shape[0]
+                    number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(
+                        num_mask_token)
 
                     if not use_kv_cache == "None":
                         if use_kv_cache == "Dual":
