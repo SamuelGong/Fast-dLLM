@@ -415,6 +415,7 @@ class DreamGenerationMixin:
 
         if debug:
             print(f"Mask id: {mask_token_id}")
+        endoftext_id = tokenizer.convert_tokens_to_ids('<|endoftext|>')
 
         histories = [] if (return_dict_in_generate and output_history) else None
 
@@ -480,7 +481,24 @@ class DreamGenerationMixin:
                 x[:, current_block_start] = x0[:, current_block_start]  # this means that quota first step == 1
             else:
                 mask_index = (x == mask_token_id)
+
+                quota = mask_index.sum(dim=1).clamp(max=block_length)
+                block_sel = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
+                for j in range(confidence.shape[0]):
+                    _, select_index = torch.topk(confidence[j], k=quota[j].item())
+                    block_sel[j, select_index - 1] = True
+                block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
+                if debug:
+                    print(block_positions + 1)
+
                 confidence = torch.where(mask_index, confidence, -np.inf)
+                # skip end of text id
+                non_eot = mask_index & (x0 != endoftext_id)
+                counts = non_eot.sum(dim=1)
+                enough = counts >= block_length
+                mask_use = mask_index.clone()
+                mask_use[enough] = non_eot[enough]
+                confidence = confidence.masked_fill(~mask_use, -np.inf)
 
                 quota_first_step = int(block_length * (1 - timesteps[1] / timesteps[0])) \
                     if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
@@ -496,21 +514,6 @@ class DreamGenerationMixin:
 
                 if block_length == 1:
                     continue
-
-                block_sel = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
-                for j in range(confidence.shape[0]):
-                    _, select_index = torch.topk(confidence[j], k=block_length)
-
-                    # # TODO: It seems that I have to use this logic though I do not know why
-                    # # Check if first_idx is already in select_index
-                    # if first_idx not in select_index:
-                    #     # Replace the lowest-confidence index with first_idx
-                    #     select_index[-1] = first_idx  # Because torch.topk returns sorted in descending order
-
-                    block_sel[j, select_index - 1] = True
-                # if debug:
-                #     print(f"\tblock_sel: {block_sel}")
-            # print(num_block, x)
             
             # Extract only previous block cache
             if not use_kv_cache == "None":
@@ -526,10 +529,7 @@ class DreamGenerationMixin:
                     replace_position[:, current_block_start:current_block_end] = 1
                 elif use_kv_cache == "C2F":
                     # block_sel is already the desired replace_position
-                    # now we need block_position
-                    block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
-                    if debug:
-                        print(block_positions + 1)
+                    pass
                 else:
                     raise NotImplementedError
                 
