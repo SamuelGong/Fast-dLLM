@@ -500,8 +500,7 @@ class DreamGenerationMixin:
                 if debug:
                     print(block_positions + 1)
 
-                quota_first_step = int(block_length * (1 - timesteps[2] / timesteps[1])) \
-                    if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
+                quota_first_step = 1  # reusing their original logic
                 # quota_first_step = block_length // steps_per_block
                 transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
