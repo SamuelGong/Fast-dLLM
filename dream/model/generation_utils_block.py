@@ -465,6 +465,9 @@ class DreamGenerationMixin:
             logits = model_output.logits
             logits = torch.cat([logits[:,:1], logits[:, :-1]], dim=1)
             confidence, x0 = sample_tokens(logits, temperature=temperature, top_p=top_p, top_k=top_k)
+            if debug:
+                print(f"confidence: {confidence}")
+                print(f"x0: {x0}")
 
             if not use_kv_cache == "C2F":
                 current_block_start = input_ids.shape[1] + num_block * block_length
