@@ -533,12 +533,7 @@ class DreamGenerationMixin:
                 else:
                     raise NotImplementedError
 
-
-            if not use_kv_cache == "C2F":
-                i = 1
-            else:
-                i = 2
-
+            i = 1
             while True:
                 # Prepare attention mask for cached generation
                 if attention_mask != "full":
