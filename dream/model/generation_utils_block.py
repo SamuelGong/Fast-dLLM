@@ -493,7 +493,9 @@ class DreamGenerationMixin:
                 block_sel = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
                     _, select_index = torch.topk(confidence[j], k=block_length)
+                    print(select_index)
                     select_index += 4
+                    print(select_index)
 
                     # TODO: It seems that I have to use this logic though I do not know why
                     # Check if first_idx is already in select_index
