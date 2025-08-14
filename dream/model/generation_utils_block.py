@@ -493,6 +493,7 @@ class DreamGenerationMixin:
                 block_sel = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
                     _, select_index = torch.topk(confidence[j], k=block_length)
+                    select_index += 4
 
                     # TODO: It seems that I have to use this logic though I do not know why
                     # Check if first_idx is already in select_index
@@ -521,7 +522,6 @@ class DreamGenerationMixin:
                     # block_sel is already the desired replace_position
                     # now we need block_position
                     block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
-                    block_positions += 4
                     if debug:
                         print(block_positions)
                 else:
