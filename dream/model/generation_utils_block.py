@@ -521,6 +521,7 @@ class DreamGenerationMixin:
                     # block_sel is already the desired replace_position
                     # now we need block_position
                     block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
+                    block_positions += 4
                     if debug:
                         print(block_positions)
                 else:
