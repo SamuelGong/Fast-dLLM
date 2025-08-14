@@ -694,6 +694,7 @@ class DreamGenerationMixin:
                             row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(
                                 transfer_index)
                             if debug:
+                                print(f"\ti {i}")
                                 print(f"\tfull_confidence {full_confidence}")
                                 print(f"\ttransfer_index {transfer_index}")
                                 print(f"\tx0 {x0}")
