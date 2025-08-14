@@ -500,8 +500,9 @@ class DreamGenerationMixin:
                 if debug:
                     print(block_positions + 1)
 
-                quota_first_step = int(block_length * (1 - timesteps[1] / timesteps[0])) \
-                    if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
+                # quota_first_step = int(block_length * (1 - timesteps[1] / timesteps[0])) \
+                #     if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
+                quota_first_step = block_length // steps_per_block
                 transfer_index = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
                     _, select_index = torch.topk(confidence[j], k=quota_first_step)
@@ -639,9 +640,13 @@ class DreamGenerationMixin:
                     else:
                         confidence, x0 = sample_tokens(logits, temperature, top_p=top_p, top_k=top_k, neg_entropy=True)
 
-                    num_mask_token = mask_index.sum() / mask_index.shape[0]
-                    number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(num_mask_token)
-                    # print(num_block, i, number_transfer_tokens, confidence.shape, x0.shape)
+                    if not use_kv_cache == "C2F":
+                        num_mask_token = mask_index.sum() / mask_index.shape[0]
+                        number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(
+                            num_mask_token)
+                        # print(num_block, i, number_transfer_tokens, confidence.shape, x0.shape)
+                    else:
+                        number_transfer_tokens = block_length // steps_per_block
 
                     if not use_kv_cache == "None":
                         if use_kv_cache == "Dual":
