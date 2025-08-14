@@ -752,7 +752,6 @@ class DreamBaseModel(DreamPreTrainedModel):
                 ) + 1
                 position_ids = torch.arange(max_needed, device=inputs_embeds.device).unsqueeze(0)
             else:  # Dual
-                print(past_seen_tokens)
                 if past_key_values is not None:
                     position_ids = torch.arange(past_seen_tokens, device=inputs_embeds.device).unsqueeze(0)
                 else:
