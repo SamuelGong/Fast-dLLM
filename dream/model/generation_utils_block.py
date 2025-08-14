@@ -483,6 +483,14 @@ class DreamGenerationMixin:
                 mask_index = (x == mask_token_id)
                 confidence = torch.where(mask_index, confidence, -np.inf)
 
+                # skip end of text id
+                non_eot = mask_index & (x0 != endoftext_id)
+                counts = non_eot.sum(dim=1)
+                enough = counts >= block_length
+                mask_use = mask_index.clone()
+                mask_use[enough] = non_eot[enough]
+                confidence = confidence.masked_fill(~mask_use, -np.inf)
+
                 quota = mask_index.sum(dim=1).clamp(max=block_length)
                 block_sel = torch.zeros_like(x0, dtype=torch.bool, device=x0.device)
                 for j in range(confidence.shape[0]):
@@ -491,20 +499,6 @@ class DreamGenerationMixin:
                 block_positions = block_sel[0].nonzero(as_tuple=False).squeeze(-1)
                 if debug:
                     print(block_positions + 1)
-
-                # skip end of text id
-                non_eot = mask_index & (x0 != endoftext_id)
-                counts = non_eot.sum(dim=1)
-                enough = counts >= block_length
-                mask_use = mask_index.clone()
-                mask_use[enough] = non_eot[enough]
-
-                print(non_eot)
-                print(counts)
-                print(enough)
-                print(confidence)
-                confidence = confidence.masked_fill(~mask_use, -np.inf)
-                print(confidence)
 
                 quota_first_step = int(block_length * (1 - timesteps[1] / timesteps[0])) \
                     if 0 < steps_per_block - 1 else int(block_length)  # reusing their original logic
