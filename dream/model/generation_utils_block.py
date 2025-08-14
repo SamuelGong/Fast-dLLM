@@ -649,6 +649,9 @@ class DreamGenerationMixin:
                     num_mask_token = mask_index.sum() / mask_index.shape[0]
                     number_transfer_tokens = int(num_mask_token * (1 - s / t)) if i < steps_per_block - 1 else int(
                         num_mask_token)
+                    if debug:
+                        print(f"\ti {i}")
+                        print(f"\tnumber_transfer_tokens {number_transfer_tokens}")
 
                     if not use_kv_cache == "None":
                         if use_kv_cache == "Dual":
@@ -694,7 +697,6 @@ class DreamGenerationMixin:
                             row_indices = torch.arange(x.size(0), device=self.device).unsqueeze(1).expand_as(
                                 transfer_index)
                             if debug:
-                                print(f"\ti {i}")
                                 print(f"\tfull_confidence {full_confidence}")
                                 print(f"\ttransfer_index {transfer_index}")
                                 print(f"\tx0 {x0}")
