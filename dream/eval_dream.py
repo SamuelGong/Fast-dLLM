@@ -222,6 +222,8 @@ class Dream(LM):
         self.use_kv_cache = use_kv_cache,
         self.generated_token_num = 0
         self.save_dir = save_dir
+
+
     @property
     def batch_size(self):
         return self.batch_size_per_gpu
@@ -330,6 +332,7 @@ class Dream(LM):
             alg_temp=self.alg_temp,
             threshold=self.threshold,
             use_kv_cache=self.use_kv_cache,
+            tokenizer=self.tokenizer
         )
 
         # decode

@@ -25,6 +25,7 @@ sys.path.append('../')
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 DTYPE = torch.bfloat16
 MODEL_NAME = "Dream-org/Dream-v0-Instruct-7B"
+MODEL_NAME = "Dream-org/Dream-v0-Base-7B"
 
 
 def evaluate_qa(question, answer, model_name="meta-llama/Meta-Llama-3-8B-Instruct"):

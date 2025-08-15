@@ -15,7 +15,7 @@ shift || true
 # Defaults
 length=128
 task="mmlu"
-model_path="Dream-org/Dream-v0-Base-7B"
+model_path="Dream-org/Dream-v0-Instruct-7B"
 model="dream"
 script="eval_dream.py"
 output_root="evals_results"

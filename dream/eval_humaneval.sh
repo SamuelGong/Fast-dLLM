@@ -6,7 +6,7 @@ task=humaneval
 length=256
 block_length=32
 steps=$((length / block_length))
-model="Dream-org/Dream-v0-Base-7B"
+model="Dream-org/Dream-v0-Instruct-7B"
 
 # baseline
 accelerate launch eval.py --model dream \
