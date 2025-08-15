@@ -222,9 +222,12 @@ class Dream(LM):
         self.use_kv_cache = use_kv_cache,
         self.generated_token_num = 0
         self.save_dir = save_dir
-        print(self.use_kv_cache)
-        exit(0)
 
+        #TODO: temporary
+        if isinstance(use_kv_cache, tuple):
+            self.use_kv_cache = use_kv_cache[0]
+        else:
+            self.use_kv_cache = use_kv_cache
 
     @property
     def batch_size(self):
