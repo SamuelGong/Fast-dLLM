@@ -58,7 +58,9 @@ def main():
                 add_generation_prompt=True,
                 tokenize=False
             )
-            prompt = torch.tensor(tokenizer(prompt_txt)["input_ids"], device=DEVICE).unsqueeze(0)
+            inputs = tokenizer(prompt_txt, return_tensors="pt")
+            inputs.input_ids = inputs.input_ids.to(DEVICE)
+            inputs.attention_mask = inputs.attention_mask.to(device=DEVICE, dtype=DTYPE)
             if len(result_dict[method]) == qid:
                 result_dict[method].append({
                     "question": question,
@@ -79,7 +81,7 @@ def main():
                         continue
 
                     lat, answer = benchmark(
-                        inputs=prompt,
+                        inputs=inputs,
                         tokenizer=tokenizer,
                         steps=steps,
                         gen_len=gen,
