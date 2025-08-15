@@ -84,7 +84,7 @@ while (( bl <= length )); do
 
     accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
       --confirm_run_unsafe_code --model "${model}" \
-      --model_args "model_path=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
+      --model_args "pretrained=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
       --output_path "${out_dir}" --log_samples \
       "${limit_arg[@]}"
 
