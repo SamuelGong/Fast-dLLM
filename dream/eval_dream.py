@@ -47,6 +47,19 @@ import json
 eval_logger = logging.getLogger(__name__)
 T = TypeVar("T", bound="LM")
 
+import random
+import numpy as np
+
+
+def set_seed(seed):
+    torch.manual_seed(seed)
+    random.seed(seed)
+    np.random.seed(seed)
+
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
+
 @register_model("dream")
 class Dream(LM):
     def __init__(
@@ -75,8 +88,7 @@ class Dream(LM):
         escape_until: Optional[bool] = False,
         threshold: Optional[float] = 0.9,
         apply_chat_template: Optional[bool] = False,
-        use_cache: Optional[bool] = False,
-        dual_cache: Optional[bool] = False,
+        use_kv_cache: str = "None",
         save_dir: Optional[str] = None,
         **kwargs,
     ) -> None:
@@ -207,8 +219,7 @@ class Dream(LM):
         self.classifier_free_guidance = classifier_free_guidance
         self.sampling_eps = sampling_eps
         self.if_apply_chat_template = apply_chat_template
-        self.use_cache = use_cache
-        self.dual_cache = dual_cache
+        self.use_kv_cache = use_kv_cache,
         self.generated_token_num = 0
         self.save_dir = save_dir
     @property
@@ -318,7 +329,7 @@ class Dream(LM):
             alg=self.alg,
             alg_temp=self.alg_temp,
             threshold=self.threshold,
-            dual_cache=self.dual_cache,
+            use_kv_cache=self.use_kv_cache,
         )
 
         # decode
@@ -336,14 +347,10 @@ class Dream(LM):
 
     def generate_until(self, requests: List[Instance], disable_tqdm: bool = False):
         res = []
-        if self.use_cache:
-            from model.generation_utils_block import DreamGenerationMixin
-            self.model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, self.model)
-            self.model._sample = types.MethodType(DreamGenerationMixin._sample, self.model)
-        else:
-            from model.generation_utils import DreamGenerationMixin
-            self.model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, self.model)
-            self.model._sample = types.MethodType(DreamGenerationMixin._sample, self.model)
+
+        from model.generation_utils_block import DreamGenerationMixin
+        self.model.diffusion_generate = types.MethodType(DreamGenerationMixin.diffusion_generate, self.model)
+        self.model._sample = types.MethodType(DreamGenerationMixin._sample, self.model)
 
         processed_count = 0
         if self.save_dir is not None:
@@ -574,7 +581,7 @@ class Dream(LM):
         ds = []
         ds = [{"prefix": req.args[0], "target": req.args[1]} for req in requests]
         ds = Dataset.from_list(ds)
-        print(ds[0])
+        # print(ds[0])
         ds = ds.map(_tokenize)
         ds = ds.with_format("torch")
 
@@ -604,4 +611,5 @@ class Dream(LM):
 
 
 if __name__ == "__main__":
+    set_seed(1234)
     cli_evaluate()
