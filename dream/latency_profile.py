@@ -79,7 +79,7 @@ def main():
                         continue
 
                     lat, answer = benchmark(
-                        prompt=prompt,
+                        inputs=prompt,
                         tokenizer=tokenizer,
                         steps=steps,
                         gen_len=gen,
