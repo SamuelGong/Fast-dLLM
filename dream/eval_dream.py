@@ -88,7 +88,7 @@ class Dream(LM):
         escape_until: Optional[bool] = False,
         threshold: Optional[float] = 0.9,
         apply_chat_template: Optional[bool] = False,
-        use_kv_cache: str = "None",
+        use_kv_cache: Optional[str] = "None",
         save_dir: Optional[str] = None,
         **kwargs,
     ) -> None:

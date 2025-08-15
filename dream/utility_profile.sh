@@ -52,6 +52,11 @@ fi
 export HF_ALLOW_CODE_EVAL=1
 export HF_DATASETS_TRUST_REMOTE_CODE=true
 
+sys_inst_arg=()
+if [[ "$task" == "humaneval" ]]; then
+  sys_inst_arg=(--system_instruction "Complete the following function by directly appending your answer to the original code. Do not leave any comment before or after the code.")
+fi
+
 # Loops: block_length (outer), steps (inner) over powers of two up to length
 bl=1
 while (( bl <= length )); do
@@ -76,17 +81,11 @@ while (( bl <= length )); do
     echo "Run: method=${method} task=${task} length=${length} bl=${bl} steps=${st} (blocks=${blocks})"
     mkdir -p "${out_dir}"
 
-#    accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
-#      --confirm_run_unsafe_code --model "${model}" \
-#      --model_args "model_path=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
-#      --output_path "${out_dir}" --log_samples --system_instruction "Complete the following function by directly appending your answer to the original code. Do not leave any comment before or after the code." \
-#      "${limit_arg[@]}"
-
     accelerate launch --num_processes "${num_processes}" --main_process_port "${main_process_port}" "${script}" --tasks "${task}" \
       --confirm_run_unsafe_code --model "${model}" \
       --model_args "pretrained=${model_path},gen_length=${length},steps=${st},block_length=${bl},use_kv_cache=${method},show_speed=True" \
       --output_path "${out_dir}" --log_samples \
-      "${limit_arg[@]}"
+      "${limit_arg[@]}" "${sys_inst_arg[@]}"
 
     st=$(( st * 2 ))
   done
