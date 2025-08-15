@@ -222,6 +222,8 @@ class Dream(LM):
         self.use_kv_cache = use_kv_cache,
         self.generated_token_num = 0
         self.save_dir = save_dir
+        print(self.use_kv_cache)
+        exit(0)
 
 
     @property
