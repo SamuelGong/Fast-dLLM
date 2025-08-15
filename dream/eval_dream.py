@@ -90,6 +90,7 @@ class Dream(LM):
         apply_chat_template: Optional[bool] = False,
         use_kv_cache: Optional[str] = "None",
         save_dir: Optional[str] = None,
+        block_length: Optional[int] = 32,
         **kwargs,
     ) -> None:
         super().__init__()
@@ -222,6 +223,7 @@ class Dream(LM):
         self.use_kv_cache = use_kv_cache,
         self.generated_token_num = 0
         self.save_dir = save_dir
+        self.block_length = block_length
 
         #TODO: temporary
         if isinstance(use_kv_cache, tuple):
@@ -326,10 +328,11 @@ class Dream(LM):
         generation_ids = self.model.diffusion_generate(
             prompt_ids,
             attention_mask=attn_mask,
-            max_new_tokens=self.max_new_tokens,
             output_history=False,
             return_dict_in_generate=True,
             steps=self.diffusion_steps,
+            max_new_tokens=self.max_new_tokens,
+            block_length=self.block_length,
             temperature=self.temperature,
             top_p=self.top_p,
             top_k=self.top_k,
@@ -337,7 +340,7 @@ class Dream(LM):
             alg_temp=self.alg_temp,
             threshold=self.threshold,
             use_kv_cache=self.use_kv_cache,
-            tokenizer=self.tokenizer
+            tokenizer=self.tokenizer,
         )
 
         # decode
