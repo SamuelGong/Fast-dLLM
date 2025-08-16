@@ -1,13 +1,14 @@
 import os
 import json
 import torch
+import argparse
 from tqdm.auto import tqdm
 from kvcache_baseline import benchmark, evaluate_qa
 from transformers import AutoTokenizer
 
-gen = 128
-block_len_list = [2 ** n for n in range(0, 8)]  # how many tokens per block
-steps_list = [2 ** n for n in range(0, 8)]  # how many generation steps in total
+# gen = 128
+# block_len_list = [2 ** n for n in range(0, 8)]  # how many tokens per block
+# steps_list = [2 ** n for n in range(0, 8)]  # how many generation steps in total
 
 # gen = 512  # how many tokens to generate
 # block_len_list = [2 ** n for n in range(0, 10)]  # how many tokens per block
@@ -32,7 +33,27 @@ def _cells_per_method(gen, block_len_list, steps_list, num_questions: int) -> in
     return num_questions * per_question
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="KV-cache latency profiling (simple end-only)")
+    parser.add_argument("-g", "--gen", type=int, default=128, help="生成的 token 数，默认 128")
+    parser.add_argument("--block_length", type=int, default=7,
+                        help="block 幂次上限(含)。生成 [2**0 .. 2**block_exp]，默认 7 -> 1..128")
+    parser.add_argument("--steps", type=int, default=7,
+                        help="steps 幂次上限(含)。生成 [2**0 .. 2**steps_exp]，默认 7 -> 1..128")
+    args = parser.parse_args()
+    if args.block_exp < 0 or args.steps_exp < 0:
+        raise ValueError("block-exp 与 steps-exp 必须为非负整数")
+    if args.gen <= 0:
+        raise ValueError("gen 必须为正整数")
+    return args
+
+
 def main():
+    args = parse_args()
+    gen = args.gen
+    block_len_list = [2 ** n for n in range(0, args.block_exp + 1)]
+    steps_list = [2 ** n for n in range(0, args.steps_exp + 1)]
+
     experiment_name = "latency_profile"
     output_file = f"{experiment_name}.json"
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
