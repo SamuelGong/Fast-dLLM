@@ -51,8 +51,8 @@ def parse_args():
 def main():
     args = parse_args()
     gen = args.gen
-    block_len_list = [2 ** n for n in range(0, args.block_exp + 1)]
-    steps_list = [2 ** n for n in range(0, args.steps_exp + 1)]
+    block_len_list = [2 ** n for n in range(0, args.block_length + 1)]
+    steps_list = [2 ** n for n in range(0, args.steps + 1)]
 
     experiment_name = "latency_profile"
     output_file = f"{experiment_name}.json"
