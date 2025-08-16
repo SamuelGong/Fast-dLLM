@@ -9,7 +9,7 @@ import os
 import argparse
 
 
-def split_file(input_file, lines_per_chunk=600, output_prefix=None):
+def split_file(input_file, lines_per_chunk=200, output_prefix=None):
     # Determine base name for output files
     if output_prefix:
         base_name = output_prefix
@@ -52,8 +52,8 @@ def main():
     parser.add_argument(
         "-n", "--lines",
         type=int,
-        default=300,
-        help="Number of lines per chunk (default: 300)."
+        default=200,
+        help="Number of lines per chunk (default: 200)."
     )
     parser.add_argument(
         "-o", "--output-prefix",
