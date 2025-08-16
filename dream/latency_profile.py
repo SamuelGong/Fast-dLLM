@@ -41,10 +41,6 @@ def parse_args():
     parser.add_argument("--steps", type=int, default=7,
                         help="steps 幂次上限(含)。生成 [2**0 .. 2**steps_exp]，默认 7 -> 1..128")
     args = parser.parse_args()
-    if args.block_exp < 0 or args.steps_exp < 0:
-        raise ValueError("block-exp 与 steps-exp 必须为非负整数")
-    if args.gen <= 0:
-        raise ValueError("gen 必须为正整数")
     return args
 
 
