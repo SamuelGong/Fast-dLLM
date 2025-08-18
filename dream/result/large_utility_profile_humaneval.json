@@ -1,0 +1,728 @@
+{
+    "C2F": {
+        "1": {
+            "512": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453189
+            }
+        },
+        "2": {
+            "256": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535406
+            },
+            "512": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535406
+            }
+        },
+        "4": {
+            "128": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "256": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "512": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535387
+            }
+        },
+        "8": {
+            "64": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609768
+            },
+            "128": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609768
+            },
+            "256": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "512": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168307
+            }
+        },
+        "16": {
+            "32": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.0060975609756097815
+            },
+            "64": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.0060975609756097815
+            },
+            "128": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "256": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.012082375722391939
+            },
+            "512": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.01049629226916831
+            }
+        },
+        "32": {
+            "16": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "32": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "64": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.01208237572239194
+            },
+            "128": {
+                "pass@1,create_test": 0.07926829268292683,
+                "pass@1_stderr,create_test": 0.0211603330801224
+            },
+            "256": {
+                "pass@1,create_test": 0.09146341463414634,
+                "pass@1_stderr,create_test": 0.02257881335185633
+            },
+            "512": {
+                "pass@1,create_test": 0.09146341463414634,
+                "pass@1_stderr,create_test": 0.022578813351856332
+            }
+        },
+        "64": {
+            "8": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "16": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609768
+            },
+            "32": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "64": {
+                "pass@1,create_test": 0.06707317073170732,
+                "pass@1_stderr,create_test": 0.019593156514629367
+            },
+            "128": {
+                "pass@1,create_test": 0.12195121951219512,
+                "pass@1_stderr,create_test": 0.025630589418441155
+            },
+            "256": {
+                "pass@1,create_test": 0.12804878048780488,
+                "pass@1_stderr,create_test": 0.026172187071286594
+            },
+            "512": {
+                "pass@1,create_test": 0.10975609756097561,
+                "pass@1_stderr,create_test": 0.024483586164351926
+            }
+        },
+        "128": {
+            "4": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "8": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "16": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "32": {
+                "pass@1,create_test": 0.042682926829268296,
+                "pass@1_stderr,create_test": 0.015832926510304688
+            },
+            "64": {
+                "pass@1,create_test": 0.0975609756097561,
+                "pass@1_stderr,create_test": 0.023240913739762257
+            },
+            "128": {
+                "pass@1,create_test": 0.18292682926829268,
+                "pass@1_stderr,create_test": 0.03028135999593354
+            },
+            "256": {
+                "pass@1,create_test": 0.21951219512195122,
+                "pass@1_stderr,create_test": 0.03242041613395384
+            },
+            "512": {
+                "pass@1,create_test": 0.17682926829268292,
+                "pass@1_stderr,create_test": 0.029883277857485947
+            }
+        },
+        "256": {
+            "2": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "4": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "8": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "16": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "32": {
+                "pass@1,create_test": 0.036585365853658534,
+                "pass@1_stderr,create_test": 0.0147050504364147
+            },
+            "64": {
+                "pass@1,create_test": 0.11585365853658537,
+                "pass@1_stderr,create_test": 0.02506820002302354
+            },
+            "128": {
+                "pass@1,create_test": 0.17682926829268292,
+                "pass@1_stderr,create_test": 0.029883277857485954
+            },
+            "256": {
+                "pass@1,create_test": 0.1951219512195122,
+                "pass@1_stderr,create_test": 0.031040185251388394
+            },
+            "512": {
+                "pass@1,create_test": 0.18292682926829268,
+                "pass@1_stderr,create_test": 0.030281359995933548
+            }
+        },
+        "512": {
+            "1": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "2": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "4": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "8": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "16": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.01208237572239194
+            },
+            "32": {
+                "pass@1,create_test": 0.04878048780487805,
+                "pass@1_stderr,create_test": 0.016872119488648713
+            },
+            "64": {
+                "pass@1,create_test": 0.10975609756097561,
+                "pass@1_stderr,create_test": 0.024483586164351912
+            },
+            "128": {
+                "pass@1,create_test": 0.2073170731707317,
+                "pass@1_stderr,create_test": 0.031752175360736774
+            },
+            "256": {
+                "pass@1,create_test": 0.21341463414634146,
+                "pass@1_stderr,create_test": 0.03209158941079731
+            },
+            "512": {
+                "pass@1,create_test": 0.20121951219512196,
+                "pass@1_stderr,create_test": 0.03140183067883278
+            }
+        }
+    },
+    "Dual": {
+        "1": {
+            "512": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.012082375722391943
+            }
+        },
+        "2": {
+            "256": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "512": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            }
+        },
+        "4": {
+            "128": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "256": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "512": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535403
+            }
+        },
+        "8": {
+            "64": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "128": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "256": {
+                "pass@1,create_test": 0.036585365853658534,
+                "pass@1_stderr,create_test": 0.01470505043641471
+            },
+            "512": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535389
+            }
+        },
+        "16": {
+            "32": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "64": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "128": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.01049629226916831
+            },
+            "256": {
+                "pass@1,create_test": 0.04878048780487805,
+                "pass@1_stderr,create_test": 0.016872119488648713
+            },
+            "512": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            }
+        },
+        "32": {
+            "16": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "32": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "64": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "128": {
+                "pass@1,create_test": 0.036585365853658534,
+                "pass@1_stderr,create_test": 0.01470505043641471
+            },
+            "256": {
+                "pass@1,create_test": 0.04878048780487805,
+                "pass@1_stderr,create_test": 0.016872119488648717
+            },
+            "512": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.012082375722391943
+            }
+        },
+        "64": {
+            "8": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "16": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "32": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.01049629226916831
+            },
+            "64": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.01208237572239194
+            },
+            "128": {
+                "pass@1,create_test": 0.042682926829268296,
+                "pass@1_stderr,create_test": 0.015832926510304688
+            },
+            "256": {
+                "pass@1,create_test": 0.042682926829268296,
+                "pass@1_stderr,create_test": 0.01583292651030469
+            },
+            "512": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.012082375722391943
+            }
+        },
+        "128": {
+            "4": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "8": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "16": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "32": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "64": {
+                "pass@1,create_test": 0.042682926829268296,
+                "pass@1_stderr,create_test": 0.015832926510304688
+            },
+            "128": {
+                "pass@1,create_test": 0.09146341463414634,
+                "pass@1_stderr,create_test": 0.02257881335185633
+            },
+            "256": {
+                "pass@1,create_test": 0.11585365853658537,
+                "pass@1_stderr,create_test": 0.025068200023023554
+            },
+            "512": {
+                "pass@1,create_test": 0.09146341463414634,
+                "pass@1_stderr,create_test": 0.022578813351856332
+            }
+        },
+        "256": {
+            "2": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "4": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "8": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "16": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.01049629226916831
+            },
+            "32": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.01208237572239194
+            },
+            "64": {
+                "pass@1,create_test": 0.06097560975609756,
+                "pass@1_stderr,create_test": 0.018742292447890885
+            },
+            "128": {
+                "pass@1,create_test": 0.12195121951219512,
+                "pass@1_stderr,create_test": 0.025630589418441155
+            },
+            "256": {
+                "pass@1,create_test": 0.13414634146341464,
+                "pass@1_stderr,create_test": 0.026694258537510642
+            },
+            "512": {
+                "pass@1,create_test": 0.12804878048780488,
+                "pass@1_stderr,create_test": 0.026172187071286594
+            }
+        },
+        "512": {
+            "1": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "2": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "4": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "8": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "16": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "32": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535385
+            },
+            "64": {
+                "pass@1,create_test": 0.07926829268292683,
+                "pass@1_stderr,create_test": 0.0211603330801224
+            },
+            "128": {
+                "pass@1,create_test": 0.14634146341463414,
+                "pass@1_stderr,create_test": 0.027684200661378906
+            },
+            "256": {
+                "pass@1,create_test": 0.1951219512195122,
+                "pass@1_stderr,create_test": 0.031040185251388394
+            },
+            "512": {
+                "pass@1,create_test": 0.18292682926829268,
+                "pass@1_stderr,create_test": 0.030281359995933555
+            }
+        }
+    },
+    "None": {
+        "1": {
+            "512": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.012082375722391943
+            }
+        },
+        "2": {
+            "256": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "512": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.012082375722391943
+            }
+        },
+        "4": {
+            "128": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "256": {
+                "pass@1,create_test": 0.04878048780487805,
+                "pass@1_stderr,create_test": 0.016872119488648717
+            },
+            "512": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            }
+        },
+        "8": {
+            "64": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "128": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.01208237572239194
+            },
+            "256": {
+                "pass@1,create_test": 0.036585365853658534,
+                "pass@1_stderr,create_test": 0.01470505043641471
+            },
+            "512": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.012082375722391943
+            }
+        },
+        "16": {
+            "32": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "64": {
+                "pass@1,create_test": 0.012195121951219513,
+                "pass@1_stderr,create_test": 0.008596761036453187
+            },
+            "128": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "256": {
+                "pass@1,create_test": 0.042682926829268296,
+                "pass@1_stderr,create_test": 0.015832926510304688
+            },
+            "512": {
+                "pass@1,create_test": 0.036585365853658534,
+                "pass@1_stderr,create_test": 0.014705050436414709
+            }
+        },
+        "32": {
+            "16": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "32": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "64": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.01208237572239194
+            },
+            "128": {
+                "pass@1,create_test": 0.04878048780487805,
+                "pass@1_stderr,create_test": 0.016872119488648717
+            },
+            "256": {
+                "pass@1,create_test": 0.04878048780487805,
+                "pass@1_stderr,create_test": 0.016872119488648706
+            },
+            "512": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535403
+            }
+        },
+        "64": {
+            "8": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "16": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "32": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.01049629226916831
+            },
+            "64": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.01208237572239194
+            },
+            "128": {
+                "pass@1,create_test": 0.054878048780487805,
+                "pass@1_stderr,create_test": 0.01783813529529064
+            },
+            "256": {
+                "pass@1,create_test": 0.054878048780487805,
+                "pass@1_stderr,create_test": 0.01783813529529062
+            },
+            "512": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535403
+            }
+        },
+        "128": {
+            "4": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "8": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "16": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "32": {
+                "pass@1,create_test": 0.024390243902439025,
+                "pass@1_stderr,create_test": 0.01208237572239194
+            },
+            "64": {
+                "pass@1,create_test": 0.06097560975609756,
+                "pass@1_stderr,create_test": 0.01874229244789088
+            },
+            "128": {
+                "pass@1,create_test": 0.06707317073170732,
+                "pass@1_stderr,create_test": 0.019593156514629374
+            },
+            "256": {
+                "pass@1,create_test": 0.08536585365853659,
+                "pass@1_stderr,create_test": 0.021886282322774297
+            },
+            "512": {
+                "pass@1,create_test": 0.08536585365853659,
+                "pass@1_stderr,create_test": 0.021886282322774297
+            }
+        },
+        "256": {
+            "2": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "4": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "8": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.010496292269168305
+            },
+            "16": {
+                "pass@1,create_test": 0.018292682926829267,
+                "pass@1_stderr,create_test": 0.01049629226916831
+            },
+            "32": {
+                "pass@1,create_test": 0.04878048780487805,
+                "pass@1_stderr,create_test": 0.016872119488648717
+            },
+            "64": {
+                "pass@1,create_test": 0.10365853658536585,
+                "pass@1_stderr,create_test": 0.023875115311878532
+            },
+            "128": {
+                "pass@1,create_test": 0.1951219512195122,
+                "pass@1_stderr,create_test": 0.031040185251388405
+            },
+            "256": {
+                "pass@1,create_test": 0.1402439024390244,
+                "pass@1_stderr,create_test": 0.02719792827139254
+            },
+            "512": {
+                "pass@1,create_test": 0.12195121951219512,
+                "pass@1_stderr,create_test": 0.025630589418441155
+            }
+        },
+        "512": {
+            "1": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "2": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "4": {
+                "pass@1,create_test": 0.006097560975609756,
+                "pass@1_stderr,create_test": 0.006097560975609774
+            },
+            "8": {
+                "pass@1,create_test": 0.0,
+                "pass@1_stderr,create_test": 0.0
+            },
+            "16": {
+                "pass@1,create_test": 0.03048780487804878,
+                "pass@1_stderr,create_test": 0.013466226472535406
+            },
+            "32": {
+                "pass@1,create_test": 0.054878048780487805,
+                "pass@1_stderr,create_test": 0.01783813529529065
+            },
+            "64": {
+                "pass@1,create_test": 0.1402439024390244,
+                "pass@1_stderr,create_test": 0.027197928271392537
+            },
+            "128": {
+                "pass@1,create_test": 0.21951219512195122,
+                "pass@1_stderr,create_test": 0.03242041613395385
+            },
+            "256": {
+                "pass@1,create_test": 0.23780487804878048,
+                "pass@1_stderr,create_test": 0.03334645408665338
+            },
+            "512": {
+                "pass@1,create_test": 0.2682926829268293,
+                "pass@1_stderr,create_test": 0.034703982128145336
+            }
+        }
+    }
+}
